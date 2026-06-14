@@ -2,11 +2,11 @@ import { useMemo } from 'react';
 import Icon from './Icon.jsx';
 
 // Tabla editable reutilizable (controlada por el padre).
-//   - Edita celdas, agrega/elimina filas y restaura la tabla original.
+//   - Edita celdas; agrega/elimina/restaura filas.
+//   - Agrega, renombra y elimina columnas (la primera, "Proceso", queda fija).
 //   - Valida datos básicos por tipo de columna (number, date, email).
-//   - El estado y su persistencia los maneja CaseViewer, para poder cruzar
-//     varias tablas en el diagnóstico de consistencia.
-// Una edición inválida se marca visualmente pero no rompe el caso.
+// CaseViewer maneja el estado (columnas + filas) y su persistencia, para poder
+// cruzar varias tablas en el diagnóstico de consistencia.
 
 // Devuelve { ok, msg } según el tipo de la columna. El vacío se permite
 // (se considera "incompleto", no inválido) para no bloquear la edición.
@@ -15,15 +15,9 @@ export function validateCell(value, type) {
   if (raw === '') return { ok: true };
   switch (type) {
     case 'number':
-      return {
-        ok: /^-?\d+([.,]\d+)?$/.test(raw),
-        msg: 'Debe ser un número (revisa coma/punto).',
-      };
+      return { ok: /^-?\d+([.,]\d+)?$/.test(raw), msg: 'Debe ser un número (revisa coma/punto).' };
     case 'date':
-      return {
-        ok: /^\d{4}-\d{2}-\d{2}$/.test(raw),
-        msg: 'Formato de fecha esperado: AAAA-MM-DD.',
-      };
+      return { ok: /^\d{4}-\d{2}-\d{2}$/.test(raw), msg: 'Formato de fecha esperado: AAAA-MM-DD.' };
     case 'email':
       return { ok: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(raw), msg: 'Correo no válido.' };
     default:
@@ -31,35 +25,58 @@ export function validateCell(value, type) {
   }
 }
 
-export default function EditableTable({ table, rows, onChange }) {
+export default function EditableTable({ table, columns, rows, onColumnsChange, onRowsChange }) {
   const updateCell = (rowIndex, key, value) => {
-    onChange(rows.map((row, index) => (index === rowIndex ? { ...row, [key]: value } : row)));
+    onRowsChange(rows.map((row, index) => (index === rowIndex ? { ...row, [key]: value } : row)));
   };
 
   const addRow = () => {
-    const blank = Object.fromEntries(table.columns.map((column) => [column.key, '']));
-    onChange([...rows, blank]);
+    const blank = Object.fromEntries(columns.map((column) => [column.key, '']));
+    onRowsChange([...rows, blank]);
   };
 
   const removeRow = (rowIndex) => {
-    onChange(rows.filter((_, index) => index !== rowIndex));
+    onRowsChange(rows.filter((_, index) => index !== rowIndex));
+  };
+
+  const renameColumn = (key, label) => {
+    onColumnsChange(columns.map((column) => (column.key === key ? { ...column, label } : column)));
+  };
+
+  const addColumn = () => {
+    const key = `extra_${Date.now()}`;
+    onColumnsChange([...columns, { key, label: 'Nueva columna', type: 'text' }]);
+    onRowsChange(rows.map((row) => ({ ...row, [key]: '' })));
+  };
+
+  const removeColumn = (key) => {
+    if (!confirm('¿Eliminar esta columna y sus datos?')) return;
+    onColumnsChange(columns.filter((column) => column.key !== key));
+    onRowsChange(
+      rows.map((row) => {
+        const next = { ...row };
+        delete next[key];
+        return next;
+      }),
+    );
   };
 
   const restore = () => {
     if (!confirm(`¿Restaurar la tabla "${table.name}" a su estado original?`)) return;
-    onChange(table.rows.map((row) => ({ ...row })));
+    onColumnsChange(table.columns.map((column) => ({ ...column })));
+    onRowsChange(table.rows.map((row) => ({ ...row })));
   };
 
   // Conteo de celdas inválidas para avisar sin bloquear nada.
   const invalidCount = useMemo(() => {
     let count = 0;
     for (const row of rows) {
-      for (const column of table.columns) {
+      for (const column of columns) {
         if (!validateCell(row[column.key], column.type).ok) count += 1;
       }
     }
     return count;
-  }, [rows, table.columns]);
+  }, [rows, columns]);
 
   return (
     <article className="editable-table">
@@ -77,16 +94,39 @@ export default function EditableTable({ table, rows, onChange }) {
         <table>
           <thead>
             <tr>
-              {table.columns.map((column) => (
-                <th key={column.key}>{column.label}</th>
-              ))}
+              {columns.map((column) =>
+                column.locked ? (
+                  <th key={column.key}>{column.label}</th>
+                ) : (
+                  <th key={column.key} className="col-head">
+                    <input
+                      className="col-head-input"
+                      value={column.label}
+                      onChange={(event) => renameColumn(column.key, event.target.value)}
+                      aria-label={`Nombre de la columna ${column.label}`}
+                      title="Editar el nombre de la columna"
+                    />
+                    {table.allowAddColumns && (
+                      <button
+                        type="button"
+                        className="col-remove"
+                        onClick={() => removeColumn(column.key)}
+                        aria-label={`Eliminar columna ${column.label}`}
+                        title="Eliminar columna"
+                      >
+                        <Icon name="quitar" size={13} />
+                      </button>
+                    )}
+                  </th>
+                ),
+              )}
               {table.allowRemoveRows && <th aria-label="Acciones" />}
             </tr>
           </thead>
           <tbody>
             {rows.map((row, rowIndex) => (
               <tr key={rowIndex}>
-                {table.columns.map((column) => {
+                {columns.map((column) => {
                   const result = validateCell(row[column.key], column.type);
                   return (
                     <td key={column.key} className={result.ok ? '' : 'cell-invalid'}>
@@ -124,6 +164,11 @@ export default function EditableTable({ table, rows, onChange }) {
         {table.allowAddRows && (
           <button type="button" className="solver-add" onClick={addRow} title="Agregar una fila">
             <Icon name="agregar" size={16} /> Agregar fila
+          </button>
+        )}
+        {table.allowAddColumns && (
+          <button type="button" className="solver-add" onClick={addColumn} title="Agregar una columna">
+            <Icon name="agregar" size={16} /> Agregar columna
           </button>
         )}
         {invalidCount > 0 && (

@@ -1,18 +1,16 @@
 // Casos de examen interactivos, con la lógica de Calidad.
 //
-// Cada caso reproduce un examen real del curso (ordeño/potrero y salud/datos
-// masivos) y permite practicarlo de forma activa:
-//   - processes: tarjetas de referencia con cada proceso del enunciado.
-//   - tables: la TABLA DE ANÁLISIS DE PROCESOS, editable (el estudiante
-//     caracteriza ráfaga, E/S, tiempo real, importancia, escritura...).
-//   - questions: las preguntas reales del examen, con respuesta guía,
-//     conceptos obligatorios, palabras clave, criterios y contradicciones que
-//     alimentan al evaluador local (src/lib/caseEvaluator.js).
-//   - consistency(tables): diagnóstico en vivo que avisa los descuidos típicos
-//     (marcar "tiempo real" a la ligera, dejar celdas sin caracterizar).
+// IMPORTANTE: el enunciado y las preguntas son VERBATIM de los exámenes reales
+// (fotos en public/exam-images/). No se parafrasean: una palabra de más o de
+// menos cambia el examen. La respuesta guía y los conceptos sí son material de
+// estudio elaborado con la lógica de Calidad para alimentar al evaluador local.
 //
-// Para agregar otro examen, añade un objeto al arreglo `cases` del módulo.
-// No hace falta tocar componentes.
+// Cada caso:
+//   - processes: tarjetas con cada proceso del enunciado (texto exacto).
+//   - tables: la TABLA DE ANÁLISIS DE PROCESOS, editable (filas y columnas).
+//   - questions: las preguntas EXACTAS del examen + guía/conceptos/keywords/
+//     criterios/contradicciones para el evaluador (src/lib/caseEvaluator.js).
+//   - consistency(tables): diagnóstico en vivo de la caracterización.
 
 function trimv(value) {
   return (value ?? '').toString().trim();
@@ -22,16 +20,18 @@ function stripAccents(text) {
   return text.normalize('NFD').replace(/[̀-ͯ]/g, '');
 }
 
-// Columnas de análisis compartidas por las tablas de caracterización.
-// La primera (proceso) viene rellena; las demás las completa el estudiante.
+// Construye la tabla de caracterización: primera columna (proceso) rellena,
+// el resto vacío para que el estudiante la complete. Las columnas se pueden
+// editar, agregar y quitar desde la interfaz.
 function caracterizacionTable(columns, processes) {
   return {
     id: 'caracterizacion',
     name: 'Tabla de análisis de procesos',
-    note: 'Caracteriza cada proceso antes de decidir el algoritmo. Puedes editar, agregar o quitar filas y restaurar el original.',
+    note: 'Caracteriza cada proceso antes de decidir. Puedes editar, agregar o quitar filas y columnas, y restaurar el original.',
     allowAddRows: true,
     allowRemoveRows: true,
-    columns: [{ key: 'proceso', label: 'Proceso', type: 'text' }, ...columns],
+    allowAddColumns: true,
+    columns: [{ key: 'proceso', label: 'Proceso', type: 'text', locked: true }, ...columns],
     rows: processes.map((process) => ({
       proceso: `${process.id} — ${process.name}`,
       ...Object.fromEntries(columns.map((column) => [column.key, ''])),
@@ -39,30 +39,31 @@ function caracterizacionTable(columns, processes) {
   };
 }
 
-// Diagnóstico en vivo de una tabla de caracterización (sirve para cualquier
-// examen porque busca la columna `tiempoReal` y cuenta celdas vacías).
+// Diagnóstico en vivo de una tabla de caracterización: avisa "tiempo real" a la
+// ligera y cuenta celdas sin completar. Sirve para cualquier examen.
 function caracterizacionDiagnostico(tables) {
   const issues = [];
   let empty = 0;
   let totalCells = 0;
 
-  for (const rows of Object.values(tables)) {
+  for (const value of Object.values(tables)) {
+    const rows = Array.isArray(value) ? value : value?.rows;
     if (!Array.isArray(rows)) continue;
     for (const row of rows) {
       const proceso = trimv(row.proceso) || 'Un proceso';
       if ('tiempoReal' in row) {
-        const value = stripAccents(trimv(row.tiempoReal).toLowerCase());
-        if (/(^|\s)si(\s|,|\.|;|:|$)/.test(value) && !value.includes('no ')) {
+        const cell = stripAccents(trimv(row.tiempoReal).toLowerCase());
+        if (/(^|\s)si(\s|,|\.|;|:|$)/.test(cell) && !cell.includes('no ')) {
           issues.push({
             level: 'warn',
             message: `${proceso}: lo marcas como tiempo real. Calidad casi nunca defiende tiempo real estricto cuando muchas instancias compiten; justifícalo muy bien o descártalo.`,
           });
         }
       }
-      for (const [key, value] of Object.entries(row)) {
+      for (const [key, cell] of Object.entries(row)) {
         if (key === 'proceso') continue;
         totalCells += 1;
-        if (!trimv(value)) empty += 1;
+        if (!trimv(cell)) empty += 1;
       }
     }
   }
@@ -87,28 +88,26 @@ const COLS_EXAMEN1 = [
 ];
 
 const examen1 = {
-  id: 'examen1-ordeno-potrero',
-  title: 'Primer examen: ordeño y potrero',
-  badge: 'CPU · archivos · sección crítica',
+  id: 'examen1-modulo-lechero',
+  title: 'Primer examen: Database Server — Módulo Lechero',
+  badge: 'CPU · BCP · sección crítica',
   context:
-    'Finca lechera automatizada. Se modela con ocho procesos (A a H): peso de leche por pezón, siete ' +
-    'dispositivos de análisis de leche, una IA que detecta anomalías y dispara tratamiento, las agujas ' +
-    'del cepo, la ubicación de pezoneras por infrarrojo, un sensor de flujo de leche, el suministro de ' +
-    'concentrado y el control de acceso al potrero por humedad, temperatura y brillo solar.',
+    'Un Database Server alberga una aplicación Módulo Lechero para 5 fincas que tiene los siguientes procesos. ' +
+    'Tomando en consideración el caso, se responden las preguntas exactas del examen.',
   problem:
-    'Hay que diseñar la planificación de CPU justificada con el BCP y la tabla de procesos, identificar ' +
-    'los procesos con riesgo de sección crítica por escritura compartida y caracterizar el archivo que ' +
-    'construye cada dispositivo (no el proceso completo). El error clásico es decir que "todo es tiempo ' +
-    'real" porque la finca suena automática.',
+    'El examen pide el algoritmo de planificación de CPU correcto (sustentado en variables del BCP y de la Tabla ' +
+    'de Procesos), describir paso a paso el ciclo de ejecución de un proceso, analizar si cabe sección crítica y ' +
+    'explicar cuándo Round Robin sería la peor elección. La trampa clásica: creer que todo es tiempo real porque ' +
+    'el módulo es automático.',
   processes: [
-    { id: 'A', name: 'Peso de leche por pezón/vaca', detail: 'Sensores de peso registran cuánta leche da cada pezón de cada vaca durante el ordeño.' },
-    { id: 'B', name: 'Siete dispositivos de análisis de leche', detail: 'Siete equipos analizan composición y calidad de la leche (grasa, proteína, anomalías).' },
-    { id: 'C', name: 'IA de tratamiento por anomalías', detail: 'Una IA detecta anomalías y propone o dispara un tratamiento; gana importancia por la alerta.' },
-    { id: 'D', name: 'Agujas de cepo', detail: 'Actuadores del cepo que inmovilizan o liberan a la vaca.' },
-    { id: 'E', name: 'Ubicación de pezoneras por infrarrojo', detail: 'Sensores infrarrojos ubican los pezones para colocar las pezoneras automáticamente.' },
-    { id: 'F', name: 'Sensor de flujo de leche', detail: 'Mide el flujo de leche durante el ordeño para saber cuándo termina.' },
-    { id: 'G', name: 'Suministro de concentrado', detail: 'Dosifica alimento concentrado a cada vaca según su producción.' },
-    { id: 'H', name: 'Acceso al potrero (humedad, temperatura, brillo)', detail: 'Controla el acceso al potrero leyendo tres variables: humedad, temperatura y brillo solar.' },
+    { id: 'A', name: 'Registro de leche por pezón', detail: 'Un proceso que se encarga del registro de leche producida por pezón por vaca utilizando un censor que cuantifica el peso. (Fincas de 300 vacas a dos ordeños diarios uno de 3 a 4 a.m. y otro de 4 a 5:00 p.m.)' },
+    { id: 'B', name: '7 dispositivos de análisis de leche', detail: 'Un proceso que administra cada uno de los 7 dispositivos que analizan de una muestra de leche por vaca de: grasa emulsionada, cadenas de azucares, sales, proteinas, vitaminas, galactosa y PH.' },
+    { id: 'C', name: 'IA de aptitud y tratamiento', detail: 'Un proceso que mediante un algoritmo de inteligencia artificial y basado en el análisis de muestras de cultivo de bacterias de la leche determina de manera inmediata si esa leche es apta y va al tanque general o si debe ser descartada y redirigida a otro tanque, al mismo tiempo que indica el tratamiento a aplicar a ese bovino.' },
+    { id: 'D', name: 'Agujas de acceso a cepos', detail: 'Un proceso que controla un sistema de agujas de acceso para permitir o cerrar el acceso a los cepos de ordeño.' },
+    { id: 'E', name: 'Ubicación de pezoneras por infrarrojo', detail: 'Un proceso que determina la ubicación precisa de manera automática mediante rayos infrarrojos las pezoneras de una ordeñadora en la ubre de la vaca.' },
+    { id: 'F', name: 'Sensor de flujo y secado', detail: 'Un proceso que determina mediante un censor de flujo de leche, el secado de la ubre, cuando ya no fluye leche y el respectivo retiro de chuponeras.' },
+    { id: 'G', name: 'Suministro de concentrado', detail: 'Un proceso que determina en el mismo instante del ordeño, la producción progresiva de leche para ir suministrando automáticamente el concentrado.' },
+    { id: 'H', name: 'Acceso a potrero (humedad, temperatura, brillo)', detail: 'Un proceso que determina la cantidad de vacas que ingresa a un potrero; utilizando el análisis: un censor de humedad, un censor de temperatura y otro de brillo solar, una vez que van saliendo de la sala de ordeño.' },
   ],
   reference: [
     {
@@ -116,72 +115,73 @@ const examen1 = {
       detail: 'No se empieza nombrando el algoritmo. Primero se separan procesos por ráfaga, E/S, importancia y escritura; después se decide.',
     },
     {
+      title: 'BCP y Tabla de Procesos',
+      detail: 'La respuesta de CPU se sustenta en variables del Bloque de Control de Proceso (estado, contador de programa, registros, prioridad, info de planificación, info de E/S, punteros de memoria, contabilidad) y de la Tabla de Procesos.',
+    },
+    {
       title: 'Tiempo real no es por el nombre',
-      detail: 'Que la finca sea automática no hace que todo sea tiempo real. Si muchas vacas o dispositivos compiten, casi nada se defiende como tiempo real estricto.',
+      detail: 'Que el módulo sea automático no hace que todo sea tiempo real. Con 300 vacas por finca, dos ordeños y 5 fincas, casi nada se defiende como tiempo real estricto.',
     },
     {
-      title: 'Buffer vs caché',
-      detail: 'Buffer responde a transferencia y ritmos (el dispositivo produce más rápido de lo que el proceso consume). Caché responde a reutilización del mismo dato.',
-    },
-    {
-      title: 'Archivo por dato de origen',
-      detail: 'Cada dispositivo entrega su propio dato crudo. No se clasifica el proceso completo como un solo archivo.',
+      title: 'Round Robin no es gratis',
+      detail: 'El quantum corta procesos y multiplica el cambio de contexto. Si las ráfagas son muy desiguales o la criticidad importa, RR puede ser la peor opción.',
     },
   ],
   tablesIntro:
-    'Esta es la tabla de análisis de procesos del examen. Caracteriza cada proceso (ráfaga, E/S, tiempo ' +
-    'real, importancia, escritura, sección crítica) y modifícala libremente; el diagnóstico de abajo te ' +
-    'avisa los descuidos típicos de Calidad.',
+    'Esta es la tabla de análisis de procesos del examen. Caracteriza cada proceso (ráfaga, E/S, tiempo real, ' +
+    'importancia, escritura, sección crítica), agrega las columnas que necesites y modifícala libremente; el ' +
+    'diagnóstico de abajo te avisa los descuidos típicos de Calidad.',
   tables: [caracterizacionTable(COLS_EXAMEN1, [
-    { id: 'A', name: 'Peso de leche por pezón/vaca' },
-    { id: 'B', name: 'Siete dispositivos de análisis de leche' },
-    { id: 'C', name: 'IA de tratamiento por anomalías' },
-    { id: 'D', name: 'Agujas de cepo' },
+    { id: 'A', name: 'Registro de leche por pezón' },
+    { id: 'B', name: '7 dispositivos de análisis de leche' },
+    { id: 'C', name: 'IA de aptitud y tratamiento' },
+    { id: 'D', name: 'Agujas de acceso a cepos' },
     { id: 'E', name: 'Ubicación de pezoneras por infrarrojo' },
-    { id: 'F', name: 'Sensor de flujo de leche' },
+    { id: 'F', name: 'Sensor de flujo y secado' },
     { id: 'G', name: 'Suministro de concentrado' },
-    { id: 'H', name: 'Acceso al potrero (humedad, temperatura, brillo)' },
+    { id: 'H', name: 'Acceso a potrero (humedad, temperatura, brillo)' },
   ])],
   consistencyTitle: 'Revisión de tu caracterización (en vivo)',
   consistency: caracterizacionDiagnostico,
   questions: [
     {
-      id: 'e1-cpu',
-      prompt: 'Diseñe y justifique el algoritmo de planificación de CPU usando el BCP y la tabla de procesos.',
+      id: 'e1-q1',
+      prompt:
+        '¿Explique cuál es el algoritmo de planificación de CPU correcto para administrar este Database Server? Sustente su respuesta en la definición y comportamiento de al menos 20 variables del Bloque de Control de Proceso y 10 de la Tabla de Procesos (35 Pts)',
       criteria: [
         'Caracteriza ráfaga, E/S e importancia antes de nombrar un algoritmo.',
-        'Descarta FCFS puro y el "tiempo real" automático.',
-        'Propone colas múltiples o prioridades justificadas por el comportamiento.',
+        'Sustenta con variables del BCP y de la Tabla de Procesos.',
+        'Descarta FCFS puro y el "tiempo real" automático; propone colas múltiples o prioridades.',
       ],
-      keywords: ['rafaga', ['colas multiples', 'colas', 'prioridad'], ['entrada y salida', 'e/s'], 'importancia'],
+      keywords: ['rafaga', ['colas multiples', 'colas', 'prioridad'], ['bloque de control', 'bcp'], 'tabla de procesos'],
       concepts: [
         {
           id: 'caracterizar',
           label: 'caracterizar por ráfaga, E/S e importancia',
-          terms: ['caracteriz', 'rafaga', 'entrada y salida', 'e/s', 'es alta', 'importancia', 'comportamiento'],
+          terms: ['caracteriz', 'rafaga', 'entrada y salida', 'e/s', 'importancia', 'comportamiento'],
           praise: 'Caracterizas por comportamiento (ráfaga, E/S, importancia) antes de elegir el algoritmo.',
-          gap: 'Empieza caracterizando: las lecturas de sensores son E/S con ráfaga baja; la IA consume CPU y gana importancia por la alerta.',
+          gap: 'Empieza caracterizando: las lecturas de sensores son E/S con ráfaga baja; la IA (C) consume CPU y gana importancia.',
+        },
+        {
+          id: 'bcp',
+          label: 'sustentar con variables del BCP y la Tabla de Procesos',
+          terms: ['bloque de control', 'bcp', 'estado', 'contador de programa', 'registros', 'prioridad', 'tabla de procesos', 'info de planificacion'],
+          praise: 'Sustentas la decisión con variables del BCP y la Tabla de Procesos, como pide el examen.',
+          gap: 'El examen exige sustentar con variables del BCP (estado, PC, registros, prioridad, info de E/S...) y de la Tabla de Procesos.',
         },
         {
           id: 'colas',
-          label: 'usar colas múltiples o prioridades justificadas',
+          label: 'proponer colas múltiples o prioridades',
           terms: ['colas multiples', 'multiples colas', 'dos colas', 'prioridad', 'prioridades', 'retroalimentacion'],
-          praise: 'Propones colas múltiples / prioridades, separando las lecturas cortas de la IA.',
+          praise: 'Propones colas múltiples / prioridades, separando lecturas cortas de la IA.',
           gap: 'Propón colas múltiples o prioridades: una cola para lecturas cortas de E/S y otra para la IA por su impacto.',
-        },
-        {
-          id: 'descarta-fcfs',
-          label: 'descartar FCFS puro',
-          terms: ['fcfs', 'primero en llegar', 'no fcfs', 'descarto fcfs', 'monopol'],
-          praise: 'Descartas FCFS puro porque un proceso largo atrasaría a los demás.',
-          gap: 'Descarta FCFS puro: un proceso largo (por ejemplo la IA) atrasaría las lecturas y la alerta.',
         },
         {
           id: 'tiempo-real',
           label: 'no clasificar todo como tiempo real',
-          terms: ['no tiempo real', 'no es tiempo real', 'muchas vacas', 'compiten', 'tiempo real estricto'],
+          terms: ['no tiempo real', 'no es tiempo real', 'muchas vacas', 'compiten', 'tiempo real estricto', '300 vacas'],
           praise: 'No caes en "todo es tiempo real": reconoces que muchas instancias compiten.',
-          gap: 'Aclara que casi nada es tiempo real estricto: con cientos de vacas/dispositivos compitiendo, se quitan CPU entre sí.',
+          gap: 'Aclara que casi nada es tiempo real estricto: con 300 vacas por finca y 5 fincas, los procesos se quitan CPU entre sí.',
         },
       ],
       contradictions: [
@@ -191,109 +191,166 @@ const examen1 = {
         },
       ],
       recommendation:
-        'Caracteriza primero (ráfaga, E/S, importancia), descarta FCFS puro y el tiempo real automático, y defiende colas múltiples o prioridades justificadas por el BCP.',
+        'Caracteriza (ráfaga, E/S, importancia), sustenta con variables del BCP y la Tabla de Procesos, descarta FCFS puro y el tiempo real automático, y defiende colas múltiples o prioridades.',
       guide:
-        'Primero caracterizo cada proceso. Las lecturas de sensores (peso, flujo, infrarrojo, potrero) tienen ' +
-        'ráfaga baja y mucha E/S; la IA de tratamiento consume más CPU y gana importancia por la alerta. No uso ' +
-        'FCFS puro porque un proceso largo atrasaría la alerta, y no digo que todo sea tiempo real solo porque la ' +
-        'finca es automática: con cientos de vacas compitiendo casi nada se defiende como tiempo real estricto. ' +
-        'Defiendo colas múltiples o prioridades: una cola para las lecturas cortas con mucha E/S y otra para la ' +
-        'IA y la alerta, con prioridad justificada por su impacto, apoyándome en el BCP y la tabla de procesos.',
+        'Primero caracterizo cada proceso. Las lecturas de sensores (peso, flujo, infrarrojo, potrero) tienen ráfaga ' +
+        'baja y mucha E/S; la IA de aptitud y tratamiento (C) consume más CPU y gana importancia. La decisión se ' +
+        'sustenta en variables del BCP —estado, contador de programa, registros, prioridad, información de ' +
+        'planificación, información de E/S, punteros de memoria y contabilidad— y de la Tabla de Procesos. No uso ' +
+        'FCFS puro porque un proceso largo atrasaría a los demás, y no digo que todo sea tiempo real solo porque el ' +
+        'módulo es automático: con 300 vacas por finca, dos ordeños y 5 fincas, casi nada se defiende como tiempo ' +
+        'real estricto. Defiendo colas múltiples o prioridades: una cola para lecturas cortas con mucha E/S y otra ' +
+        'para la IA con prioridad justificada por su impacto.',
     },
     {
-      id: 'e1-seccion-critica',
-      prompt: 'Identifique qué procesos tienen riesgo de sección crítica y por qué.',
+      id: 'e1-q2',
+      prompt:
+        'Escoja un proceso y describa paso a paso, un recorrido completo por el ciclo de ejecución, indicando que hace en cada estado y las variables de Bloque de Control de Proceso que escribe. (25 Pts)',
       criteria: [
-        'Reconoce que el riesgo viene de escritura concurrente sobre un recurso/archivo compartido.',
-        'Señala procesos concretos que escriben datos compartidos.',
-        'Propone exclusión mutua o sincronización.',
+        'Elige un proceso concreto y recorre los estados del ciclo de ejecución.',
+        'Indica qué ocurre en cada estado (nuevo, listo, ejecución, bloqueado, terminado).',
+        'Señala las variables del BCP que se escriben en cada transición.',
+      ],
+      keywords: [['listo', 'preparado'], ['ejecucion', 'ejecución'], ['bloqueado', 'en espera'], ['bloque de control', 'bcp']],
+      concepts: [
+        {
+          id: 'elige',
+          label: 'escoger un proceso concreto',
+          terms: ['proceso a', 'proceso c', 'escojo', 'elijo el proceso', 'tomo el proceso', 'el proceso de'],
+          praise: 'Escoges un proceso concreto para el recorrido, como pide la pregunta.',
+          gap: 'Escoge un proceso concreto (por ejemplo A, el registro de leche) y haz el recorrido sobre él.',
+        },
+        {
+          id: 'estados',
+          label: 'recorrer los estados del ciclo de ejecución',
+          terms: ['nuevo', 'listo', 'preparado', 'ejecucion', 'bloqueado', 'en espera', 'terminado', 'transicion'],
+          praise: 'Recorres los estados (nuevo, listo, ejecución, bloqueado, terminado) paso a paso.',
+          gap: 'Recorre los estados: nuevo → listo → ejecución → bloqueado por E/S → listo → ... → terminado, diciendo qué pasa en cada uno.',
+        },
+        {
+          id: 'bcp-escribe',
+          label: 'variables del BCP que se escriben',
+          terms: ['bloque de control', 'bcp', 'contador de programa', 'registros', 'estado del proceso', 'info de planificacion', 'puntero', 'contabilidad'],
+          praise: 'Indicas las variables del BCP que se escriben en cada transición.',
+          gap: 'Di qué variables del BCP se escriben: estado, contador de programa, registros, info de planificación/E/S, punteros y contabilidad.',
+        },
+      ],
+      contradictions: [
+        {
+          terms: ['todos los procesos a la vez', 'no escojo ninguno'],
+          message: 'La pregunta pide escoger UN proceso y recorrer su ciclo; no describas todos a la vez.',
+        },
+      ],
+      recommendation:
+        'Escoge un proceso, recorre nuevo → listo → ejecución → bloqueado → listo → terminado, y en cada transición nombra las variables del BCP que se escriben.',
+      guide:
+        'Escojo el proceso A (registro de leche por pezón). Nuevo: el SO lo admite y crea su BCP (asigna PID, estado ' +
+        '= nuevo, punteros de memoria). Listo: pasa a la cola de listos (estado = listo, info de planificación y ' +
+        'prioridad). Ejecución: el planificador lo despacha (estado = ejecución; se cargan contador de programa y ' +
+        'registros; al desalojarlo se guardan PC y registros en el BCP). Bloqueado: cuando pide la lectura del ' +
+        'censor de peso queda en espera de E/S (estado = bloqueado, info de E/S). Listo otra vez: terminada la E/S ' +
+        'vuelve a la cola (se actualiza estado e info de planificación). Terminado: al cerrar el registro libera ' +
+        'recursos (estado = terminado, contabilidad de uso de CPU). En cada transición se escriben en el BCP el ' +
+        'estado, el contador de programa, los registros, la información de planificación y de E/S y la contabilidad.',
+    },
+    {
+      id: 'e1-q3',
+      prompt:
+        '¿Cabría la posibilidad de incurrir en alguna sección crítica? Explique las razones del porque se daría o del porque no se daría. (20 pts)',
+      criteria: [
+        'Responde si cabe o no, con razones (no solo sí/no).',
+        'Ubica el riesgo en la escritura concurrente sobre un recurso compartido.',
+        'Menciona exclusión mutua o sincronización donde aplica.',
       ],
       keywords: [['seccion critica', 'sección crítica'], 'escritura', ['exclusion mutua', 'exclusión mutua'], 'compartido'],
       concepts: [
         {
           id: 'escritura-compartida',
           label: 'la escritura concurrente sobre un recurso compartido',
-          terms: ['escritura compartida', 'escriben el mismo', 'recurso compartido', 'mismo archivo', 'mismo registro', 'concurrente', 'simultane', 'a la vez'],
-          praise: 'Ubicas el riesgo donde varios procesos escriben el mismo recurso a la vez.',
-          gap: 'El riesgo aparece cuando dos o más procesos escriben el mismo archivo/registro a la vez (por ejemplo el histórico de leche por vaca).',
+          terms: ['escritura compartida', 'escriben el mismo', 'recurso compartido', 'tanque general', 'base de datos', 'mismo registro', 'concurrente', 'a la vez', 'database server'],
+          praise: 'Ubicas el riesgo donde varios procesos escriben el mismo recurso a la vez (tanque general, base de datos).',
+          gap: 'El riesgo aparece cuando varios procesos escriben el mismo recurso a la vez: el tanque general, el registro de leche o la base de datos del Database Server.',
         },
         {
-          id: 'identifica',
-          label: 'identificar procesos concretos',
-          terms: ['peso de leche', 'registro de leche', 'historico', 'analisis de leche', 'base de datos', 'concentrado'],
-          praise: 'Identificas procesos concretos que comparten escritura (registro de leche, histórico).',
-          gap: 'Nombra procesos concretos: el registro de leche por vaca o el histórico que varios escriben en paralelo.',
+          id: 'razones',
+          label: 'explicar las razones (no solo sí/no)',
+          terms: ['porque', 'razon', 'se daria', 'no se daria', 'depende', 'cuando'],
+          praise: 'Explicas las razones del sí/no, como pide la pregunta.',
+          gap: 'No basta decir sí o no: explica las razones (cuándo se daría y cuándo no).',
         },
         {
           id: 'exclusion',
-          label: 'proponer exclusión mutua / sincronización',
+          label: 'exclusión mutua / sincronización',
           terms: ['exclusion mutua', 'sincroniz', 'semaforo', 'candado', 'mutex', 'bloqueo', 'region critica'],
           praise: 'Propones exclusión mutua o sincronización para proteger la sección crítica.',
-          gap: 'Propón exclusión mutua o sincronización (semáforo/candado) para serializar la escritura compartida.',
+          gap: 'Donde haya escritura compartida, propón exclusión mutua o sincronización (semáforo/candado).',
         },
       ],
       contradictions: [
         {
-          terms: ['no hay seccion critica', 'ningun proceso tiene riesgo', 'no existe seccion critica'],
-          message: 'Si dos procesos escriben el mismo registro o archivo a la vez, sí hay riesgo de sección crítica: hay que justificarlo, no descartarlo de entrada.',
+          terms: ['no hay seccion critica en ningun', 'ningun proceso tiene riesgo', 'no existe seccion critica'],
+          message: 'Sí cabe en los puntos de escritura compartida (tanque general, base de datos): hay que justificarlo, no descartarlo de entrada.',
         },
       ],
       recommendation:
-        'Localiza la escritura compartida (qué procesos escriben el mismo dato a la vez), nómbralos y propón exclusión mutua o sincronización.',
+        'Responde con razones: sí cabe donde varios procesos escriben el mismo recurso (tanque general, base de datos), y ahí se necesita exclusión mutua; donde cada proceso escribe lo suyo, no.',
       guide:
-        'El riesgo de sección crítica no está en leer, sino en escribir el mismo recurso al mismo tiempo. Los ' +
-        'procesos que registran el peso/análisis de leche y actualizan un histórico compartido por vaca pueden ' +
-        'chocar si escriben en paralelo; lo mismo el suministro de concentrado si actualiza un registro común. ' +
-        'Para esos casos defiendo exclusión mutua (semáforo o candado) que serialice la escritura, dejando libre ' +
-        'la lectura. Los sensores que solo leen y escriben su propio archivo no comparten sección crítica.',
+        'Sí cabe la posibilidad, pero no en todos lados. Se daría sección crítica donde varios procesos escriben un ' +
+        'recurso compartido a la vez: la IA (C) que decide a qué tanque va la leche y el registro que actualiza el ' +
+        'tanque general o la base de datos del Database Server pueden chocar si escriben en paralelo; lo mismo el ' +
+        'suministro de concentrado (G) si actualiza un registro común. En esos puntos se necesita exclusión mutua ' +
+        '(un semáforo o candado) que serialice la escritura. No se daría en los procesos que solo leen su propio ' +
+        'censor y escriben su propio archivo, porque no comparten el recurso.',
     },
     {
-      id: 'e1-archivos',
-      prompt: 'Caracterice el archivo que construye cada dispositivo (no el proceso completo). ¿Qué estructura, acceso y buffer/caché justifica?',
+      id: 'e1-q4',
+      prompt:
+        'Explique en que condiciones la aplicación del algoritmo Round Robbin sería la peor elección para este contexto de ejecución. (20 Pts)',
       criteria: [
-        'No generaliza el proceso completo como un solo archivo.',
-        'Parte del dato de origen de cada dispositivo.',
-        'Define estructura/acceso y justifica buffer o caché.',
+        'Explica el costo del quantum / cambio de contexto.',
+        'Relaciona la mala elección con ráfagas desiguales o E/S intensiva.',
+        'Menciona que RR ignora prioridad/criticidad.',
       ],
-      keywords: ['dispositivo', 'registros', 'secuencial', 'buffer'],
+      keywords: [['round robin', 'round robbin'], 'quantum', ['cambio de contexto', 'contexto'], 'prioridad'],
       concepts: [
         {
-          id: 'por-dispositivo',
-          label: 'caracterizar por dispositivo / dato de origen',
-          terms: ['cada dispositivo', 'por dispositivo', 'dato de origen', 'dato crudo', 'no el proceso completo', 'cada sensor'],
-          praise: 'Partes del dato de origen de cada dispositivo, no del proceso completo.',
-          gap: 'Empieza por el dato de origen de cada dispositivo: qué entrega el sensor de flujo, el de temperatura, el infrarrojo, etc.',
+          id: 'cambio-contexto',
+          label: 'el costo del quantum y el cambio de contexto',
+          terms: ['cambio de contexto', 'overhead', 'sobrecarga', 'quantum', 'se multiplica', 'cambios constantes'],
+          praise: 'Explicas que el quantum multiplica el cambio de contexto y su sobrecarga.',
+          gap: 'Explica el costo: el quantum corta los procesos y multiplica el cambio de contexto sin avanzar trabajo útil.',
         },
         {
-          id: 'estructura-acceso',
-          label: 'definir estructura y acceso',
-          terms: ['registros', 'timestamp', 'secuencial', 'indexado', 'directo', 'estructura', 'binario'],
-          praise: 'Defines estructura y acceso (registros con timestamp, secuencial o indexado).',
-          gap: 'Define estructura y acceso: registros con timestamp+valor, secuencial para histórico o indexado si se consulta por rangos.',
+          id: 'desigualdad',
+          label: 'ráfagas desiguales / E/S intensiva',
+          terms: ['rafagas desiguales', 'procesos largos', 'corta el proceso', 'fragmenta', 'e/s', 'entrada y salida', 'procesos cortos'],
+          praise: 'Relacionas la mala elección con ráfagas muy desiguales y procesos de E/S.',
+          gap: 'Relaciónalo con el contexto: ráfagas muy desiguales (IA larga vs lecturas cortas) hacen a RR ineficiente.',
         },
         {
-          id: 'buffer-cache',
-          label: 'justificar buffer o caché',
-          terms: ['buffer', 'cache', 'reutiliz', 'transferencia', 'ritmo', 'mas rapido'],
-          praise: 'Justificas buffer (transferencia/ritmo) y caché solo si hay reutilización.',
-          gap: 'Justifica buffer cuando el dispositivo produce más rápido de lo que se consume, y caché solo si el dato se reutiliza.',
+          id: 'prioridad-ignorada',
+          label: 'RR ignora prioridad / criticidad',
+          terms: ['no respeta prioridad', 'criticidad', 'la alerta espera', 'equitativo', 'mismo trato', 'importancia'],
+          praise: 'Señalas que RR trata a todos por igual e ignora la criticidad (la alerta de la IA esperaría su turno).',
+          gap: 'Agrega que RR reparte por igual e ignora prioridad: un proceso crítico (la IA) tendría que esperar su turno.',
         },
       ],
       contradictions: [
         {
-          terms: ['un solo archivo', 'el proceso completo es un archivo', 'todos los dispositivos generan el mismo archivo'],
-          message: 'No se clasifica el proceso completo como un archivo: cada dispositivo entrega su propio dato de origen y construye su propio archivo.',
+          terms: ['round robin es la mejor', 'round robin siempre', 'round robbin es la mejor'],
+          message: 'La pregunta pide cuándo RR es la PEOR elección: justifica el costo del quantum, las ráfagas desiguales y que ignora la criticidad.',
         },
       ],
       recommendation:
-        'Caracteriza un archivo por dispositivo (dato de origen → estructura → acceso) y justifica buffer por transferencia, caché solo si hay reutilización.',
+        'Explica que RR es la peor opción cuando las ráfagas son muy desiguales y hay E/S: el quantum multiplica el cambio de contexto y, al repartir por igual, ignora la criticidad de la IA.',
       guide:
-        'No clasifico el proceso completo como un archivo: cada dispositivo entrega su propio dato de origen. El ' +
-        'sensor de temperatura y el de brillo del potrero generan registros periódicos (timestamp + valor); el ' +
-        'sensor de flujo entrega muestras durante el ordeño; el análisis de leche produce registros de resultados. ' +
-        'La estructura suele ser de registros; el acceso, secuencial si solo se guarda el histórico o indexado por ' +
-        'tiempo si se consultan rangos. Defiendo buffer cuando el dispositivo produce más rápido de lo que el ' +
-        'proceso consume, y caché solo si esos datos se reutilizan; si el dato siempre es nuevo, no pongo caché.',
+        'Round Robin sería la peor elección cuando las ráfagas son muy desiguales y hay mucha E/S, como aquí. El ' +
+        'quantum corta los procesos largos (la IA) en muchos trozos y multiplica el cambio de contexto, gastando ' +
+        'CPU en sobrecarga en vez de trabajo útil; los procesos de lectura corta ceden el CPU enseguida por E/S y ' +
+        'no necesitan turnos forzados. Además RR reparte el CPU por igual e ignora la prioridad: un proceso ' +
+        'crítico como la alerta de la IA tendría que esperar su turno detrás de procesos sin importancia. Y si un ' +
+        'proceso retiene un recurso y se le acaba el quantum, lo conserva mientras espera, agravando posibles ' +
+        'bloqueos.',
     },
   ],
 };
@@ -304,212 +361,274 @@ const COLS_EXAMEN2 = [
   { key: 'tiempoReal', label: '¿Tiempo real?', type: 'text' },
   { key: 'memoria', label: 'Memoria solicitada', type: 'text' },
   { key: 'crecimiento', label: 'Crecimiento', type: 'text' },
-  { key: 'memoriaVirtual', label: '¿Memoria virtual?', type: 'text' },
+  { key: 'reutilizacion', label: '¿Reutiliza páginas?', type: 'text' },
 ];
 
 const examen2 = {
-  id: 'examen2-salud-datos',
-  title: 'Segundo examen: salud y datos masivos',
-  badge: 'Memoria · memoria virtual',
+  id: 'examen2-medicore',
+  title: 'Segundo examen: Data Center — MediCore',
+  badge: 'CPU · memoria · reemplazo',
   context:
-    'Sistema de salud y datos masivos. Se combinan la decodificación de ADN, el monitoreo de signos ' +
-    'vitales de bebés, la predicción de pandemias, perfiles de redes sociales, web services clínicos con ' +
-    'integración a Hacienda y el análisis de hábitos alimenticios. El foco está en administración de ' +
-    'memoria y memoria virtual.',
+    'Un Data Center Hospitalario alberga una aplicación denominada MediCore, utilizada simultáneamente por tres ' +
+    'hospitales regionales y cinco clínicas periféricas. El sistema administra procesos críticos en tiempo real ' +
+    'relacionados con atención médica, monitoreo de pacientes y gestión hospitalaria. Tomando en consideración el ' +
+    'caso, se responden las preguntas exactas del examen.',
   problem:
-    'Hay que decidir si aplica memoria virtual y por qué, justificar por qué no bastan particiones fijas, ' +
-    'mapa de bits, listas ligadas ni el sistema de socios, y recomendar una política de reemplazo según si ' +
-    'interesa conservar páginas frecuentes. La política no se elige por su nombre.',
+    'El examen pide el algoritmo de planificación de CPU (sustentado en variables del BCP y de la Tabla de ' +
+    'Procesos), la política de Administración de Memoria del Planificador de Mediano Plazo con sus variables de ' +
+    'peso, qué proceso se favorece con Particiones Fijas de varios tamaños, y para el proceso D con Intercambio, ' +
+    'qué política de reemplazo lo favorece y cuál lo perjudica.',
   processes: [
-    { id: 'A', name: 'Decodificación de ADN', detail: 'Ráfaga alta y mucha E/S por lectura; construye archivos de texto/caracteres muy grandes.' },
-    { id: 'B', name: 'Monitorización de bebés', detail: 'Signos vitales (latidos, respiración): E/S muy alta y ráfaga baja en múltiples centros.' },
-    { id: 'C', name: 'Predicción de pandemias', detail: 'Bodegas de datos: CPU y memoria muy altos, con crecimiento fuerte.' },
-    { id: 'D', name: 'Perfiles de redes sociales', detail: 'Gran volumen de datos de perfiles; lectura/escritura intensiva.' },
-    { id: 'E', name: 'Web services clínicos / Hacienda', detail: 'Integración con servicios externos; E/S por red y validaciones.' },
-    { id: 'F', name: 'Hábitos alimenticios', detail: 'Procesa strings de compras; memoria y crecimiento altos.' },
+    { id: 'A', name: 'Sensores biomédicos (450 pacientes)', detail: 'Un proceso que registra continuamente los signos vitales de pacientes internados mediante sensores biomédicos conectados a monitores inteligentes, capturando: frecuencia cardíaca, saturación de oxígeno, presión arterial y temperatura corporal. La información es almacenada y actualizada cada 2 segundos para aproximadamente 450 pacientes simultáneamente.' },
+    { id: 'B', name: 'IA de riesgo clínico', detail: 'Un proceso basado en inteligencia artificial que analiza en tiempo real los signos vitales y resultados clínicos de pacientes críticos para determinar: riesgo de paro cardiorrespiratorio y eventos cerebrovasculares. Cuando detecta anomalías, activa alarmas, notifica al personal médico y prioriza pacientes.' },
+    { id: 'C', name: 'Análisis de imágenes de cultivos', detail: 'Un proceso que analiza imágenes de alta resolución obtenidas de cultivos de sangre, piel u otras muestras clínicas sembradas en placas de Petri o medios especializados, con el fin de identificar posibles patrones compatibles con crecimiento bacteriano, fúngico o viral indirecto. El sistema carga lotes de imágenes de microscopios digitales y compara con modelos entrenados para estimar la probabilidad de presencia de microorganismos patógenos.' },
+    { id: 'D', name: 'Audio de dolor (UCI)', detail: 'Un proceso que analiza señales de audio capturadas por un dispositivo instalado en una unidad de cuidados intensivos, cercano a la camilla de cada persona internada, con el fin de estimar posibles niveles de dolor o malestar a partir de patrones acústicos. Procesa intensidad, frecuencia, tono, duración de quejidos, respiración irregular, pausas y vocalización; transforma el audio en espectrogramas o vectores y los compara con modelos de IA para clasificar dolor leve, moderado o severo.' },
   ],
   reference: [
+    {
+      title: 'Caracterizar antes de decidir',
+      detail: 'A tiene ráfaga mínima y E/S altísima; B, C y D son CPU-bound con ráfaga alta. Esa diferencia (la ráfaga) es la que justifica separar colas.',
+    },
     {
       title: 'El problema de la memoria virtual',
       detail: 'Con intercambio, la pregunta es qué queda en memoria principal y qué va al área de intercambio, no cuánta RAM comprar.',
     },
     {
-      title: 'La política no se elige por su nombre',
-      detail: 'Si interesa conservar páginas frecuentes, segunda oportunidad o reloj se defienden mejor que FIFO. Si cada iteración trae datos nuevos, FIFO basta.',
+      title: 'La política de reemplazo depende de la reutilización',
+      detail: 'Si las páginas se reutilizan entre iteraciones, segunda oportunidad/reloj se defienden; si cada iteración trae datos nuevos, FIFO basta y es más barato.',
     },
     {
-      title: 'Por qué fallan los modelos sin intercambio',
-      detail: 'Particiones fijas y socios desperdician/rompen por crecimiento; el mapa de bits busca bloques contiguos; las listas ligadas se vuelven lentas al crecer.',
+      title: 'Particiones fijas y crecimiento',
+      detail: 'Los procesos que crecen no caben en un bloque fijo; la reasignación es cara. Hay que ver quién se favorece y por qué los demás no.',
     },
   ],
   tablesIntro:
-    'Caracteriza cada proceso pensando en memoria: ráfaga, E/S, memoria solicitada, crecimiento y si ' +
-    'defiendes memoria virtual. Modifica la tabla libremente; el diagnóstico te avisa los descuidos típicos.',
+    'Caracteriza cada proceso pensando en CPU y memoria: ráfaga, E/S, memoria solicitada, crecimiento y si ' +
+    'reutiliza páginas. Agrega las columnas que necesites; el diagnóstico te avisa los descuidos típicos.',
   tables: [caracterizacionTable(COLS_EXAMEN2, [
-    { id: 'A', name: 'Decodificación de ADN' },
-    { id: 'B', name: 'Monitorización de bebés' },
-    { id: 'C', name: 'Predicción de pandemias' },
-    { id: 'D', name: 'Perfiles de redes sociales' },
-    { id: 'E', name: 'Web services clínicos / Hacienda' },
-    { id: 'F', name: 'Hábitos alimenticios' },
+    { id: 'A', name: 'Sensores biomédicos (450 pacientes)' },
+    { id: 'B', name: 'IA de riesgo clínico' },
+    { id: 'C', name: 'Análisis de imágenes de cultivos' },
+    { id: 'D', name: 'Audio de dolor (UCI)' },
   ])],
   consistencyTitle: 'Revisión de tu caracterización (en vivo)',
   consistency: caracterizacionDiagnostico,
   questions: [
     {
-      id: 'e2-memoria-virtual',
-      prompt: '¿Aplicaría memoria virtual? Justifíquelo y proponga una política de reemplazo.',
+      id: 'e2-q1',
+      prompt:
+        '¿Explique cuál es el algoritmo de planificación de CPU correcto para administrar este Data Center? Sustente su respuesta en la definición y comportamiento de al menos 5 variables prioritarias del Bloque de Control de Proceso y 5 de la Tabla de Procesos (20 Pts)',
       criteria: [
-        'Defiende memoria virtual por datos masivos y crecimiento alto.',
-        'Elige la política según si interesa conservar páginas frecuentes.',
-        'No elige la política por su nombre.',
+        'Caracteriza ráfaga y E/S antes de nombrar el algoritmo.',
+        'Sustenta con variables del BCP y de la Tabla de Procesos.',
+        'Propone colas múltiples (A en una cola, B/C/D en otra) y descarta FCFS/apropiatividad.',
       ],
-      keywords: [['memoria virtual', 'intercambio'], 'reemplazo', ['segunda oportunidad', 'reloj'], 'paginas'],
+      keywords: ['rafaga', ['colas multiples', 'colas', 'dos colas'], ['bloque de control', 'bcp'], 'tabla de procesos'],
+      concepts: [
+        {
+          id: 'caracterizar',
+          label: 'caracterizar por ráfaga y E/S',
+          terms: ['caracteriz', 'rafaga', 'entrada y salida', 'e/s', 'cpu-bound', 'comportamiento'],
+          praise: 'Caracterizas por ráfaga y E/S: A es E/S intensiva de ráfaga mínima; B, C y D son CPU-bound.',
+          gap: 'Caracteriza primero: A tiene ráfaga mínima y E/S altísima; B, C y D tienen ráfaga alta (CPU-bound).',
+        },
+        {
+          id: 'colas',
+          label: 'colas múltiples (dos colas)',
+          terms: ['colas multiples', 'dos colas', 'multiples colas', 'una cola para a', 'separar colas', 'prioridad'],
+          praise: 'Propones colas múltiples: una cola para A y otra para B, C y D.',
+          gap: 'Propón colas múltiples: cola 1 para A (RR con quantum bajo o SJF) y cola 2 para B/C/D (RR con quantum alto).',
+        },
+        {
+          id: 'bcp',
+          label: 'sustentar con variables del BCP y la Tabla',
+          terms: ['bloque de control', 'bcp', 'estado', 'prioridad', 'tabla de procesos', 'rafaga estimada', 'registros'],
+          praise: 'Sustentas con variables del BCP y de la Tabla de Procesos, como pide el examen.',
+          gap: 'Sustenta con al menos 5 variables del BCP y 5 de la Tabla de Procesos (estado, prioridad, ráfaga estimada...).',
+        },
+        {
+          id: 'descarta',
+          label: 'descartar FCFS y apropiatividad',
+          terms: ['fcfs', 'primero en llegar', 'descarto fcfs', 'apropiativ', 'no tiempo real estricto', 'monopol'],
+          praise: 'Descartas FCFS (ráfagas grandes monopolizan) y la apropiatividad (no hay tiempo real estricto).',
+          gap: 'Descarta FCFS (B/C/D monopolizarían el CPU) y la apropiatividad, porque ninguno es tiempo real estricto.',
+        },
+      ],
+      contradictions: [
+        {
+          terms: ['round robin para todos', 'una sola cola', 'todo en round robin'],
+          message: 'Una sola cola de Round Robin mete a A (ráfaga mínima) en la misma bolsa que B/C/D (ráfaga alta). La clave es separar colas por ráfaga.',
+        },
+      ],
+      recommendation:
+        'Caracteriza por ráfaga, propón colas múltiples (A aparte de B/C/D), sustenta con variables del BCP y la Tabla, y descarta FCFS y la apropiatividad.',
+      guide:
+        'La respuesta correcta es colas múltiples con dos colas, porque permite aplicar algoritmos distintos a ' +
+        'comportamientos distintos. La variable que separa las colas es la ráfaga: A tiene ráfaga mínima y E/S ' +
+        'altísima, mientras B, C y D tienen ráfaga alta. Cola 1 (A): RR con quantum bajo —cede el CPU rápido y se ' +
+        'va a E/S— o SJF por su poca pila de código. Cola 2 (B, C, D): RR con quantum alto, para que avancen su ' +
+        'análisis sin multiplicar el cambio de contexto. Se descarta la apropiatividad porque ninguno es tiempo ' +
+        'real estricto, y FCFS porque las ráfagas enormes de B, C y D monopolizarían el CPU. Todo se sustenta en ' +
+        'variables del BCP (estado, prioridad, ráfaga estimada, registros, info de E/S) y de la Tabla de Procesos.',
+    },
+    {
+      id: 'e2-q2',
+      prompt:
+        'Cual es la política de Administración de Memoria que recomienda debería implementar el Planificador de Mediano Plazo. Determine para ello al menos 10 variables de peso que le permiten concluir su decisión. (30 pts)',
+      criteria: [
+        'Recomienda memoria virtual con intercambio y descarta los modelos sin intercambio.',
+        'Lista al menos 10 variables de peso.',
+        'Liga la política de reemplazo a la reutilización de páginas.',
+      ],
+      keywords: [['memoria virtual', 'intercambio'], 'reemplazo', 'variables', 'crecimiento'],
       concepts: [
         {
           id: 'memoria-virtual',
-          label: 'defender memoria virtual con intercambio',
-          terms: ['memoria virtual', 'intercambio', 'swap', 'area de intercambio', 'paginacion', 'memoria principal'],
-          praise: 'Defiendes memoria virtual: decides qué queda en memoria principal y qué va al intercambio.',
-          gap: 'Defiende memoria virtual: el problema es qué queda en memoria principal y qué va al área de intercambio.',
+          label: 'memoria virtual con intercambio',
+          terms: ['memoria virtual', 'intercambio', 'swap', 'area de intercambio', 'paginacion', 'mediano plazo'],
+          praise: 'Recomiendas memoria virtual con intercambio para el planificador de mediano plazo.',
+          gap: 'Recomienda memoria virtual con intercambio: el problema es qué queda en memoria principal y qué va al área de intercambio.',
         },
         {
-          id: 'crecimiento',
-          label: 'el porqué: datos masivos y crecimiento',
-          terms: ['datos masivos', 'crecimiento', 'volumen', 'adn', 'pandemias', 'crecen', 'bodegas de datos'],
-          praise: 'Justificas por datos masivos y crecimiento alto (ADN, pandemias, hábitos).',
-          gap: 'Justifica el porqué: ADN, pandemias y hábitos son datos masivos con crecimiento alto que no caben en bloques fijos.',
+          id: 'descarta-modelos',
+          label: 'descartar los modelos sin intercambio',
+          terms: ['particiones fijas', 'mapa de bits', 'listas ligadas', 'socios', 'buddies', 'sin intercambio'],
+          praise: 'Descartas particiones fijas, mapa de bits, listas ligadas y socios por crecimiento/desperdicio.',
+          gap: 'Descarta los modelos sin intercambio (particiones fijas, mapa de bits, listas ligadas, socios) porque los procesos crecen.',
         },
         {
-          id: 'reemplazo',
-          label: 'proponer una política de reemplazo',
-          terms: ['reemplazo', 'fifo', 'segunda oportunidad', 'reloj', 'lru', 'politica'],
-          praise: 'Propones una política de reemplazo concreta.',
-          gap: 'Propón una política de reemplazo (FIFO, segunda oportunidad/reloj, LRU) y justifícala.',
+          id: 'variables',
+          label: 'al menos 10 variables de peso',
+          terms: ['crecimiento', 'tamano de memoria', 'frecuencia de acceso', 'bit r', 'bit m', 'hora de carga', 'fallos de pagina', 'puntero', 'reutilizacion', 'area de intercambio'],
+          praise: 'Aportas varias variables de peso (crecimiento, frecuencia de acceso, bit R, bit M, fallos de página...).',
+          gap: 'Lista al menos 10 variables de peso: crecimiento, tamaño solicitado, frecuencia de acceso, bit R, bit M, hora de carga, puntero a la última reemplazada, fallos de página, tamaño del área de intercambio y reutilización.',
         },
         {
           id: 'reutilizacion',
-          label: 'elegir según la reutilización de páginas',
-          terms: ['reutiliz', 'paginas frecuentes', 'frecuencia de acceso', 'localidad', 'se repiten'],
-          praise: 'Eliges la política según si las páginas se reutilizan, no por su nombre.',
-          gap: 'La clave es la reutilización: si interesa conservar páginas frecuentes, reloj/segunda oportunidad superan a FIFO.',
+          label: 'reemplazo según la reutilización',
+          terms: ['reutiliz', 'paginas frecuentes', 'segunda oportunidad', 'reloj', 'fifo', 'localidad'],
+          praise: 'Ligas el reemplazo a la reutilización (segunda oportunidad/reloj vs FIFO).',
+          gap: 'La política de reemplazo depende de la reutilización: si B reutiliza su modelo, segunda oportunidad/reloj; si C/D traen datos nuevos, FIFO.',
         },
       ],
       contradictions: [
         {
-          terms: ['mas ram', 'comprar memoria', 'agregar ram', 'mas memoria fisica'],
-          message: 'No basta "más RAM": con datos masivos y crecimiento alto, el problema es qué queda en memoria principal y qué va al área de intercambio.',
+          terms: ['mas ram', 'comprar memoria', 'agregar ram', 'particiones fijas funcionan'],
+          message: 'No basta "más RAM" ni las particiones fijas: con procesos que crecen, la salida es memoria virtual con intercambio.',
         },
       ],
       recommendation:
-        'Defiende memoria virtual por datos masivos y crecimiento, y elige la política de reemplazo según si interesa conservar páginas frecuentes (no por su nombre).',
+        'Recomienda memoria virtual con intercambio, descarta los modelos sin intercambio y respalda con ≥10 variables de peso; cierra ligando el reemplazo a la reutilización de páginas.',
       guide:
-        'Sí aplico memoria virtual, porque hay procesos de datos masivos con crecimiento alto (ADN, pandemias, ' +
-        'hábitos) que no caben en bloques fijos: el problema no es cuánta RAM hay, sino qué queda en memoria ' +
-        'principal y qué se manda al área de intercambio. La política de reemplazo no se elige por su nombre: ' +
-        'pregunto si interesa conservar páginas usadas con frecuencia. Si sí, segunda oportunidad o reloj se ' +
-        'defienden mejor que FIFO; si cada iteración trae datos nuevos, FIFO basta y es más barata.',
+        'Recomiendo memoria virtual con intercambio. Se descartan uno a uno los modelos sin intercambio: ' +
+        'particiones fijas (mismo y varios tamaños) por crecimiento; mapa de bits por huecos inútiles y búsqueda ' +
+        'de bloques contiguos; listas ligadas porque el crecimiento vuelve lentas las búsquedas; socios por ' +
+        'desperdicio interno al redondear a potencias de 2. El problema no es el tamaño físico, sino que B, C y D ' +
+        'crecen de forma que ningún bloque fijo los contiene. Variables de peso: crecimiento del proceso, tamaño ' +
+        'de memoria solicitado, frecuencia de acceso a páginas, bit R, bit M, hora de carga de página, puntero a ' +
+        'la última página reemplazada, frecuencia de fallos de página, tamaño del área de intercambio y frecuencia ' +
+        'de reutilización de páginas entre iteraciones. Con esas dos últimas decido también el algoritmo de ' +
+        'reemplazo: si hay reutilización (B), segunda oportunidad o reloj; si no (C, D), FIFO.',
     },
     {
-      id: 'e2-modelos',
-      prompt: '¿Por qué no bastan particiones fijas, mapa de bits, listas ligadas ni el sistema de socios (buddies)?',
+      id: 'e2-q3',
+      prompt:
+        'Cual proceso cree que podría salir favorecido si decidiéramos aplicar Administración de Memoria con Particiones Fijas, de varios tamaños (20 pts)',
       criteria: [
-        'Relaciona la insuficiencia con el crecimiento de los procesos.',
-        'Explica al menos dos modelos con su limitación concreta.',
-        'Concluye que la salida es el intercambio / memoria virtual.',
+        'Descarta B, C y D por crecimiento.',
+        'Señala A como el candidato (consumo estable, bloque pequeño).',
+        'Matiza que el modelo no favorece limpiamente a nadie por el buffer de A.',
       ],
-      keywords: [['particiones fijas', 'particiones'], 'mapa de bits', 'listas ligadas', ['socios', 'buddies'], 'crecimiento'],
+      keywords: ['particiones fijas', 'crecimiento', ['proceso a', 'sensores'], 'estable'],
       concepts: [
         {
-          id: 'crecimiento-bloque',
-          label: 'el crecimiento rompe los bloques fijos',
-          terms: ['crecimiento', 'crecen', 'no caben', 'bloque fijo', 'reasign', 'particiones fijas'],
-          praise: 'Conectas la insuficiencia con el crecimiento: los bloques fijos no contienen procesos que crecen.',
-          gap: 'Explica que las particiones fijas fallan porque los procesos crecen y no caben en un bloque fijo.',
+          id: 'descarta',
+          label: 'descartar B, C y D por crecimiento',
+          terms: ['crecimiento', 'crecen', 'no caben', 'reasign', 'b c y d', 'descarto b'],
+          praise: 'Descartas B, C y D porque crecen y no caben en un bloque fijo.',
+          gap: 'Descarta B, C y D: crecen y la reasignación a un bloque mayor es cara o imposible.',
         },
         {
-          id: 'mapa-bits',
-          label: 'el mapa de bits busca bloques contiguos',
-          terms: ['mapa de bits', 'bloques contiguos', 'huecos', 'contigua'],
-          praise: 'Señalas que el mapa de bits exige bloques contiguos y deja huecos.',
-          gap: 'Agrega que el mapa de bits busca bloques contiguos y deja huecos inútiles cuando hay crecimiento.',
+          id: 'proceso-a',
+          label: 'A como candidato (estable, bloque pequeño)',
+          terms: ['proceso a', 'sensores', 'estable', 'bloque pequeno', 'consumo estable', 'favorecido'],
+          praise: 'Señalas A como el favorecido por su consumo estable y bloque pequeño.',
+          gap: 'A parece el favorecido: consumo estable y bloque pequeño que sí cabe en una partición fija.',
         },
         {
-          id: 'listas-buddies',
-          label: 'listas ligadas y socios también fallan',
-          terms: ['listas ligadas', 'busqueda lenta', 'recorrer', 'socios', 'buddies', 'potencias de 2', 'desperdicio interno'],
-          praise: 'Explicas el costo de listas ligadas (búsqueda lenta) y de socios (desperdicio por potencias de 2).',
-          gap: 'Menciona que las listas ligadas se vuelven lentas al crecer y los socios desperdician al redondear a potencias de 2.',
-        },
-        {
-          id: 'salida',
-          label: 'la salida es el intercambio / memoria virtual',
-          terms: ['intercambio', 'memoria virtual', 'swap', 'paginacion'],
-          praise: 'Concluyes que la salida es el intercambio / memoria virtual.',
-          gap: 'Cierra concluyendo que la única salida viable es el intercambio con memoria virtual.',
+          id: 'matiz',
+          label: 'el modelo no favorece limpiamente a nadie',
+          terms: ['no favorece a nadie', 'buffer', 'pellizc', 'pierde espacio', 'giro', 'no limpiamente'],
+          praise: 'Matizas: cuando B/C/D crecen pueden pellizcar el bloque de A (su buffer), así que no favorece limpio a nadie.',
+          gap: 'Matiza el giro: cuando B/C/D crecen y reasignan, pueden quitar espacio al bloque de A (que tiene un buffer activo de 450 sensores).',
         },
       ],
       contradictions: [
         {
-          terms: ['particiones fijas funcionan', 'basta con particiones', 'el mapa de bits resuelve'],
-          message: 'Esos modelos sin intercambio no resuelven el caso: el crecimiento de los procesos los rompe o los desperdicia.',
+          terms: ['favorece a todos por igual', 'favorece a b', 'favorece a c', 'favorece a d'],
+          message: 'B, C y D quedan descartados por crecimiento; el candidato es A, aunque el modelo no favorezca limpiamente a nadie.',
         },
       ],
       recommendation:
-        'Explica cada modelo con su limitación concreta (crecimiento, contigüidad, búsqueda lenta, potencias de 2) y concluye que la salida es el intercambio / memoria virtual.',
+        'Descarta B, C y D por crecimiento, señala A como candidato por su consumo estable, y matiza que su buffer de 450 sensores puede perder espacio cuando los otros crecen.',
       guide:
-        'Ninguno de esos modelos resuelve el caso porque los procesos crecen. Las particiones fijas (de mismo o ' +
-        'varios tamaños) no contienen un proceso que crece y obligan a reasignaciones caras. El mapa de bits busca ' +
-        'bloques contiguos y deja huecos inútiles al inicio. Las listas ligadas crecen, pero la búsqueda se vuelve ' +
-        'lenta al haber muchos nodos. El sistema de socios desperdicia memoria al redondear a potencias de 2. Por ' +
-        'eso la única salida viable es el intercambio con memoria virtual.',
+        'B, C y D quedan descartados por crecimiento: la reasignación y protección es una operación cara y, si ' +
+        'crecen demasiado, no pueden migrar a un bloque mayor. A parece el favorecido por consumo estable y bloque ' +
+        'pequeño. Pero hay un giro: cuando B, C o D crecen y aplican reasignación, pellizcan espacio de otros ' +
+        'bloques, y el bloque pequeño de A —que tiene un buffer activo de 450 sensores— es el candidato a perder ' +
+        'espacio. Conclusión honesta: este modelo no favorece limpiamente a nadie. Si hay que elegir uno, es A, ' +
+        'pero solo si se garantiza que su bloque no será objetivo de las reasignaciones de los otros tres.',
     },
     {
-      id: 'e2-paginas',
-      prompt: 'Si hay consultas frecuentes, ¿qué páginas conviene mantener y con qué política de reemplazo?',
+      id: 'e2-q4',
+      prompt:
+        'Analice el proceso D). En caso de que le corresponda aplicar Intercambio. Cuál es la política de reemplazo que más le favorecería, y cual es la política de reemplazo que más lo perjudicaría, Justifique su respuesta. (30 Pts)',
       criteria: [
-        'Reconoce que conviene mantener las páginas usadas con frecuencia.',
-        'Propone una política acorde (segunda oportunidad/reloj/LRU).',
-        'Descarta FIFO cuando hay reutilización.',
+        'Reconoce que D no reutiliza páginas entre iteraciones.',
+        'Favorece FIFO (barato) y justifica.',
+        'Perjudica Reloj / Segunda Oportunidad (costo sin beneficio).',
       ],
-      keywords: [['paginas frecuentes', 'frecuentes'], ['segunda oportunidad', 'reloj'], 'reutilizacion', 'fifo'],
+      keywords: ['fifo', ['reloj', 'segunda oportunidad'], 'reutiliz', 'reemplazo'],
       concepts: [
         {
-          id: 'mantener-frecuentes',
-          label: 'mantener las páginas frecuentes',
-          terms: ['paginas frecuentes', 'frecuentemente', 'reutiliz', 'conservar', 'se repiten', 'localidad'],
-          praise: 'Reconoces que conviene mantener en memoria las páginas usadas con frecuencia.',
-          gap: 'Lo central es mantener las páginas que se usan con frecuencia, porque hay reutilización.',
+          id: 'sin-reutilizacion',
+          label: 'D no reutiliza páginas',
+          terms: ['no reutiliz', 'paginas nuevas', 'cada iteracion', 'nuevo fragmento', 'datos nuevos', 'no se repiten'],
+          praise: 'Reconoces que D carga páginas nuevas cada iteración: no hay reutilización.',
+          gap: 'Parte de que D carga páginas nuevas cada vez (nuevo audio/espectrograma): no reutiliza páginas entre iteraciones.',
         },
         {
-          id: 'politica',
-          label: 'una política que proteja páginas frecuentes',
-          terms: ['segunda oportunidad', 'reloj', 'lru', 'bit r', 'bit de referencia'],
-          praise: 'Propones segunda oportunidad, reloj o LRU para proteger las páginas frecuentes.',
-          gap: 'Propón segunda oportunidad, reloj o LRU: usan el bit de referencia para proteger lo que se reutiliza.',
+          id: 'favorece-fifo',
+          label: 'FIFO lo favorece',
+          terms: ['fifo', 'mas barato', 'limpia rapido', 'favorece fifo'],
+          praise: 'Favorece FIFO: es el algoritmo más barato y aquí no hay nada que proteger.',
+          gap: 'La política que más favorece a D es FIFO: la más barata, porque no tiene sentido evaluar bits si todo cambia.',
         },
         {
-          id: 'descarta-fifo',
-          label: 'descartar FIFO cuando hay reutilización',
-          terms: ['no fifo', 'descarto fifo', 'fifo no', 'fifo saca', 'fifo es peor'],
-          praise: 'Descartas FIFO porque sacaría páginas frecuentes solo por su antigüedad.',
-          gap: 'Descarta FIFO aquí: sacaría páginas frecuentes solo por antigüedad, sin mirar si se reutilizan.',
+          id: 'perjudica-reloj',
+          label: 'Reloj / Segunda Oportunidad lo perjudican',
+          terms: ['reloj', 'segunda oportunidad', 'perjudica', 'costoso', 'bit r', 'sin beneficio'],
+          praise: 'Perjudica Reloj/Segunda Oportunidad: trabajo costoso de proteger páginas que salen igual.',
+          gap: 'La que más perjudica es Reloj (y segunda oportunidad): protege páginas frecuentes, pero en D no hay frecuentes, así que es costo sin beneficio.',
         },
       ],
       contradictions: [
         {
-          terms: ['fifo es la mejor', 'siempre fifo', 'uso fifo porque es simple'],
-          message: 'Con consultas frecuentes, FIFO es mala idea: saca páginas reutilizadas por antigüedad. Mejor segunda oportunidad o reloj.',
+          terms: ['lru lo favorece', 'reloj lo favorece', 'segunda oportunidad lo favorece'],
+          message: 'Para D, que no reutiliza páginas, los algoritmos que protegen páginas frecuentes (reloj, segunda oportunidad, LRU) son los que perjudican; el que favorece es FIFO.',
         },
       ],
       recommendation:
-        'Mantén las páginas usadas con frecuencia y defiende segunda oportunidad, reloj o LRU; descarta FIFO porque ignora la reutilización.',
+        'Parte de que D no reutiliza páginas: lo favorece FIFO (barato) y lo perjudica Reloj/Segunda Oportunidad (costo de proteger páginas que igual salen).',
       guide:
-        'Si hay consultas frecuentes, conviene mantener en memoria principal las páginas que se reutilizan con ' +
-        'frecuencia. La política acorde es segunda oportunidad o reloj (o LRU): usan el bit de referencia para ' +
-        'conservar lo que se vuelve a usar y reemplazar lo que no. Descarto FIFO en este caso, porque reemplaza ' +
-        'por antigüedad y sacaría páginas frecuentes aunque se estén usando. La decisión se justifica por la ' +
-        'reutilización, no por el nombre del algoritmo.',
+        'Cada vez que D entra a ejecución carga páginas completamente nuevas (nuevo fragmento de audio, nuevo ' +
+        'espectrograma, nuevos vectores): no hay reutilización de páginas entre iteraciones. La política que más ' +
+        'lo favorece es FIFO, el algoritmo más barato, que limpia todo rápido; no tiene sentido invertir en ' +
+        'evaluar bits R y M si en la próxima iteración todo cambia igual. La que más lo perjudica es Reloj (y ' +
+        'segunda oportunidad): están diseñadas para proteger páginas frecuentes, y en D ese análisis es trabajo ' +
+        'costoso sin beneficio, porque las páginas "protegidas" salen igual; Reloj es el peor porque recorre ' +
+        'circularmente todas las páginas. La variable que manda no es el nombre del algoritmo, sino si el proceso ' +
+        'reutiliza páginas: para D, no.',
     },
   ],
 };
@@ -519,7 +638,7 @@ export const caseModules = [
     id: 'examenes',
     name: 'Práctica de examen',
     description:
-      'Exámenes reales del curso resueltos de forma interactiva: caracteriza la tabla de procesos y responde con la lógica de Calidad.',
+      'Los dos exámenes reales del curso, resueltos de forma interactiva: caracteriza la tabla de procesos y responde con las preguntas exactas y la lógica de Calidad.',
     cases: [examen1, examen2],
   },
 ];

@@ -30,9 +30,9 @@ export const uxPrinciples = [
 export const examPhotoSets = [
   {
     title: 'Primer examen',
-    subtitle: 'Caso ordeño y potrero — procesos A a H',
+    subtitle: 'Database Server — Módulo Lechero (procesos A–H)',
     context:
-      'Fotografías oficiales del primer examen. El caso modela una finca lechera automatizada: peso de leche por pezón, siete dispositivos de análisis de leche, IA de tratamiento por anomalías, agujas de cepo, ubicación de pezoneras por infrarrojo, sensor de flujo, suministro de concentrado y control de acceso al potrero con sensores de humedad, temperatura y brillo solar.',
+      'Fotografías oficiales del primer examen. "Un Database Server alberga una aplicación Módulo Lechero para 5 fincas": registro de leche por pezón, 7 dispositivos de análisis de leche, IA que decide aptitud y tratamiento, agujas de acceso a cepos, ubicación de pezoneras por infrarrojo, sensor de flujo y secado, suministro de concentrado y control de acceso al potrero con sensores de humedad, temperatura y brillo solar.',
     images: [
       {
         src: '/exam-images/primer-examen-caso.webp',
@@ -40,41 +40,41 @@ export const examPhotoSets = [
       },
       {
         src: '/exam-images/primer-examen-preguntas.webp',
-        label: 'Preguntas: planificación de CPU, sección crítica y archivos por dispositivo',
+        label: 'Preguntas: planificación de CPU, ciclo de ejecución, sección crítica y Round Robin',
       },
     ],
     prompts: [
-      'Caracterizar cada proceso por ráfaga, E/S, importancia y tiempo real antes de elegir el algoritmo de CPU.',
-      'Justificar el algoritmo de planificación con el BCP y la tabla de procesos.',
-      'Identificar qué procesos tienen riesgo de sección crítica por escritura compartida.',
-      'Caracterizar el archivo que construye cada dispositivo, no el proceso completo.',
+      '¿Explique cuál es el algoritmo de planificación de CPU correcto para administrar este Database Server? Sustente su respuesta en la definición y comportamiento de al menos 20 variables del Bloque de Control de Proceso y 10 de la Tabla de Procesos (35 Pts)',
+      'Escoja un proceso y describa paso a paso, un recorrido completo por el ciclo de ejecución, indicando que hace en cada estado y las variables de Bloque de Control de Proceso que escribe. (25 Pts)',
+      '¿Cabría la posibilidad de incurrir en alguna sección crítica? Explique las razones del porque se daría o del porque no se daría. (20 pts)',
+      'Explique en que condiciones la aplicación del algoritmo Round Robbin sería la peor elección para este contexto de ejecución. (20 Pts)',
     ],
     defense:
       'No digo que todo es tiempo real solo porque el caso suena automático. La lectura de sensores consume E/S, no CPU; la IA de tratamiento sí consume CPU y gana importancia por la alerta. Con cientos de vacas compitiendo, casi nada se defiende como tiempo real estricto.',
   },
   {
     title: 'Segundo examen',
-    subtitle: 'Caso salud y datos masivos — ADN, bebés y perfiles',
+    subtitle: 'Data Center Hospitalario — MediCore (procesos A–D)',
     context:
-      'Fotografías oficiales del segundo examen. El caso combina decodificación de ADN, monitoreo de signos vitales de bebés, perfiles de redes sociales, web services clínicos, integración con Hacienda y análisis de hábitos alimenticios. El foco está en planificación de CPU, administración de memoria y memoria virtual.',
+      'Fotografías oficiales del segundo examen. "Un Data Center Hospitalario alberga una aplicación denominada MediCore", usada por tres hospitales y cinco clínicas: sensores biomédicos en ~450 pacientes, IA de riesgo cardiorrespiratorio y cerebrovascular, análisis de imágenes de cultivos y análisis de audio de dolor en UCI. El foco está en planificación de CPU, administración de memoria y política de reemplazo.',
     images: [
       {
         src: '/exam-images/segundo-examen-caso.webp',
-        label: 'Enunciado base del caso de salud y datos masivos',
+        label: 'Enunciado del Data Center Hospitalario MediCore (procesos A–D)',
       },
       {
         src: '/exam-images/segundo-examen-preguntas.webp',
-        label: 'Preguntas: CPU, administración de memoria y política de reemplazo',
+        label: 'Preguntas: CPU, administración de memoria, particiones fijas y reemplazo del proceso D',
       },
     ],
     prompts: [
-      'Definir el algoritmo de planificación de CPU usando variables del BCP y la tabla de procesos.',
-      'Decidir si aplica memoria virtual y por qué no bastan particiones fijas, mapa de bits, listas ligadas ni buddies.',
-      'Recomendar una política de reemplazo defendible según si interesa mantener páginas frecuentes.',
-      'Determinar qué procesos presionan más memoria por volumen y crecimiento.',
+      '¿Explique cuál es el algoritmo de planificación de CPU correcto para administrar este Data Center? Sustente su respuesta en la definición y comportamiento de al menos 5 variables prioritarias del Bloque de Control de Proceso y 5 de la Tabla de Procesos (20 Pts)',
+      'Cual es la política de Administración de Memoria que recomienda debería implementar el Planificador de Mediano Plazo. Determine para ello al menos 10 variables de peso que le permiten concluir su decisión. (30 pts)',
+      'Cual proceso cree que podría salir favorecido si decidiéramos aplicar Administración de Memoria con Particiones Fijas, de varios tamaños (20 pts)',
+      'Analice el proceso D). En caso de que le corresponda aplicar Intercambio. Cuál es la política de reemplazo que más le favorecería, y cual es la política de reemplazo que más lo perjudicaría, Justifique su respuesta. (30 Pts)',
     ],
     defense:
-      'La memoria virtual se defiende porque hay datos masivos y crecimiento alto (ADN, pandemias, hábitos). La política de reemplazo no se elige por nombre: si me interesa conservar páginas frecuentes, segunda oportunidad o reloj se defienden mejor que FIFO.',
+      'La respuesta fuerte separa A (ráfaga mínima, E/S altísima) de B, C y D (ráfaga alta). Para memoria, la salida es memoria virtual con intercambio; la política de reemplazo se decide por la reutilización de páginas: si se reutilizan, segunda oportunidad o reloj; si no, FIFO.',
   },
 ];
 
@@ -551,7 +551,7 @@ export const medicoreCase = {
     {
       area: 'CPU',
       title: 'Pregunta 1 — Algoritmo de planificación de CPU',
-      ask: 'Justifique el algoritmo de planificación correcto con variables del BCP y de la tabla de procesos.',
+      ask: '¿Explique cuál es el algoritmo de planificación de CPU correcto para administrar este Data Center? Sustente su respuesta en la definición y comportamiento de al menos 5 variables prioritarias del Bloque de Control de Proceso y 5 de la Tabla de Procesos (20 Pts)',
       answer: [
         'Decir solo "Round Robin" mete a todos en la misma bolsa, y A es muy distinto a B, C y D. La respuesta completa es colas múltiples con dos colas, porque permite aplicar algoritmos distintos a comportamientos distintos.',
         'Cola 1 — Proceso A (ráfaga mínima, E/S altísima): RR con quantum bajo (cede el CPU rápido y se va a E/S) o SJF por pila de código (A tiene poquísimas instrucciones: leer el sensor y registrar). Cualquiera se defiende según el criterio que enfatices.',
@@ -564,7 +564,7 @@ export const medicoreCase = {
     {
       area: 'Memoria',
       title: 'Pregunta 2 — Política de administración de memoria',
-      ask: 'Recomiende la política del planificador de mediano plazo con al menos diez variables de peso.',
+      ask: 'Cual es la política de Administración de Memoria que recomienda debería implementar el Planificador de Mediano Plazo. Determine para ello al menos 10 variables de peso que le permiten concluir su decisión. (30 pts)',
       answer: [
         'Se descartan uno a uno los modelos sin intercambio: particiones fijas (mismo y varios tamaños) por crecimiento; mapa de bits por huecos inútiles al inicio y crecimiento desproporcionado; listas ligadas porque el crecimiento vuelve lentas las búsquedas; socios por desperdicio interno al redondear a potencias de 2.',
         'La única política viable es memoria virtual con intercambio: el problema no es el tamaño físico, sino que B, C y D crecen de forma que ningún bloque fijo los contiene.',
@@ -577,7 +577,7 @@ export const medicoreCase = {
     {
       area: 'Memoria',
       title: 'Pregunta 3 — ¿Quién se favorece con particiones fijas de varios tamaños?',
-      ask: 'Determine qué proceso se favorece y por qué los demás quedan descartados.',
+      ask: 'Cual proceso cree que podría salir favorecido si decidiéramos aplicar Administración de Memoria con Particiones Fijas, de varios tamaños (20 pts)',
       answer: [
         'B, C y D quedan descartados por crecimiento: la reasignación y protección es una operación atómica cara y, si crecen demasiado, no pueden migrar a un bloque mayor.',
         'A parece el favorecido por consumo estable y bloque pequeño. Pero hay un giro: cuando B, C o D crecen y aplican reasignación, pellizcan espacio de otros bloques, y el bloque pequeño de A —que tiene un buffer activo de 450 sensores— es el candidato a perder espacio.',
@@ -589,7 +589,7 @@ export const medicoreCase = {
     {
       area: 'Memoria',
       title: 'Pregunta 4 — Proceso D con intercambio: reemplazo que favorece y que perjudica',
-      ask: 'Indique la política de reemplazo que más favorece y la que más perjudica al proceso D.',
+      ask: 'Analice el proceso D). En caso de que le corresponda aplicar Intercambio. Cuál es la política de reemplazo que más le favorecería, y cual es la política de reemplazo que más lo perjudicaría, Justifique su respuesta. (30 Pts)',
       answer: [
         'Cada vez que D entra a ejecución carga páginas completamente nuevas (nuevo fragmento de audio, nuevo espectrograma, nuevos vectores). No hay reutilización de páginas entre iteraciones.',
         'Favorece: FIFO. Es el algoritmo más barato; limpia todo rápido. No tiene sentido invertir en evaluar bits R y M si en la próxima iteración todo cambia igual.',
@@ -647,6 +647,91 @@ export const medicoreCase = {
       ],
       defense:
         'La pregunta no es si distribuir, sino qué: con 50 000 imágenes independientes, distribuyo la data. Si la rutina de IA fuera muy pesada por sí sola, podría además distribuir el código.',
+    },
+  ],
+};
+
+// Caso Lechería resuelto = PRIMER EXAMEN (Database Server, Módulo Lechero).
+// Mismo formato que medicoreCase: caracterización por columnas + las preguntas
+// EXACTAS del examen con su respuesta defendida con la lógica de Calidad.
+export const lecheriaCase = {
+  intro:
+    'Un Database Server alberga una aplicación Módulo Lechero para 5 fincas con ocho procesos (A–H): registro de leche por pezón, 7 dispositivos de análisis de leche, IA que decide aptitud y tratamiento, agujas de acceso a cepos, ubicación de pezoneras por infrarrojo, sensor de flujo y secado, suministro de concentrado y control de acceso al potrero. Primero se caracteriza cada proceso; recién después se decide CPU, ciclo de ejecución, sección crítica o Round Robin.',
+  processes: [
+    { id: 'A', name: 'Registro de leche por pezón', detail: 'Censor que cuantifica el peso de leche por pezón por vaca. Fincas de 300 vacas, dos ordeños diarios (3–4 a.m. y 4–5 p.m.).' },
+    { id: 'B', name: '7 dispositivos de análisis de leche', detail: 'Administra 7 dispositivos que analizan grasa emulsionada, cadenas de azúcares, sales, proteínas, vitaminas, galactosa y PH.' },
+    { id: 'C', name: 'IA de aptitud y tratamiento', detail: 'IA que decide de inmediato si la leche es apta (tanque general) o se descarta/redirige, e indica el tratamiento al bovino.' },
+    { id: 'D', name: 'Agujas de acceso a cepos', detail: 'Controla un sistema de agujas para permitir o cerrar el acceso a los cepos de ordeño.' },
+    { id: 'E', name: 'Pezoneras por infrarrojo', detail: 'Determina por rayos infrarrojos la ubicación precisa de las pezoneras en la ubre.' },
+    { id: 'F', name: 'Sensor de flujo y secado', detail: 'Por censor de flujo detecta el secado de la ubre y el retiro de chuponeras cuando ya no fluye leche.' },
+    { id: 'G', name: 'Suministro de concentrado', detail: 'Según la producción progresiva de leche durante el ordeño, suministra automáticamente el concentrado.' },
+    { id: 'H', name: 'Acceso a potrero', detail: 'Determina las vacas que ingresan al potrero con censores de humedad, temperatura y brillo solar al salir de la sala de ordeño.' },
+  ],
+  columns: ['Tiempo real', 'Ráfaga', 'E/S', 'Importancia', 'Lectura/escritura', 'Sección crítica'],
+  table: {
+    A: ['No', 'Baja', '+++', 'Media', 'Escribe registro', 'Posible (BD/histórico)'],
+    B: ['No', 'Media', 'Alta', 'Media-alta', 'Escribe resultados', 'Posible (BD)'],
+    C: ['No estricto', 'Alta', 'Media', 'Alta (decide y alerta)', 'Lee y escribe (tanque)', 'Sí (tanque general)'],
+    D: ['No estricto', 'Baja', 'Media', 'Media (seguridad)', 'Escribe estado del cepo', 'Baja'],
+    E: ['No estricto', 'Media', 'Alta', 'Media', 'Escribe posición', 'Baja'],
+    F: ['No estricto', 'Baja', '+++', 'Media (retiro)', 'Escribe estado', 'Baja'],
+    G: ['No estricto', 'Baja', 'Media', 'Media', 'Lee producción, escribe dosis', 'Posible (registro)'],
+    H: ['No', 'Baja', 'Alta', 'Baja-media', 'Escribe conteo', 'Baja'],
+  },
+  tableNote:
+    'Calidad descarta tiempo real estricto en todos: con 300 vacas por finca, dos ordeños y 5 fincas, los procesos compiten por la CPU. El riesgo de sección crítica se concentra donde se escribe un recurso compartido —el tanque general o la base de datos del Database Server— sobre todo en C (decide el tanque) y en A, B y G (escriben registros comunes).',
+  questions: [
+    {
+      area: 'CPU',
+      title: 'Pregunta 1 — Algoritmo de planificación de CPU',
+      ask: '¿Explique cuál es el algoritmo de planificación de CPU correcto para administrar este Database Server? Sustente su respuesta en la definición y comportamiento de al menos 20 variables del Bloque de Control de Proceso y 10 de la Tabla de Procesos (35 Pts)',
+      answer: [
+        'Primero caracterizo: las lecturas de sensores (A, E, F, H) tienen ráfaga baja y mucha E/S; la IA (C) consume CPU y gana importancia por la alerta y la decisión del tanque.',
+        'La respuesta correcta son colas múltiples / prioridades: una cola para lecturas cortas con mucha E/S y otra para la IA y procesos de cálculo, con prioridad justificada por impacto.',
+        'Se descarta FCFS puro porque un proceso largo atrasaría a los demás, y se descarta la apropiatividad de tiempo real estricto porque hay cientos de instancias compitiendo.',
+        'Se sustenta en variables del BCP (estado, contador de programa, registros, prioridad, info de planificación, info de E/S, punteros de memoria, contabilidad) y de la Tabla de Procesos.',
+      ],
+      defense:
+        'No digo que todo es tiempo real porque el módulo es automático. La variable que manda es la ráfaga y la E/S: separo lecturas cortas de la IA y sustento con el BCP.',
+    },
+    {
+      area: 'Ciclo de ejecución',
+      title: 'Pregunta 2 — Recorrido por el ciclo de ejecución',
+      ask: 'Escoja un proceso y describa paso a paso, un recorrido completo por el ciclo de ejecución, indicando que hace en cada estado y las variables de Bloque de Control de Proceso que escribe. (25 Pts)',
+      answer: [
+        'Escojo el proceso A (registro de leche). Nuevo: el SO lo admite y crea su BCP (PID, estado = nuevo, punteros de memoria).',
+        'Listo: entra a la cola de listos (estado = listo, info de planificación y prioridad). Ejecución: el planificador lo despacha (estado = ejecución; carga PC y registros; al desalojarlo los guarda en el BCP).',
+        'Bloqueado: al pedir la lectura del censor de peso queda en espera de E/S (estado = bloqueado, info de E/S). Listo otra vez: terminada la E/S vuelve a la cola.',
+        'Terminado: al cerrar el registro libera recursos (estado = terminado, contabilidad de CPU). En cada transición se escriben estado, PC, registros, info de planificación/E/S y contabilidad.',
+      ],
+      defense:
+        'El recorrido se hace sobre UN proceso y se nombra, en cada estado, exactamente qué variable del BCP se escribe.',
+    },
+    {
+      area: 'Sección crítica',
+      title: 'Pregunta 3 — ¿Cabría sección crítica?',
+      ask: '¿Cabría la posibilidad de incurrir en alguna sección crítica? Explique las razones del porque se daría o del porque no se daría. (20 pts)',
+      answer: [
+        'Sí cabe, pero no en todos lados. Se daría donde varios procesos escriben un recurso compartido a la vez.',
+        'La IA (C) que decide a qué tanque va la leche, junto con el registro que actualiza el tanque general o la base de datos del Database Server, pueden chocar si escriben en paralelo; igual el suministro de concentrado (G) sobre un registro común.',
+        'Ahí se necesita exclusión mutua (semáforo o candado) que serialice la escritura.',
+        'No se daría en los procesos que solo leen su propio censor y escriben su propio archivo, porque no comparten el recurso.',
+      ],
+      defense:
+        'No basta decir sí o no: muestro dónde se comparte la escritura (tanque general, base de datos) y dónde no, y propongo exclusión mutua solo donde aplica.',
+    },
+    {
+      area: 'Round Robin',
+      title: 'Pregunta 4 — Cuándo Round Robin es la peor elección',
+      ask: 'Explique en que condiciones la aplicación del algoritmo Round Robbin sería la peor elección para este contexto de ejecución. (20 Pts)',
+      answer: [
+        'RR es la peor opción cuando las ráfagas son muy desiguales y hay mucha E/S, como aquí.',
+        'El quantum corta los procesos largos (la IA) en muchos trozos y multiplica el cambio de contexto, gastando CPU en sobrecarga; los de lectura corta ceden el CPU enseguida por E/S y no necesitan turnos forzados.',
+        'RR reparte por igual e ignora la prioridad: un proceso crítico como la alerta de la IA esperaría su turno detrás de procesos sin importancia.',
+        'Si un proceso retiene un recurso y se le acaba el quantum, lo conserva mientras espera, agravando posibles bloqueos.',
+      ],
+      defense:
+        'La pregunta pide cuándo RR es la PEOR opción: lo justifico por el costo del quantum, las ráfagas desiguales y que ignora la criticidad.',
     },
   ],
 };

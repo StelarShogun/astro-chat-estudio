@@ -14,7 +14,12 @@ const tablesKey = (id) => `calidad-os-case-${id}-tables-v2`;
 const answersKey = (id) => `calidad-os-case-${id}-answers-v2`;
 
 function initTables(activeCase) {
-  return Object.fromEntries(activeCase.tables.map((table) => [table.id, table.rows.map((row) => ({ ...row }))]));
+  return Object.fromEntries(
+    activeCase.tables.map((table) => [
+      table.id,
+      { columns: table.columns.map((column) => ({ ...column })), rows: table.rows.map((row) => ({ ...row })) },
+    ]),
+  );
 }
 
 function loadTables(activeCase) {
@@ -24,7 +29,10 @@ function loadTables(activeCase) {
     if (raw) {
       const parsed = JSON.parse(raw);
       for (const table of activeCase.tables) {
-        if (Array.isArray(parsed[table.id])) base[table.id] = parsed[table.id];
+        const saved = parsed[table.id];
+        if (saved && Array.isArray(saved.columns) && Array.isArray(saved.rows)) {
+          base[table.id] = { columns: saved.columns, rows: saved.rows };
+        }
       }
     }
   } catch {
@@ -53,10 +61,11 @@ function buildExport(activeCase, tables, answers, feedbacks) {
   lines.push('');
   lines.push('## Tablas');
   for (const table of activeCase.tables) {
+    const state = tables[table.id] || { columns: table.columns, rows: [] };
     lines.push(`### ${table.name}`);
-    lines.push(table.columns.map((column) => column.label).join(' | '));
-    for (const row of tables[table.id] || []) {
-      lines.push(table.columns.map((column) => row[column.key] ?? '').join(' | '));
+    lines.push(state.columns.map((column) => column.label).join(' | '));
+    for (const row of state.rows) {
+      lines.push(state.columns.map((column) => row[column.key] ?? '').join(' | '));
     }
     lines.push('');
   }
@@ -150,7 +159,11 @@ function CaseContent({ activeCase }) {
   }, [answers, loaded, activeCase.id]);
 
   const setTableRows = (tableId, rows) => {
-    setTables((prev) => ({ ...prev, [tableId]: rows }));
+    setTables((prev) => ({ ...prev, [tableId]: { ...prev[tableId], rows } }));
+  };
+
+  const setTableColumns = (tableId, columns) => {
+    setTables((prev) => ({ ...prev, [tableId]: { ...prev[tableId], columns } }));
   };
 
   const setAnswer = (questionId, text) => {
@@ -286,8 +299,10 @@ function CaseContent({ activeCase }) {
           <EditableTable
             key={table.id}
             table={table}
-            rows={tables[table.id] || []}
-            onChange={(rows) => setTableRows(table.id, rows)}
+            columns={tables[table.id]?.columns || table.columns}
+            rows={tables[table.id]?.rows || []}
+            onColumnsChange={(columns) => setTableColumns(table.id, columns)}
+            onRowsChange={(rows) => setTableRows(table.id, rows)}
           />
         ))}
       </div>

@@ -1,0 +1,73 @@
+---
+import { lecheriaCase } from '../data/course-content';
+import Icon from './Icon.astro';
+const { intro, processes, columns, table, tableNote, questions } = lecheriaCase;
+---
+
+<section class="stack">
+  <div class="section-heading">
+    <p class="eyebrow"><Icon name="examen" size={15} /> Caso resuelto · primer examen</p>
+    <h2>Caso Lechería, caracterizado y defendido como Calidad.</h2>
+  </div>
+
+  <article class="wide-card">
+    <p class="lead">{intro}</p>
+    <div class="rule-grid">
+      {processes.map((process) => (
+        <article>
+          <h3>{process.id} — {process.name}</h3>
+          <p>{process.detail}</p>
+        </article>
+      ))}
+    </div>
+  </article>
+
+  <div class="mini-heading">
+    <span><Icon name="notas" size={14} /> Pizarra</span>
+    <strong>Tabla de caracterización</strong>
+  </div>
+  <div class="markdown-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Proceso</th>
+          {columns.map((column) => (
+            <th>{column}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {processes.map((process) => (
+          <tr>
+            <th scope="row">{process.id}</th>
+            {table[process.id].map((value) => (
+              <td>{value}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <blockquote>{tableNote}</blockquote>
+
+  <div class="mini-heading">
+    <span><Icon name="preguntas" size={14} /> Preguntas del examen</span>
+    <strong>{questions.length} con defensa de examen</strong>
+  </div>
+
+  <div class="medicore-questions">
+    {questions.map((question) => (
+      <article class="medicore-card">
+        <span class="medicore-area">{question.area}</span>
+        <h3>{question.title}</h3>
+        <p class="medicore-ask">{question.ask}</p>
+        <ul>
+          {question.answer.map((point) => (
+            <li>{point}</li>
+          ))}
+        </ul>
+        <blockquote>{question.defense}</blockquote>
+      </article>
+    ))}
+  </div>
+</section>

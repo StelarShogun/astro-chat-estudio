@@ -5,6 +5,7 @@ import Questions from '../components/Questions.astro';
 import Exams from '../components/Exams.astro';
 import Theory from '../components/Theory.astro';
 import MediCore from '../components/MediCore.astro';
+import Lecheria from '../components/Lecheria.astro';
 import Tanenbaum from '../components/Tanenbaum.astro';
 import DocumentReader from '../components/DocumentReader.jsx';
 import CaseSolver from '../components/CaseSolver.jsx';
@@ -19,7 +20,8 @@ const sections = [
   { id: 'obsidian', label: 'Notas', icon: 'notas', hint: 'Notas del curso' },
   { id: 'preguntas', label: 'Preguntas', icon: 'preguntas', hint: 'Banco de preguntas' },
   { id: 'examenes', label: 'Exámenes', icon: 'examenes', hint: 'Fotos de los exámenes' },
-  { id: 'medicore', label: 'Caso MediCore', icon: 'medicore', hint: 'Caso resuelto' },
+  { id: 'medicore', label: 'Caso MediCore', icon: 'medicore', hint: 'Examen 2 resuelto' },
+  { id: 'lecheria', label: 'Caso Lechería', icon: 'examen', hint: 'Examen 1 resuelto' },
   { id: 'teoria', label: 'Teoría guía', icon: 'teoria', hint: 'Resumen por tema' },
   { id: 'tanenbaum', label: 'Tanenbaum', icon: 'libro', hint: 'Libro por capítulo' },
 ];
@@ -60,7 +62,7 @@ const sections = [
               <strong>{section.label}</strong>
               <small>{section.hint}</small>
             </span>
-            <span class="nav-key">{index === 9 ? '0' : index + 1}</span>
+            <span class="nav-key">{index < 9 ? index + 1 : index === 9 ? '0' : ''}</span>
           </button>
         ))}
       </nav>
@@ -110,6 +112,9 @@ const sections = [
       </div>
       <div class="section-panel" data-section="medicore">
         <MediCore />
+      </div>
+      <div class="section-panel" data-section="lecheria">
+        <Lecheria />
       </div>
       <div class="section-panel" data-section="teoria">
         <Theory />

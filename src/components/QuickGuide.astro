@@ -1,11 +1,12 @@
 ---
 import { methodRules, oralTemplate } from '../data/course-content';
+import Icon from './Icon.astro';
 ---
 
 <section class="screen-grid">
   <article class="wide-card">
     <div class="section-heading">
-      <p class="eyebrow">Regla principal</p>
+      <p class="eyebrow"><Icon name="metodo" size={15} /> Regla principal</p>
       <h2>Primero caracterizo el caso.</h2>
     </div>
     <p class="lead">
@@ -24,7 +25,7 @@ import { methodRules, oralTemplate } from '../data/course-content';
   </article>
 
   <article class="template-card">
-    <p class="eyebrow">Frases de defensa</p>
+    <p class="eyebrow"><Icon name="resolver" size={15} /> Frases de defensa</p>
     <h2>Plantilla oral</h2>
     <ol>
       {oralTemplate.map((step) => (

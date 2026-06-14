@@ -1,46 +1,20 @@
-import { useEffect, useState } from 'react';
-import { evaluateAnswer } from '../lib/caseEvaluator.js';
+import { useState } from 'react';
 import FeedbackPanel from './FeedbackPanel.jsx';
 
-// Una pregunta abierta del caso: enunciado, respuesta editable, feedback
-// automático (evaluador local) y opción de mejorar y re-evaluar.
-// La respuesta se guarda en localStorage por caso + pregunta.
+// Una pregunta abierta del caso (controlada por CaseViewer): enunciado,
+// respuesta editable, feedback automático y opción de ver la respuesta guía.
+// Atajo: Ctrl/Cmd + Enter evalúa sin soltar el teclado.
 
-function storageKey(caseId, questionId) {
-  return `calidad-os-case-${caseId}-answer-${questionId}`;
-}
-
-export default function QuestionAnswer({ caseId, question, index }) {
-  const [text, setText] = useState('');
-  const [feedback, setFeedback] = useState(null);
+export default function QuestionAnswer({ question, index, text, feedback, onTextChange, onEvaluate }) {
   const [showGuide, setShowGuide] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(storageKey(caseId, question.id));
-      if (saved != null) setText(saved);
-    } catch {
-      // Ignorar.
-    }
-    setLoaded(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [caseId, question.id]);
-
-  useEffect(() => {
-    if (!loaded) return;
-    try {
-      localStorage.setItem(storageKey(caseId, question.id), text);
-    } catch {
-      // Ignorar.
-    }
-  }, [text, loaded, caseId, question.id]);
-
-  const evaluate = () => {
-    setFeedback(evaluateAnswer(text, question));
-  };
-
   const hasFeedback = feedback != null;
+
+  const handleKeyDown = (event) => {
+    if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+      event.preventDefault();
+      onEvaluate();
+    }
+  };
 
   return (
     <article className="qa-card">
@@ -64,12 +38,13 @@ export default function QuestionAnswer({ caseId, question, index }) {
         className="qa-textarea"
         rows={5}
         value={text}
-        placeholder="Escribe aquí tu respuesta. Relaciónala con las tablas del caso y justifica como en examen."
-        onChange={(event) => setText(event.target.value)}
+        placeholder="Escribe aquí tu respuesta. Relaciónala con las tablas del caso y justifica como en examen. (Ctrl + Enter para evaluar)"
+        onChange={(event) => onTextChange(event.target.value)}
+        onKeyDown={handleKeyDown}
       />
 
       <div className="qa-actions">
-        <button type="button" className="doc-action" onClick={evaluate}>
+        <button type="button" className="doc-action" onClick={onEvaluate}>
           {hasFeedback ? 'Mejorar y volver a evaluar' : 'Evaluar respuesta'}
         </button>
         {hasFeedback && (

@@ -10,6 +10,135 @@
 //
 // Para agregar otro caso, añade un objeto al arreglo `cases` del módulo
 // correspondiente (o crea un módulo nuevo). No hace falta tocar componentes.
+//
+// Un caso puede declarar `consistency(tables)`: recibe el estado EDITADO de las
+// tablas ({ idTabla: filas }) y devuelve una lista de hallazgos en vivo
+// [{ level: 'error' | 'warn', message }]. El panel de diagnóstico se actualiza
+// conforme el estudiante corrige las tablas.
+
+function trimv(value) {
+  return (value ?? '').toString().trim();
+}
+
+// Valores (no vacíos) que aparecen más de una vez en una columna.
+function duplicateValues(rows, key) {
+  const counts = new Map();
+  for (const row of rows) {
+    const value = trimv(row[key]);
+    if (!value) continue;
+    counts.set(value, (counts.get(value) || 0) + 1);
+  }
+  return [...counts.entries()].filter(([, count]) => count > 1).map(([value]) => value);
+}
+
+// Conjunto de valores (no vacíos) de una columna.
+function valueSet(rows, key) {
+  return new Set(rows.map((row) => trimv(row[key])).filter(Boolean));
+}
+
+// Diagnóstico de consistencia del caso de base de datos lechera.
+// Detecta justo los problemas que el mal diseño provoca: por eso, al normalizar
+// las tablas y unificar la escritura, los hallazgos van desapareciendo.
+function lecheroConsistency(tables) {
+  const issues = [];
+  const productores = tables.productores || [];
+  const fincas = tables.fincas || [];
+  const animales = tables.animales || [];
+  const produccion = tables.produccion || [];
+  const usuarios = tables.usuarios || [];
+
+  // 1. Claves primarias duplicadas.
+  const pkChecks = [
+    ['Productores', productores, 'id_productor'],
+    ['Fincas', fincas, 'id_finca'],
+    ['Animales', animales, 'id_animal'],
+    ['Producción diaria', produccion, 'id_registro'],
+    ['Usuarios', usuarios, 'id_usuario'],
+  ];
+  for (const [name, rows, key] of pkChecks) {
+    for (const dup of duplicateValues(rows, key)) {
+      issues.push({
+        level: 'error',
+        message: `En ${name}, la clave primaria ${key}="${dup}" está repetida: cada fila debe tener un identificador único.`,
+      });
+    }
+  }
+
+  // 2. Referencias por nombre que no calzan (deberían ser llaves foráneas).
+  const productorNames = valueSet(productores, 'nombre');
+  for (const finca of fincas) {
+    const ref = trimv(finca.nombre_productor);
+    if (ref && !productorNames.has(ref)) {
+      issues.push({
+        level: 'error',
+        message: `La finca "${trimv(finca.nombre_finca) || finca.id_finca}" referencia al productor "${ref}", que no aparece igual en Productores. Pasa por guardar el nombre en vez de una llave foránea.`,
+      });
+    }
+  }
+  const fincaNames = valueSet(fincas, 'nombre_finca');
+  for (const animal of animales) {
+    const ref = trimv(animal.nombre_finca);
+    if (ref && !fincaNames.has(ref)) {
+      issues.push({
+        level: 'error',
+        message: `El animal "${trimv(animal.nombre_animal) || animal.id_animal}" referencia la finca "${ref}", que no coincide con ninguna en Fincas.`,
+      });
+    }
+  }
+  const animalNames = valueSet(animales, 'nombre_animal');
+  for (const registro of produccion) {
+    const animalRef = trimv(registro.nombre_animal);
+    if (animalRef && !animalNames.has(animalRef)) {
+      issues.push({
+        level: 'error',
+        message: `El registro ${trimv(registro.id_registro)} referencia al animal "${animalRef}", que no existe en Animales.`,
+      });
+    }
+    const productorRef = trimv(registro.nombre_productor);
+    if (productorRef && !productorNames.has(productorRef)) {
+      issues.push({
+        level: 'error',
+        message: `El registro ${trimv(registro.id_registro)} referencia al productor "${productorRef}", que no aparece igual en Productores.`,
+      });
+    }
+  }
+
+  // 3. Litros inválidos (texto o negativos).
+  for (const registro of produccion) {
+    const raw = trimv(registro.litros);
+    if (!raw) continue;
+    const num = Number(raw.replace(',', '.'));
+    if (Number.isNaN(num)) {
+      issues.push({
+        level: 'warn',
+        message: `En Producción, el registro ${trimv(registro.id_registro)} guarda litros="${raw}", que no es un número limpio (coma o texto).`,
+      });
+    } else if (num < 0) {
+      issues.push({
+        level: 'error',
+        message: `En Producción, el registro ${trimv(registro.id_registro)} tiene litros negativos (${raw}). La producción no puede ser negativa.`,
+      });
+    }
+  }
+
+  // 4. Correos duplicados.
+  for (const dup of duplicateValues(usuarios, 'correo')) {
+    issues.push({
+      level: 'warn',
+      message: `El correo "${dup}" se repite en Usuarios: debería ser único por usuario.`,
+    });
+  }
+
+  // 5. Contraseñas en texto plano.
+  if (usuarios.some((user) => trimv(user.contrasena))) {
+    issues.push({
+      level: 'warn',
+      message: 'Las contraseñas se ven en texto plano en Usuarios. Deberían guardarse como hash, nunca legibles.',
+    });
+  }
+
+  return issues;
+}
 
 const databaseServerLechero = {
   id: 'db-server-lechero',
@@ -407,6 +536,229 @@ const databaseServerLechero = {
         'todo el módulo lechero, no solo de una consulta aislada.',
     },
   ],
+  consistency: lecheroConsistency,
+};
+
+// Segundo caso del mismo módulo: rendimiento de consultas y reportes.
+const reportesLechero = {
+  id: 'reportes-lechero',
+  title: 'Consultas y reportes del módulo lechero',
+  badge: 'Caso de rendimiento',
+  context:
+    'El módulo lechero genera reportes diarios y mensuales de producción para la cooperativa. ' +
+    'Con el tiempo, la tabla de producción creció a cientos de miles de filas y las consultas que ' +
+    'antes eran instantáneas ahora tardan varios segundos.',
+  problem:
+    'Las consultas de reportes hacen recorridos completos de tabla porque casi no hay índices, y se ' +
+    'creó una tabla de reporte "aplanada" (denormalizada) que a veces queda desactualizada respecto a ' +
+    'la producción real. Hay que decidir qué indexar y cómo manejar el reporte sin sacrificar la consistencia.',
+  reference: [
+    {
+      title: 'Índice',
+      detail:
+        'Estructura auxiliar (por ejemplo un árbol B) que evita recorrer toda la tabla: acelera búsquedas, ' +
+        'filtros y joins por las columnas indexadas, a costa de algo más de espacio y de escritura.',
+    },
+    {
+      title: 'Escaneo completo (full scan)',
+      detail:
+        'Cuando no hay índice útil, el motor revisa fila por fila. Es costoso cuando la tabla es grande y ' +
+        'solo se necesita una parte de los datos.',
+    },
+    {
+      title: 'Selectividad',
+      detail:
+        'Conviene indexar columnas por las que se filtra o se une (fecha, llaves foráneas) y que discriminan ' +
+        'bien las filas. Indexar todo encarece las escrituras.',
+    },
+    {
+      title: 'Denormalización',
+      detail:
+        'Guardar datos pre-calculados o duplicados para acelerar lecturas. Mejora reportes, pero introduce ' +
+        'redundancia: hay que mantener la consistencia con la fuente.',
+    },
+  ],
+  tablesIntro:
+    'Estas tablas describen cómo se consulta hoy la base de datos. Edita los tiempos, marca qué consulta usa ' +
+    'índice y agrega los índices que propondrías; relaciona lo que ves con las preguntas de abajo.',
+  tables: [
+    {
+      id: 'consultas',
+      name: 'Consultas frecuentes',
+      note: 'Un tiempo_ms alto con indice_usado="no" sobre muchas filas delata un escaneo completo evitable.',
+      allowAddRows: true,
+      allowRemoveRows: true,
+      columns: [
+        { key: 'id_consulta', label: 'id_consulta', type: 'text' },
+        { key: 'descripcion', label: 'descripción', type: 'text' },
+        { key: 'filas_revisadas', label: 'filas_revisadas', type: 'number' },
+        { key: 'tiempo_ms', label: 'tiempo_ms', type: 'number' },
+        { key: 'indice_usado', label: 'indice_usado (si/no)', type: 'text' },
+      ],
+      rows: [
+        { id_consulta: 'C1', descripcion: 'Producción por fecha (reporte diario)', filas_revisadas: '480000', tiempo_ms: '5200', indice_usado: 'no' },
+        { id_consulta: 'C2', descripcion: 'Producción por animal', filas_revisadas: '480000', tiempo_ms: '4100', indice_usado: 'no' },
+        { id_consulta: 'C3', descripcion: 'Buscar usuario por correo', filas_revisadas: '3', tiempo_ms: '12', indice_usado: 'si' },
+      ],
+    },
+    {
+      id: 'indices',
+      name: 'Índices definidos',
+      note: 'Hoy casi no hay índices. Agrega filas proponiendo índices por las columnas de filtro/join.',
+      allowAddRows: true,
+      allowRemoveRows: true,
+      columns: [
+        { key: 'id_indice', label: 'id_indice', type: 'text' },
+        { key: 'tabla', label: 'tabla', type: 'text' },
+        { key: 'columna', label: 'columna', type: 'text' },
+        { key: 'tipo', label: 'tipo', type: 'text' },
+      ],
+      rows: [
+        { id_indice: 'IX1', tabla: 'usuarios', columna: 'correo', tipo: 'único' },
+      ],
+    },
+  ],
+  questions: [
+    {
+      id: 'r1-lentas',
+      prompt: '¿Por qué algunas consultas de reportes son lentas?',
+      criteria: [
+        'Identifica la falta de índices / el escaneo completo.',
+        'Relaciona la lentitud con el volumen de filas.',
+        'Diferencia las consultas rápidas (con índice) de las lentas.',
+      ],
+      keywords: ['indice', ['escaneo completo', 'full scan'], 'volumen', 'filas'],
+      concepts: [
+        {
+          id: 'sin-indice',
+          label: 'la falta de índices / escaneo completo',
+          terms: ['indice', 'escaneo completo', 'full scan', 'recorrer toda la tabla', 'recorre toda', 'sin indice'],
+          praise: 'Identificas que sin índice el motor hace un escaneo completo.',
+          gap: 'Explica que sin índice el motor recorre toda la tabla (escaneo completo).',
+        },
+        {
+          id: 'volumen',
+          label: 'el impacto del volumen de datos',
+          terms: ['volumen', 'muchas filas', 'cientos de miles', 'crecio', 'tamano de la tabla', '480000'],
+          praise: 'Relacionas la lentitud con el gran volumen de filas.',
+          gap: 'Conecta la lentitud con el volumen: la tabla creció a cientos de miles de filas.',
+        },
+        {
+          id: 'contraste',
+          label: 'el contraste con consultas indexadas',
+          terms: ['correo', 'indice unico', 'rapida', 'si tiene indice', 'c3'],
+          praise: 'Contrastas con la consulta por correo, que sí usa índice y es rápida.',
+          gap: 'Compara con la consulta por correo: usa índice y por eso es rápida.',
+        },
+      ],
+      contradictions: [
+        {
+          terms: ['es por el internet', 'es la red', 'el servidor es viejo'],
+          message: 'La causa no es la red ni el hardware: las consultas lentas no usan índice y recorren toda la tabla.',
+        },
+      ],
+      recommendation:
+        'Explica que las consultas lentas no tienen índice y hacen un escaneo completo sobre cientos de miles de filas, mientras la consulta por correo es rápida porque usa un índice.',
+      guide:
+        'Las consultas son lentas porque no tienen un índice útil y el motor hace un escaneo completo, ' +
+        'revisando las cientos de miles de filas de la tabla de producción. La consulta por correo es rápida ' +
+        'porque usa un índice único. La lentitud aparece en las consultas por fecha y por animal, que filtran ' +
+        'sobre columnas sin indexar.',
+    },
+    {
+      id: 'r2-indices',
+      prompt: '¿Qué índices propondrías y sobre qué columnas?',
+      criteria: [
+        'Propone índices sobre columnas de filtro/join (fecha, animal/llave foránea).',
+        'Justifica por selectividad o por el uso en las consultas.',
+        'Evita indexar todo sin criterio.',
+      ],
+      keywords: ['indice', 'fecha', ['llave foránea', 'clave foranea'], 'columna', 'filtro'],
+      concepts: [
+        {
+          id: 'col-filtro',
+          label: 'indexar las columnas de filtro o join',
+          terms: ['fecha', 'animal', 'llave foranea', 'clave foranea', 'columna de filtro', 'por la que se filtra', 'join'],
+          praise: 'Propones indexar las columnas por las que se filtra o une (fecha, animal).',
+          gap: 'Indica indexar las columnas de filtro/join: fecha y la llave foránea del animal.',
+        },
+        {
+          id: 'justifica',
+          label: 'justificar por uso o selectividad',
+          terms: ['selectividad', 'porque se consulta', 'uso frecuente', 'discrimin', 'reduce filas', 'consultas lentas'],
+          praise: 'Justificas la elección por selectividad o por el uso real de la consulta.',
+          gap: 'Justifica por qué: esas columnas se usan en las consultas frecuentes y reducen las filas a revisar.',
+        },
+        {
+          id: 'no-todo',
+          label: 'no indexar todo sin criterio',
+          terms: ['no indexar todo', 'costo de escritura', 'solo las necesarias', 'espacio', 'mantenimiento'],
+          praise: 'Reconoces que no se indexa todo: los índices cuestan espacio y escritura.',
+          gap: 'Aclara que no conviene indexar todo: cada índice cuesta espacio y hace más lenta la escritura.',
+        },
+      ],
+      contradictions: [
+        {
+          terms: ['indexar todas las columnas', 'un indice por cada columna'],
+          message: 'Indexar todas las columnas no es buena idea: encarece las escrituras y el espacio sin beneficio claro.',
+        },
+      ],
+      recommendation:
+        'Propón índices concretos: uno por fecha y otro por la llave foránea del animal en producción, justificados por las consultas frecuentes, sin indexar todo.',
+      guide:
+        'Propondría un índice por la columna fecha (para el reporte diario) y otro por la llave foránea del ' +
+        'animal (para la producción por animal), porque son las columnas por las que filtran las consultas ' +
+        'lentas y reducen mucho las filas a revisar. No conviene indexar todas las columnas: cada índice ocupa ' +
+        'espacio y hace más lentas las inserciones de producción diaria.',
+    },
+    {
+      id: 'r3-denormalizar',
+      prompt: '¿Conviene mantener una tabla de reporte denormalizada? Explica ventajas y riesgos.',
+      criteria: [
+        'Reconoce la ventaja de rendimiento en lectura.',
+        'Identifica el riesgo de inconsistencia/redundancia.',
+        'Propone cómo mantenerla actualizada.',
+      ],
+      keywords: ['denormalizacion', 'rendimiento', 'consistencia', 'actualizar', 'redundancia'],
+      concepts: [
+        {
+          id: 'ventaja',
+          label: 'la ventaja de rendimiento en lectura',
+          terms: ['rapido', 'rendimiento', 'lectura', 'reporte', 'precalcul', 'acelera', 'agregad'],
+          praise: 'Reconoces la ventaja: reportes más rápidos al estar precalculados.',
+          gap: 'Menciona la ventaja: los reportes se leen más rápido porque están precalculados.',
+        },
+        {
+          id: 'riesgo',
+          label: 'el riesgo de inconsistencia o redundancia',
+          terms: ['inconsisten', 'redundan', 'desactualiz', 'duplicad', 'no cuadra'],
+          praise: 'Identificas el riesgo: redundancia que puede quedar inconsistente con la fuente.',
+          gap: 'Señala el riesgo: la tabla denormalizada duplica datos y puede quedar inconsistente.',
+        },
+        {
+          id: 'mantener',
+          label: 'cómo mantenerla actualizada',
+          terms: ['actualizar', 'trigger', 'disparador', 'recalcul', 'sincroniz', 'proceso programado', 'batch'],
+          praise: 'Propones cómo mantenerla al día (disparadores o recálculo programado).',
+          gap: 'Explica cómo mantenerla: actualizarla con disparadores o un proceso programado cuando cambia la producción.',
+        },
+      ],
+      contradictions: [
+        {
+          terms: ['nunca usar denormalizacion', 'siempre denormalizar'],
+          message: 'No es un absoluto: denormalizar ayuda al rendimiento pero exige un plan para mantener la consistencia.',
+        },
+      ],
+      recommendation:
+        'Equilibra ambos lados: la tabla denormalizada acelera los reportes, pero hay que mantenerla consistente con la producción mediante disparadores o un recálculo programado.',
+      guide:
+        'Una tabla de reporte denormalizada conviene cuando los reportes se leen mucho y se necesita rapidez, ' +
+        'porque guarda los datos ya agregados. Su riesgo es la redundancia: puede quedar inconsistente con la ' +
+        'producción real si no se actualiza. Para usarla bien hay que mantenerla sincronizada, por ejemplo con ' +
+        'disparadores que la actualicen al insertar producción o con un proceso programado de recálculo. Así se ' +
+        'gana rendimiento sin perder consistencia.',
+    },
+  ],
 };
 
 export const caseModules = [
@@ -415,7 +767,7 @@ export const caseModules = [
     name: 'Módulo lechero',
     description:
       'Casos prácticos del módulo lechero: registro de producción, base de datos y decisiones de la cooperativa.',
-    cases: [databaseServerLechero],
+    cases: [databaseServerLechero, reportesLechero],
   },
 ];
 

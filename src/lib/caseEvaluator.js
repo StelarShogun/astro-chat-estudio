@@ -38,25 +38,59 @@ export function tokenize(text) {
   return norm.split(' ').filter((token) => token.length > 2 && !STOPWORDS.has(token));
 }
 
-// ¿Aparece alguno de los términos (cualquiera de sus variantes) en el texto?
-function matchesAny(normText, terms = []) {
-  return terms.some((term) => normText.includes(normalize(term)));
+// Stemmer ligero para español: recorta sufijos frecuentes para emparejar
+// variantes morfológicas (normalizar / normalización / normalizada → "normaliz").
+// No pretende ser perfecto; busca mejorar la cobertura sin dependencias externas.
+const STEM_SUFFIXES = [
+  'aciones', 'amientos', 'imientos', 'amiento', 'imiento', 'aciones', 'adoras',
+  'adores', 'ancias', 'encias', 'acion', 'ación', 'adora', 'antes', 'ables',
+  'ibles', 'mente', 'idades', 'idad', 'ador', 'ante', 'able', 'ible', 'ancia',
+  'encia', 'ivos', 'ivas', 'osos', 'osas', 'ando', 'iendo', 'adas', 'idas',
+  'ados', 'idos', 'amos', 'emos', 'imos', 'aron', 'ieron', 'aba', 'abas',
+  'ado', 'ido', 'ada', 'ida', 'ar', 'er', 'ir', 'as', 'os', 'es', 'an',
+  'en', 'a', 'o', 'e', 's',
+];
+
+export function stem(word) {
+  let w = word;
+  for (const suffix of STEM_SUFFIXES) {
+    if (w.length - suffix.length >= 4 && w.endsWith(suffix)) {
+      w = w.slice(0, -suffix.length);
+      break;
+    }
+  }
+  return w;
 }
 
-function detectConcepts(normText, concepts = []) {
+// ¿Coincide un término con el texto del usuario?
+//   - Frases o stems explícitos: coincidencia por substring del texto normalizado.
+//   - Palabras sueltas: además se compara por raíz (stem) con los tokens del usuario.
+function termMatches(normText, userStems, term) {
+  const normTerm = normalize(term);
+  if (!normTerm) return false;
+  if (normText.includes(normTerm)) return true;
+  if (!normTerm.includes(' ')) return userStems.has(stem(normTerm));
+  return false;
+}
+
+function matchesAny(normText, userStems, terms = []) {
+  return terms.some((term) => termMatches(normText, userStems, term));
+}
+
+function detectConcepts(normText, userStems, concepts = []) {
   return concepts.map((concept) => ({
     ...concept,
-    found: matchesAny(normText, concept.terms),
+    found: matchesAny(normText, userStems, concept.terms),
   }));
 }
 
-function keywordCoverage(normText, keywords = []) {
+function keywordCoverage(normText, userStems, keywords = []) {
   if (!keywords.length) return { hit: [], miss: [], ratio: 1 };
   const hit = [];
   const miss = [];
   for (const keyword of keywords) {
     const variants = Array.isArray(keyword) ? keyword : [keyword];
-    if (matchesAny(normText, variants)) hit.push(variants[0]);
+    if (matchesAny(normText, userStems, variants)) hit.push(variants[0]);
     else miss.push(variants[0]);
   }
   return { hit, miss, ratio: hit.length / keywords.length };
@@ -86,19 +120,20 @@ function levelFromScore(score) {
 export function evaluateAnswer(answer, question) {
   const userNorm = normalize(answer);
   const userTokens = tokenize(answer);
+  const userStems = new Set(userTokens.map(stem));
   const wordCount = userTokens.length;
 
-  const concepts = detectConcepts(userNorm, question.concepts || []);
+  const concepts = detectConcepts(userNorm, userStems, question.concepts || []);
   const foundConcepts = concepts.filter((concept) => concept.found);
   const missingConcepts = concepts.filter((concept) => !concept.found);
 
-  const keywords = keywordCoverage(userNorm, question.keywords || []);
+  const keywords = keywordCoverage(userNorm, userStems, question.keywords || []);
 
   const guideTokens = tokenize(question.guide || '');
   const similarity = jaccard(userTokens, guideTokens);
 
   const contradictions = (question.contradictions || [])
-    .filter((rule) => matchesAny(userNorm, rule.terms))
+    .filter((rule) => matchesAny(userNorm, userStems, rule.terms))
     .map((rule) => rule.message);
 
   const conceptRatio = concepts.length

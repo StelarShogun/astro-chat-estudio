@@ -408,3 +408,101 @@ export const oralTemplate = [
   'Aplicaría esta opción porque...',
   'Lo defendería en examen así...',
 ];
+
+// Mapa de los temas del curso a los capítulos de Tanenbaum (Sistemas Operativos Modernos),
+// con la lectura desde la lógica de Calidad. Tanenbaum es apoyo técnico: la decisión se
+// defiende por comportamiento, no por la definición del libro.
+export const tanenbaumGuide = [
+  {
+    chapter: 'Cap. 2 — Procesos e hilos',
+    topic: 'CPU y planificación',
+    pages: 'Planificación: 2.4',
+    read: [
+      'Estados del proceso y BCP: úsalos para describir el ciclo de ejecución paso a paso.',
+      'FCFS, SJF, Round Robin y prioridades: en examen no basta el nombre, se justifica por ráfaga, pila de código e importancia.',
+      'Quantum y cambio de contexto: un proceso vuelve a listo por Round Robin cuando se agota el quantum y aún tiene instrucciones.',
+    ],
+    calidad:
+      'Caracterizo ráfaga, cantidad de instrucciones, E/S e importancia antes de nombrar el algoritmo. No clasifico tiempo real solo porque el enunciado lo diga.',
+  },
+  {
+    chapter: 'Cap. 3 — Administración de memoria',
+    topic: 'Memoria',
+    pages: 'Particiones, intercambio y memoria virtual: 3.1–3.3',
+    read: [
+      'Particiones fijas (mismo y varios tamaños), variables, mapa de bits y listas ligadas.',
+      'Ajustes: primer, siguiente, mejor, peor y rápido — cada uno con su costo y desperdicio.',
+      'Memoria virtual y reemplazo (FIFO, segunda oportunidad/reloj, LRU): el problema es qué queda en memoria principal y qué va al área de intercambio.',
+    ],
+    calidad:
+      'El mapa de bits busca bloques contiguos, no sueltos; los huecos inútiles aparecen al inicio. La política de reemplazo se elige según si interesa conservar páginas frecuentes.',
+  },
+  {
+    chapter: 'Cap. 4 — Sistemas de archivos',
+    topic: 'Archivos',
+    pages: 'Archivos e implementación: 4.1–4.3',
+    read: [
+      'Estructura (bytes, registros, árbol/índice), tipos (regular, directorio, especial de carácter/bloque) y acceso.',
+      'Implementación: contigua, lista ligada, FAT y nodo-i con punteros directos/indirectos.',
+      'Cada dispositivo entrega su propia data de origen: se caracteriza cada archivo por separado.',
+    ],
+    calidad:
+      'No clasifico el proceso completo como un archivo. Primero pregunto qué entrega el dispositivo en crudo y luego cómo lo procesa el sistema.',
+  },
+  {
+    chapter: 'Cap. 5 — Entrada/salida',
+    topic: 'E/S, buffer y caché',
+    pages: 'Principios de E/S y DMA: 5.1',
+    read: [
+      'Controladora (cerca del hardware) vs manejador/driver (lógica del SO).',
+      'Buffer: reunir porciones, ordenar, verificar y entregar; el archivo no se trae completo de golpe.',
+      'DMA libera a la CPU de copiar byte por byte; la CPU configura y recibe la interrupción final.',
+    ],
+    calidad:
+      'Buffer responde a transferencia; caché responde a reutilización. No defiendo caché si el dato siempre es nuevo.',
+  },
+  {
+    chapter: 'Cap. 6 — Interbloqueos',
+    topic: 'Bloqueos',
+    pages: 'Detección y evitación: 6.1–6.4',
+    read: [
+      'Condiciones de Coffman: exclusión mutua, retención y espera, no apropiación y espera circular.',
+      'Matrices E, asignación y solicitud; algoritmo del banquero.',
+      'Recorrido de detección: disponibilidad → quién puede terminar → libera → repito.',
+    ],
+    calidad:
+      'No miro primero lo que el proceso ya tiene. Comparo lo que solicita contra el vector disponible; si termina, libera y actualizo. La respuesta muestra el recorrido.',
+  },
+  {
+    chapter: 'Cap. 8 — Sistemas con múltiples procesadores',
+    topic: 'Distribuidos',
+    pages: 'Multiprocesadores y distribuidos: 8.1–8.2',
+    read: [
+      'Taxonomía de Flynn: SISD, SIMD, MISD, MIMD.',
+      'Fuertemente acoplado (memoria compartida) vs débilmente acoplado (nodos por red).',
+      'Distribuir código, datos o ambos según dónde está la presión.',
+    ],
+    calidad:
+      'La pregunta no es si distribuir, sino qué: código cuando pesa la ejecución, datos cuando pesa el volumen, ambos cuando pesan los dos.',
+  },
+];
+
+// Campos de la plantilla de resolución de casos (estructura de defensa de Calidad).
+export const caseProcessFields = [
+  { key: 'rafaga', label: 'Ráfaga' },
+  { key: 'instrucciones', label: 'Cantidad de instrucciones / pila de código' },
+  { key: 'es', label: 'Entrada/salida' },
+  { key: 'tiempoReal', label: '¿Tiempo real?' },
+  { key: 'lecturaEscritura', label: 'Lectura / escritura' },
+  { key: 'memoria', label: 'Memoria' },
+  { key: 'importancia', label: 'Importancia' },
+  { key: 'seccionCritica', label: 'Riesgo de sección crítica' },
+];
+
+export const caseDecisionFields = [
+  { key: 'cpu', label: 'Para CPU', hint: 'Algoritmo recomendado y por qué (ráfaga, instrucciones, importancia).' },
+  { key: 'memoria', label: 'Para memoria', hint: 'Modelo, ajuste, intercambio o política de reemplazo.' },
+  { key: 'archivos', label: 'Para archivos', hint: 'Estructura, tipo y acceso por cada dispositivo.' },
+  { key: 'es', label: 'Para entrada/salida', hint: 'Buffer, caché y justificación.' },
+  { key: 'conclusion', label: 'Conclusión como examen', hint: 'Respuesta breve defendible.' },
+];

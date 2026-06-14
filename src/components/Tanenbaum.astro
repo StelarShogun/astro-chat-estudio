@@ -1,0 +1,45 @@
+---
+import { tanenbaumGuide } from '../data/course-content';
+---
+
+<section class="stack">
+  <div class="section-heading">
+    <p class="eyebrow">Apoyo técnico</p>
+    <h2>Tanenbaum por capítulo, leído como Calidad.</h2>
+  </div>
+
+  <article class="pdf-card">
+    <div class="pdf-card-head">
+      <div>
+        <p class="eyebrow">Libro completo</p>
+        <h3>Sistemas Operativos Modernos</h3>
+        <p>El PDF se abre desde tu equipo. Tanenbaum es apoyo: la decisión se defiende por comportamiento, no por la definición del libro.</p>
+      </div>
+      <a class="doc-action" href="/tanenbaum.pdf" target="_blank" rel="noreferrer">Abrir PDF</a>
+    </div>
+    <object class="pdf-frame" data="/tanenbaum.pdf#view=FitH" type="application/pdf">
+      <p class="pdf-fallback">
+        No se encontró <code>/tanenbaum.pdf</code> en este entorno. Copia el archivo a
+        <code>public/tanenbaum.pdf</code> para verlo embebido aquí.
+      </p>
+    </object>
+  </article>
+
+  <div class="tanenbaum-grid">
+    {tanenbaumGuide.map((entry) => (
+      <article class="tanenbaum-card">
+        <div class="tanenbaum-card-head">
+          <span>{entry.topic}</span>
+          <h3>{entry.chapter}</h3>
+          <p class="tanenbaum-pages">{entry.pages}</p>
+        </div>
+        <ul>
+          {entry.read.map((point) => (
+            <li>{point}</li>
+          ))}
+        </ul>
+        <blockquote>{entry.calidad}</blockquote>
+      </article>
+    ))}
+  </div>
+</section>

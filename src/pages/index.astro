@@ -4,15 +4,19 @@ import QuickGuide from '../components/QuickGuide.astro';
 import Questions from '../components/Questions.astro';
 import Exams from '../components/Exams.astro';
 import Theory from '../components/Theory.astro';
+import Tanenbaum from '../components/Tanenbaum.astro';
 import DocumentReader from '../components/DocumentReader.jsx';
+import CaseSolver from '../components/CaseSolver.jsx';
 
 const sections = [
   { id: 'inicio', label: 'Método', short: 'M' },
+  { id: 'resolver', label: 'Resolver caso', short: 'R' },
   { id: 'transcripciones', label: 'Transcripciones', short: 'T' },
   { id: 'obsidian', label: 'Notas', short: 'N' },
   { id: 'preguntas', label: 'Preguntas', short: 'P' },
   { id: 'examenes', label: 'Exámenes', short: 'E' },
   { id: 'teoria', label: 'Teoría guía', short: 'G' },
+  { id: 'tanenbaum', label: 'Tanenbaum', short: 'L' },
 ];
 ---
 
@@ -51,6 +55,8 @@ const sections = [
           </button>
         ))}
       </nav>
+
+      <p class="sidebar-hint">Atajos: teclas 1–8 cambian de sección.</p>
     </aside>
 
     <section class="content">
@@ -60,7 +66,7 @@ const sections = [
           <h1>Todo el material para estudiar como examen.</h1>
           <p class="hero-text">
             Repasa con las transcripciones completas, las notas del curso, mapas visuales y
-            exámenes reales organizados por secciones.
+            exámenes reales. Caracteriza casos en la plantilla y consulta a Tanenbaum como apoyo.
           </p>
         </div>
         <div class="source-panel">
@@ -74,6 +80,9 @@ const sections = [
 
       <div class="section-panel is-active" data-section="inicio">
         <QuickGuide />
+      </div>
+      <div class="section-panel" data-section="resolver">
+        <CaseSolver client:visible />
       </div>
       <div class="section-panel" data-section="transcripciones">
         <DocumentReader section="transcripciones" client:visible />
@@ -90,50 +99,80 @@ const sections = [
       <div class="section-panel" data-section="teoria">
         <Theory />
       </div>
+      <div class="section-panel" data-section="tanenbaum">
+        <Tanenbaum />
+      </div>
     </section>
   </main>
 </Layout>
 
 <script>
+  const STORAGE_SECTION = 'calidad-os-section';
+  const STORAGE_SIDEBAR = 'calidad-os-sidebar-collapsed';
   const shell = document.getElementById('app-shell');
-  const navButtons = document.querySelectorAll('.section-nav button[data-target]');
-  const panels = document.querySelectorAll('.section-panel');
+  const navButtons = Array.from(document.querySelectorAll('.section-nav button[data-target]'));
+  const panels = Array.from(document.querySelectorAll('.section-panel'));
   const collapseButton = document.getElementById('collapse-button');
 
-  navButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const target = button.getAttribute('data-target');
-
-      navButtons.forEach((other) => {
-        const isActive = other === button;
-        other.classList.toggle('active', isActive);
-        if (isActive) other.setAttribute('aria-current', 'page');
-        else other.removeAttribute('aria-current');
-      });
-
-      panels.forEach((panel) => {
-        panel.classList.toggle('is-active', panel.getAttribute('data-section') === target);
-      });
+  const activate = (target) => {
+    let matched = false;
+    navButtons.forEach((button) => {
+      const isActive = button.getAttribute('data-target') === target;
+      if (isActive) matched = true;
+      button.classList.toggle('active', isActive);
+      if (isActive) button.setAttribute('aria-current', 'page');
+      else button.removeAttribute('aria-current');
     });
+    if (!matched) return;
+    panels.forEach((panel) => {
+      panel.classList.toggle('is-active', panel.getAttribute('data-section') === target);
+    });
+    try {
+      localStorage.setItem(STORAGE_SECTION, target);
+    } catch {}
+  };
+
+  navButtons.forEach((button) => {
+    button.addEventListener('click', () => activate(button.getAttribute('data-target')));
+  });
+
+  // Atajos de teclado 1–8, ignorando cuando se escribe en un campo.
+  document.addEventListener('keydown', (event) => {
+    if (event.metaKey || event.ctrlKey || event.altKey) return;
+    const tag = document.activeElement?.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+    const index = Number(event.key) - 1;
+    if (Number.isInteger(index) && index >= 0 && index < navButtons.length) {
+      activate(navButtons[index].getAttribute('data-target'));
+    }
   });
 
   const syncNumbers = (collapsed) => {
     document.querySelectorAll('.section-nav button span').forEach((span) => {
-      span.textContent = collapsed
-        ? span.getAttribute('data-short')
-        : span.getAttribute('data-num');
+      span.textContent = collapsed ? span.getAttribute('data-short') : span.getAttribute('data-num');
     });
   };
 
-  collapseButton?.addEventListener('click', () => {
-    const collapsed = shell.classList.toggle('sidebar-collapsed');
+  const setCollapsed = (collapsed) => {
+    shell.classList.toggle('sidebar-collapsed', collapsed);
     shell.classList.toggle('sidebar-open', !collapsed);
     collapseButton.setAttribute('aria-expanded', String(!collapsed));
-    collapseButton.setAttribute(
-      'aria-label',
-      collapsed ? 'Abrir dashboard' : 'Contraer dashboard',
-    );
+    collapseButton.setAttribute('aria-label', collapsed ? 'Abrir dashboard' : 'Contraer dashboard');
     collapseButton.textContent = collapsed ? '›' : '‹';
     syncNumbers(collapsed);
+    try {
+      localStorage.setItem(STORAGE_SIDEBAR, String(collapsed));
+    } catch {}
+  };
+
+  collapseButton?.addEventListener('click', () => {
+    setCollapsed(!shell.classList.contains('sidebar-collapsed'));
   });
+
+  // Restaurar estado previo.
+  try {
+    const savedSection = localStorage.getItem(STORAGE_SECTION);
+    if (savedSection) activate(savedSection);
+    if (localStorage.getItem(STORAGE_SIDEBAR) === 'true') setCollapsed(true);
+  } catch {}
 </script>

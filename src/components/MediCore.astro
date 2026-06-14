@@ -1,0 +1,72 @@
+---
+import { medicoreCase } from '../data/course-content';
+const { intro, processes, columns, table, tableNote, questions } = medicoreCase;
+---
+
+<section class="stack">
+  <div class="section-heading">
+    <p class="eyebrow">Caso resuelto · práctica tercer examen</p>
+    <h2>Caso MediCore, caracterizado y defendido como Calidad.</h2>
+  </div>
+
+  <article class="wide-card">
+    <p class="lead">{intro}</p>
+    <div class="rule-grid">
+      {processes.map((process) => (
+        <article>
+          <h3>{process.id} — {process.name}</h3>
+          <p>{process.detail}</p>
+        </article>
+      ))}
+    </div>
+  </article>
+
+  <div class="mini-heading">
+    <span>Pizarra</span>
+    <strong>Tabla de caracterización</strong>
+  </div>
+  <div class="markdown-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Proceso</th>
+          {columns.map((column) => (
+            <th>{column}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {processes.map((process) => (
+          <tr>
+            <th scope="row">{process.id}</th>
+            {table[process.id].map((value) => (
+              <td>{value}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <blockquote>{tableNote}</blockquote>
+
+  <div class="mini-heading">
+    <span>Preguntas trabajadas</span>
+    <strong>{questions.length} con defensa de examen</strong>
+  </div>
+
+  <div class="medicore-questions">
+    {questions.map((question) => (
+      <article class="medicore-card">
+        <span class="medicore-area">{question.area}</span>
+        <h3>{question.title}</h3>
+        <p class="medicore-ask">{question.ask}</p>
+        <ul>
+          {question.answer.map((point) => (
+            <li>{point}</li>
+          ))}
+        </ul>
+        <blockquote>{question.defense}</blockquote>
+      </article>
+    ))}
+  </div>
+</section>

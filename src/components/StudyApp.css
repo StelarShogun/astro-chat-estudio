@@ -1389,3 +1389,60 @@ blockquote {
     border-color: #888 !important;
   }
 }
+
+/* ---- Caso MediCore ---- */
+.medicore-questions {
+  display: grid;
+  gap: 12px;
+}
+
+.medicore-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(17, 22, 28, 0.98), rgba(9, 12, 16, 0.98));
+  box-shadow: var(--shadow);
+  padding: clamp(18px, 3vw, 26px);
+}
+
+.medicore-area {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0 11px;
+  background: rgba(85, 199, 255, 0.12);
+  color: var(--cyan);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.medicore-card h3 {
+  margin: 12px 0 6px;
+  font-size: 1.22rem;
+}
+
+.medicore-ask {
+  margin: 0 0 6px;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.medicore-card ul {
+  display: grid;
+  gap: 10px;
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+
+.medicore-card li {
+  color: var(--muted);
+  line-height: 1.62;
+}
+
+/* La primera columna de la tabla de caracterización queda fija al hacer scroll */
+.markdown-table-wrap th[scope='row'] {
+  position: sticky;
+  left: 0;
+  background: #10161d;
+  color: var(--teal);
+}

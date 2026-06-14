@@ -4,6 +4,7 @@ import QuickGuide from '../components/QuickGuide.astro';
 import Questions from '../components/Questions.astro';
 import Exams from '../components/Exams.astro';
 import Theory from '../components/Theory.astro';
+import MediCore from '../components/MediCore.astro';
 import Tanenbaum from '../components/Tanenbaum.astro';
 import DocumentReader from '../components/DocumentReader.jsx';
 import CaseSolver from '../components/CaseSolver.jsx';
@@ -15,6 +16,7 @@ const sections = [
   { id: 'obsidian', label: 'Notas', short: 'N' },
   { id: 'preguntas', label: 'Preguntas', short: 'P' },
   { id: 'examenes', label: 'Exámenes', short: 'E' },
+  { id: 'medicore', label: 'Caso MediCore', short: 'C' },
   { id: 'teoria', label: 'Teoría guía', short: 'G' },
   { id: 'tanenbaum', label: 'Tanenbaum', short: 'L' },
 ];
@@ -56,7 +58,7 @@ const sections = [
         ))}
       </nav>
 
-      <p class="sidebar-hint">Atajos: teclas 1–8 cambian de sección.</p>
+      <p class="sidebar-hint">Atajos: teclas 1–9 cambian de sección.</p>
     </aside>
 
     <section class="content">
@@ -95,6 +97,9 @@ const sections = [
       </div>
       <div class="section-panel" data-section="examenes">
         <Exams />
+      </div>
+      <div class="section-panel" data-section="medicore">
+        <MediCore />
       </div>
       <div class="section-panel" data-section="teoria">
         <Theory />

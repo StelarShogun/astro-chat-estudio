@@ -77,16 +77,16 @@ function buildExport(activeCase, tables, answers, feedbacks) {
   return `${lines.join('\n').trim()}\n`;
 }
 
-function ConsistencyPanel({ issues }) {
+function ConsistencyPanel({ issues, title }) {
   const errors = issues.filter((issue) => issue.level === 'error');
   const warns = issues.filter((issue) => issue.level === 'warn');
 
   return (
     <details className="consistency-panel" open={issues.length > 0}>
       <summary>
-        <span>Diagnóstico de consistencia (en vivo)</span>
+        <span>{title || 'Diagnóstico de consistencia (en vivo)'}</span>
         <span className="consistency-badges">
-          <span className="consistency-badge is-error">{errors.length} errores</span>
+          {errors.length > 0 && <span className="consistency-badge is-error">{errors.length} errores</span>}
           <span className="consistency-badge is-warn">{warns.length} avisos</span>
         </span>
       </summary>
@@ -238,6 +238,23 @@ function CaseContent({ activeCase }) {
         </article>
       </div>
 
+      {activeCase.processes?.length > 0 && (
+        <>
+          <div className="mini-heading">
+            <span>Procesos del caso</span>
+            <strong>{activeCase.processes.length} procesos (A–{String.fromCharCode(64 + activeCase.processes.length)})</strong>
+          </div>
+          <div className="rule-grid">
+            {activeCase.processes.map((process) => (
+              <article key={process.id}>
+                <h3>{process.id} — {process.name}</h3>
+                <p>{process.detail}</p>
+              </article>
+            ))}
+          </div>
+        </>
+      )}
+
       {activeCase.reference?.length > 0 && (
         <details className="case-reference">
           <summary>Material de referencia ({activeCase.reference.length})</summary>
@@ -253,8 +270,8 @@ function CaseContent({ activeCase }) {
       )}
 
       <div className="mini-heading">
-        <span>Tablas del caso</span>
-        <strong>Editables · se guardan solas</strong>
+        <span>Tabla de análisis de procesos</span>
+        <strong>Editable · se guarda sola</strong>
       </div>
       {activeCase.tablesIntro && <p className="case-tables-intro">{activeCase.tablesIntro}</p>}
       <div className="case-tables">
@@ -268,7 +285,9 @@ function CaseContent({ activeCase }) {
         ))}
       </div>
 
-      {typeof activeCase.consistency === 'function' && <ConsistencyPanel issues={issues} />}
+      {typeof activeCase.consistency === 'function' && (
+        <ConsistencyPanel issues={issues} title={activeCase.consistencyTitle} />
+      )}
 
       <div className="mini-heading">
         <span>Preguntas abiertas</span>

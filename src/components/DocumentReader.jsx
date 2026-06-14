@@ -1,39 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import {
-  examPhotoSets,
-  fileTheory,
-  methodRules,
-  oralTemplate,
-  questionBank,
-  theoryModules,
-} from '../data/course-content';
 import { sourceDocuments } from '../data/source-manifest';
-
-const sections = [
-  { id: 'inicio', label: 'Método', short: 'M' },
-  { id: 'transcripciones', label: 'Transcripciones', short: 'T' },
-  { id: 'obsidian', label: 'Notas', short: 'N' },
-  { id: 'preguntas', label: 'Preguntas', short: 'P' },
-  { id: 'examenes', label: 'Exámenes', short: 'E' },
-  { id: 'teoria', label: 'Teoría guía', short: 'G' },
-];
 
 const transcriptionDocs = sourceDocuments.filter((doc) => doc.kind === 'Transcripciones');
 const obsidianDocs = sourceDocuments.filter((doc) => doc.kind === 'Obsidian');
-
-function matchesQuery(values, query) {
-  if (!query) return true;
-  return values.join(' ').toLowerCase().includes(query);
-}
 
 function getSourceDocs(section) {
   if (section === 'transcripciones') return transcriptionDocs;
   if (section === 'obsidian') return obsidianDocs;
   return sourceDocuments;
-}
-
-function getInitialDocId(section) {
-  return getSourceDocs(section)[0]?.id ?? sourceDocuments[0]?.id;
 }
 
 function resolveObsidianAsset(src) {
@@ -62,6 +36,7 @@ function renderInline(text, keyPrefix = 'inline') {
           className="markdown-inline-image"
           src={resolveObsidianAsset(asset.trim())}
           alt={(label ?? asset).trim()}
+          loading="lazy"
         />,
       );
     } else if (match[3]) {
@@ -71,6 +46,7 @@ function renderInline(text, keyPrefix = 'inline') {
           className="markdown-inline-image"
           src={resolveObsidianAsset(match[3].trim())}
           alt={match[2] || match[3]}
+          loading="lazy"
         />,
       );
     } else if (match[4]) {
@@ -412,17 +388,9 @@ function MarkdownContent({ text }) {
   );
 }
 
-function DocumentReader({ section, query }) {
+export default function DocumentReader({ section }) {
   const docs = getSourceDocs(section);
-  const normalizedQuery = query.trim().toLowerCase();
-  const filteredDocs = useMemo(
-    () =>
-      docs.filter((doc) =>
-        matchesQuery([doc.title, doc.kind, doc.format, doc.sourcePath], normalizedQuery),
-      ),
-    [docs, normalizedQuery],
-  );
-  const [activeDocId, setActiveDocId] = useState(getInitialDocId(section));
+  const [activeDocId, setActiveDocId] = useState(docs[0]?.id);
   const [documentText, setDocumentText] = useState('');
   const [status, setStatus] = useState('idle');
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -444,16 +412,7 @@ function DocumentReader({ section, query }) {
     }
   };
 
-  useEffect(() => {
-    const nextDoc = getSourceDocs(section)[0];
-    setActiveDocId(nextDoc?.id ?? sourceDocuments[0]?.id);
-  }, [section]);
-
-  const activeDoc =
-    filteredDocs.find((doc) => doc.id === activeDocId) ??
-    docs.find((doc) => doc.id === activeDocId) ??
-    filteredDocs[0] ??
-    docs[0];
+  const activeDoc = docs.find((doc) => doc.id === activeDocId) ?? docs[0];
 
   useEffect(() => {
     if (!activeDoc) return;
@@ -493,22 +452,25 @@ function DocumentReader({ section, query }) {
       .map((line) => line.replace(/^#{1,4}\s+/, '').trim());
   }, [documentText]);
 
+  const kindLabel = (doc) =>
+    doc.format === 'excalidraw' ? 'Mapa' : doc.kind === 'Obsidian' ? 'Nota' : 'Transcripción';
+
   return (
     <section className="source-workbench">
       <aside className="doc-list" aria-label="Documentos fuente">
         <div className="mini-heading">
           <span>{section === 'transcripciones' ? 'Transcripciones' : 'Notas'}</span>
-          <strong>{filteredDocs.length}</strong>
+          <strong>{docs.length}</strong>
         </div>
         <div className="doc-buttons">
-          {filteredDocs.map((doc) => (
+          {docs.map((doc) => (
             <button
               key={doc.id}
               type="button"
               className={activeDoc?.id === doc.id ? 'active' : ''}
               onClick={() => setActiveDocId(doc.id)}
             >
-              <span>{doc.format === 'excalidraw' ? 'Mapa' : doc.kind === 'Obsidian' ? 'Nota' : 'Transcripción'}</span>
+              <span>{kindLabel(doc)}</span>
               <strong>{doc.title}</strong>
             </button>
           ))}
@@ -520,7 +482,7 @@ function DocumentReader({ section, query }) {
           <>
             <header className="doc-toolbar">
               <div>
-                <p className="eyebrow">{activeDoc.format === 'excalidraw' ? 'Mapa' : activeDoc.kind === 'Obsidian' ? 'Nota' : 'Transcripción'}</p>
+                <p className="eyebrow">{kindLabel(activeDoc)}</p>
                 <h2>{activeDoc.title}</h2>
               </div>
               <div className="doc-actions">
@@ -542,13 +504,11 @@ function DocumentReader({ section, query }) {
             )}
 
             {status === 'loading' && <p className="loading-note">Cargando...</p>}
-            {status === 'error' && (
-              <p className="error-note">No se pudo cargar el contenido.</p>
-            )}
-            {status === 'ready' && activeDoc.format === 'excalidraw' && (
-              <MarkdownContent text={documentText} />
-            )}
-            {status === 'ready' && activeDoc.format === 'md' && <MarkdownContent text={documentText} />}
+            {status === 'error' && <p className="error-note">No se pudo cargar el contenido.</p>}
+            {status === 'ready' &&
+              (activeDoc.format === 'md' || activeDoc.format === 'excalidraw') && (
+                <MarkdownContent text={documentText} />
+              )}
             {status === 'ready' && activeDoc.format !== 'md' && activeDoc.format !== 'excalidraw' && (
               <pre className="document-text" aria-label={`Texto completo de ${activeDoc.title}`}>
                 {documentText}
@@ -558,278 +518,5 @@ function DocumentReader({ section, query }) {
         )}
       </article>
     </section>
-  );
-}
-
-function QuickGuide() {
-  return (
-    <section className="screen-grid">
-      <article className="wide-card">
-        <div className="section-heading">
-          <p className="eyebrow">Regla principal</p>
-          <h2>Primero caracterizo el caso.</h2>
-        </div>
-        <p className="lead">
-          La guía rápida no reemplaza las transcripciones. Sirve para estudiar con dirección:
-          se caracteriza el comportamiento, se descartan opciones y luego se defiende la decisión
-          con lenguaje de examen.
-        </p>
-        <div className="rule-grid">
-          {methodRules.map((rule) => (
-            <article key={rule.title}>
-              <h3>{rule.title}</h3>
-              <p>{rule.body}</p>
-            </article>
-          ))}
-        </div>
-      </article>
-
-      <article className="template-card">
-        <p className="eyebrow">Frases de defensa</p>
-        <h2>Plantilla oral</h2>
-        <ol>
-          {oralTemplate.map((step) => (
-            <li key={step}>{step}</li>
-          ))}
-        </ol>
-      </article>
-    </section>
-  );
-}
-
-function Questions({ query }) {
-  const normalizedQuery = query.trim().toLowerCase();
-  const filteredQuestions = questionBank.filter((item) =>
-    matchesQuery([item.area, item.prompt, item.answer, item.examLine], normalizedQuery),
-  );
-
-  return (
-    <section className="stack">
-      <div className="section-heading">
-        <p className="eyebrow">Banco de preguntas</p>
-        <h2>Preguntas tipo Calidad con respuesta defendible</h2>
-      </div>
-      <div className="question-grid">
-        {filteredQuestions.map((question) => (
-          <article className="question-card" key={question.prompt}>
-            <span>{question.area}</span>
-            <h3>{question.prompt}</h3>
-            <p>{question.answer}</p>
-            <blockquote>{question.examLine}</blockquote>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function Exams() {
-  return (
-    <section className="stack">
-      <div className="section-heading">
-        <p className="eyebrow">Exámenes oficiales</p>
-        <h2>Casos reales usados como fuente visual exacta.</h2>
-      </div>
-
-      <div className="exam-photo-grid">
-        {examPhotoSets.map((exam) => (
-          <article className="exam-photo-card" key={exam.title}>
-            <div className="exam-card-head">
-              <p className="eyebrow">{exam.subtitle}</p>
-              <h3>{exam.title}</h3>
-              <p>{exam.context}</p>
-            </div>
-            <div className="exam-image-row">
-              {exam.images.map((image) => (
-                <a
-                  key={image.src}
-                  href={image.src}
-                  target="_blank"
-                  rel="noreferrer"
-                  title="Abrir imagen en tamaño completo"
-                >
-                  <img src={image.src} alt={image.label} loading="lazy" />
-                  <span>{image.label}</span>
-                </a>
-              ))}
-            </div>
-            <div className="exam-bottom">
-              <div>
-                <h4>Preguntas de ese bloque</h4>
-                <ul>
-                  {exam.prompts.map((prompt) => (
-                    <li key={prompt}>{prompt}</li>
-                  ))}
-                </ul>
-              </div>
-              <blockquote>{exam.defense}</blockquote>
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function Theory({ query }) {
-  const normalizedQuery = query.trim().toLowerCase();
-  const filteredFileCards = fileTheory.cards.filter((card) =>
-    matchesQuery([card.title, ...card.points], normalizedQuery),
-  );
-  const filteredDeviceExamples = fileTheory.deviceExamples.filter((device) =>
-    matchesQuery([device.device, device.raw, device.file, device.access, device.risk], normalizedQuery),
-  );
-  const filteredTheory = theoryModules.filter((module) =>
-    matchesQuery([module.title, ...module.points], normalizedQuery),
-  );
-
-  return (
-    <section className="stack">
-      <div className="split-hero">
-        <div>
-          <p className="eyebrow">Guía rápida sobre la teoría completa</p>
-          <h2>No se clasifica el proceso; se clasifica cada dato, archivo o recurso.</h2>
-          <p>{fileTheory.overview}</p>
-        </div>
-        <img src={fileTheory.assets[0]} alt="Diagrama de nodo-i usado en la nota de archivos" />
-      </div>
-
-      <div className="theory-grid">
-        {filteredFileCards.map((card) => (
-          <article className="theory-card" key={card.title}>
-            <h3>{card.title}</h3>
-            <ul>
-              {card.points.map((point) => (
-                <li key={point}>{point}</li>
-              ))}
-            </ul>
-          </article>
-        ))}
-      </div>
-
-      <div className="section-heading">
-        <p className="eyebrow">Por dispositivo</p>
-        <h2>Cómo defender archivos en examen</h2>
-      </div>
-      <div className="device-table" role="table" aria-label="Caracterización de archivos por dispositivo">
-        {filteredDeviceExamples.map((device) => (
-          <article key={device.device}>
-            <h3>{device.device}</h3>
-            <dl>
-              <div>
-                <dt>Dato de origen</dt>
-                <dd>{device.raw}</dd>
-              </div>
-              <div>
-                <dt>Archivo</dt>
-                <dd>{device.file}</dd>
-              </div>
-              <div>
-                <dt>Acceso</dt>
-                <dd>{device.access}</dd>
-              </div>
-              <div>
-                <dt>Riesgo</dt>
-                <dd>{device.risk}</dd>
-              </div>
-            </dl>
-          </article>
-        ))}
-      </div>
-
-      <div className="module-grid">
-        {filteredTheory.map((module) => (
-          <article className="module-card" key={module.title}>
-            <img src={module.asset} alt={`Apunte visual de ${module.title}`} />
-            <div>
-              <h3>{module.title}</h3>
-              <ul>
-                {module.points.map((point) => (
-                  <li key={point}>{point}</li>
-                ))}
-              </ul>
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-export default function StudyApp() {
-  const [activeSection, setActiveSection] = useState('inicio');
-  const [query, setQuery] = useState('');
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-
-  return (
-    <main className={`app-shell ${sidebarOpen ? 'sidebar-open' : 'sidebar-collapsed'}`}>
-      <aside className="sidebar" aria-label="Dashboard de estudio">
-        <div className="sidebar-top">
-          <button
-            className="collapse-button"
-            type="button"
-            aria-label={sidebarOpen ? 'Contraer dashboard' : 'Abrir dashboard'}
-            onClick={() => setSidebarOpen((value) => !value)}
-          >
-            {sidebarOpen ? '‹' : '›'}
-          </button>
-          <div className="brand-block">
-            <span>Sistemas Operativos</span>
-            <strong>Calidad OS</strong>
-            <p>Transcripciones, notas y exámenes para repasar con respuesta de examen.</p>
-          </div>
-        </div>
-
-        <label className="search-box">
-          <span>Buscar</span>
-          <input
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="ráfaga, buffer, mapa de bits..."
-          />
-        </label>
-
-        <nav className="section-nav" aria-label="Secciones principales">
-          {sections.map((section, index) => (
-            <button
-              key={section.id}
-              type="button"
-              className={activeSection === section.id ? 'active' : ''}
-              onClick={() => setActiveSection(section.id)}
-            >
-              <span>{sidebarOpen ? String(index + 1).padStart(2, '0') : section.short}</span>
-              <strong>{section.label}</strong>
-            </button>
-          ))}
-        </nav>
-      </aside>
-
-      <section className="content">
-        <header className="hero-panel">
-          <div>
-            <p className="eyebrow">Curso de Sistemas Operativos</p>
-            <h1>Todo el material para estudiar como examen.</h1>
-            <p className="hero-text">
-              Repasa con las transcripciones completas, las notas del curso, mapas visuales y
-              exámenes reales organizados por secciones.
-            </p>
-          </div>
-          <div className="source-panel">
-            <span>Ruta de estudio</span>
-            <strong>Caracterizar, decidir y defender</strong>
-            <p>Primero se separan procesos, dispositivos, archivos y recursos.</p>
-            <p>Después se elige la política y se justifica con lenguaje de examen.</p>
-            <p>Al final se practica con casos completos y preguntas reales.</p>
-          </div>
-        </header>
-
-        {activeSection === 'inicio' && <QuickGuide />}
-        {activeSection === 'transcripciones' && <DocumentReader section="transcripciones" query={query} />}
-        {activeSection === 'obsidian' && <DocumentReader section="obsidian" query={query} />}
-        {activeSection === 'preguntas' && <Questions query={query} />}
-        {activeSection === 'examenes' && <Exams />}
-        {activeSection === 'teoria' && <Theory query={query} />}
-      </section>
-    </main>
   );
 }

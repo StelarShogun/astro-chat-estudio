@@ -1,0 +1,20 @@
+---
+import { questionBank } from '../data/course-content';
+---
+
+<section class="stack">
+  <div class="section-heading">
+    <p class="eyebrow">Banco de preguntas</p>
+    <h2>Preguntas tipo Calidad con respuesta defendible</h2>
+  </div>
+  <div class="question-grid">
+    {questionBank.map((question) => (
+      <article class="question-card">
+        <span>{question.area}</span>
+        <h3>{question.prompt}</h3>
+        <p>{question.answer}</p>
+        <blockquote>{question.examLine}</blockquote>
+      </article>
+    ))}
+  </div>
+</section>

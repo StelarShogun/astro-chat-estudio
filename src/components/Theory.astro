@@ -1,0 +1,73 @@
+---
+import { fileTheory, theoryModules } from '../data/course-content';
+---
+
+<section class="stack">
+  <div class="split-hero">
+    <div>
+      <p class="eyebrow">Guía rápida sobre la teoría completa</p>
+      <h2>No se clasifica el proceso; se clasifica cada dato, archivo o recurso.</h2>
+      <p>{fileTheory.overview}</p>
+    </div>
+    <img src={fileTheory.assets[0]} alt="Diagrama de nodo-i usado en la nota de archivos" loading="lazy" />
+  </div>
+
+  <div class="theory-grid">
+    {fileTheory.cards.map((card) => (
+      <article class="theory-card">
+        <h3>{card.title}</h3>
+        <ul>
+          {card.points.map((point) => (
+            <li>{point}</li>
+          ))}
+        </ul>
+      </article>
+    ))}
+  </div>
+
+  <div class="section-heading">
+    <p class="eyebrow">Por dispositivo</p>
+    <h2>Cómo defender archivos en examen</h2>
+  </div>
+  <div class="device-table" role="table" aria-label="Caracterización de archivos por dispositivo">
+    {fileTheory.deviceExamples.map((device) => (
+      <article>
+        <h3>{device.device}</h3>
+        <dl>
+          <div>
+            <dt>Dato de origen</dt>
+            <dd>{device.raw}</dd>
+          </div>
+          <div>
+            <dt>Archivo</dt>
+            <dd>{device.file}</dd>
+          </div>
+          <div>
+            <dt>Acceso</dt>
+            <dd>{device.access}</dd>
+          </div>
+          <div>
+            <dt>Riesgo</dt>
+            <dd>{device.risk}</dd>
+          </div>
+        </dl>
+      </article>
+    ))}
+  </div>
+
+  <div class="module-grid">
+    {theoryModules.map((module) => (
+      <article class="module-card">
+        <img src={module.asset} alt={`Apunte visual de ${module.title}`} loading="lazy" />
+        <div>
+          <h3>{module.title}</h3>
+          <ul>
+            {module.points.map((point) => (
+              <li>{point}</li>
+            ))}
+          </ul>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

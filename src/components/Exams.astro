@@ -1,0 +1,41 @@
+---
+import { examPhotoSets } from '../data/course-content';
+---
+
+<section class="stack">
+  <div class="section-heading">
+    <p class="eyebrow">Exámenes oficiales</p>
+    <h2>Casos reales usados como fuente visual exacta.</h2>
+  </div>
+
+  <div class="exam-photo-grid">
+    {examPhotoSets.map((exam) => (
+      <article class="exam-photo-card">
+        <div class="exam-card-head">
+          <p class="eyebrow">{exam.subtitle}</p>
+          <h3>{exam.title}</h3>
+          <p>{exam.context}</p>
+        </div>
+        <div class="exam-image-row">
+          {exam.images.map((image) => (
+            <a href={image.src} target="_blank" rel="noreferrer" title="Abrir imagen en tamaño completo">
+              <img src={image.src} alt={image.label} loading="lazy" />
+              <span>{image.label}</span>
+            </a>
+          ))}
+        </div>
+        <div class="exam-bottom">
+          <div>
+            <h4>Preguntas de ese bloque</h4>
+            <ul>
+              {exam.prompts.map((prompt) => (
+                <li>{prompt}</li>
+              ))}
+            </ul>
+          </div>
+          <blockquote>{exam.defense}</blockquote>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

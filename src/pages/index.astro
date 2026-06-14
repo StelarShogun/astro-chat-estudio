@@ -1,8 +1,139 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import StudyApp from '../components/StudyApp.jsx';
+import QuickGuide from '../components/QuickGuide.astro';
+import Questions from '../components/Questions.astro';
+import Exams from '../components/Exams.astro';
+import Theory from '../components/Theory.astro';
+import DocumentReader from '../components/DocumentReader.jsx';
+
+const sections = [
+  { id: 'inicio', label: 'Método', short: 'M' },
+  { id: 'transcripciones', label: 'Transcripciones', short: 'T' },
+  { id: 'obsidian', label: 'Notas', short: 'N' },
+  { id: 'preguntas', label: 'Preguntas', short: 'P' },
+  { id: 'examenes', label: 'Exámenes', short: 'E' },
+  { id: 'teoria', label: 'Teoría guía', short: 'G' },
+];
 ---
 
 <Layout>
-  <StudyApp client:load />
+  <main class="app-shell sidebar-open" id="app-shell">
+    <aside class="sidebar" aria-label="Dashboard de estudio">
+      <div class="sidebar-top">
+        <button
+          class="collapse-button"
+          type="button"
+          id="collapse-button"
+          aria-label="Contraer dashboard"
+          aria-expanded="true"
+        >
+          ‹
+        </button>
+        <div class="brand-block">
+          <span>Sistemas Operativos</span>
+          <strong>Calidad OS</strong>
+          <p>Transcripciones, notas y exámenes para repasar con respuesta de examen.</p>
+        </div>
+      </div>
+
+      <nav class="section-nav" aria-label="Secciones principales">
+        {sections.map((section, index) => (
+          <button
+            type="button"
+            class={index === 0 ? 'active' : ''}
+            data-target={section.id}
+            aria-current={index === 0 ? 'page' : undefined}
+          >
+            <span data-num={String(index + 1).padStart(2, '0')} data-short={section.short}>
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <strong>{section.label}</strong>
+          </button>
+        ))}
+      </nav>
+    </aside>
+
+    <section class="content">
+      <header class="hero-panel">
+        <div>
+          <p class="eyebrow">Curso de Sistemas Operativos</p>
+          <h1>Todo el material para estudiar como examen.</h1>
+          <p class="hero-text">
+            Repasa con las transcripciones completas, las notas del curso, mapas visuales y
+            exámenes reales organizados por secciones.
+          </p>
+        </div>
+        <div class="source-panel">
+          <span>Ruta de estudio</span>
+          <strong>Caracterizar, decidir y defender</strong>
+          <p>Primero se separan procesos, dispositivos, archivos y recursos.</p>
+          <p>Después se elige la política y se justifica con lenguaje de examen.</p>
+          <p>Al final se practica con casos completos y preguntas reales.</p>
+        </div>
+      </header>
+
+      <div class="section-panel is-active" data-section="inicio">
+        <QuickGuide />
+      </div>
+      <div class="section-panel" data-section="transcripciones">
+        <DocumentReader section="transcripciones" client:visible />
+      </div>
+      <div class="section-panel" data-section="obsidian">
+        <DocumentReader section="obsidian" client:visible />
+      </div>
+      <div class="section-panel" data-section="preguntas">
+        <Questions />
+      </div>
+      <div class="section-panel" data-section="examenes">
+        <Exams />
+      </div>
+      <div class="section-panel" data-section="teoria">
+        <Theory />
+      </div>
+    </section>
+  </main>
 </Layout>
+
+<script>
+  const shell = document.getElementById('app-shell');
+  const navButtons = document.querySelectorAll('.section-nav button[data-target]');
+  const panels = document.querySelectorAll('.section-panel');
+  const collapseButton = document.getElementById('collapse-button');
+
+  navButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const target = button.getAttribute('data-target');
+
+      navButtons.forEach((other) => {
+        const isActive = other === button;
+        other.classList.toggle('active', isActive);
+        if (isActive) other.setAttribute('aria-current', 'page');
+        else other.removeAttribute('aria-current');
+      });
+
+      panels.forEach((panel) => {
+        panel.classList.toggle('is-active', panel.getAttribute('data-section') === target);
+      });
+    });
+  });
+
+  const syncNumbers = (collapsed) => {
+    document.querySelectorAll('.section-nav button span').forEach((span) => {
+      span.textContent = collapsed
+        ? span.getAttribute('data-short')
+        : span.getAttribute('data-num');
+    });
+  };
+
+  collapseButton?.addEventListener('click', () => {
+    const collapsed = shell.classList.toggle('sidebar-collapsed');
+    shell.classList.toggle('sidebar-open', !collapsed);
+    collapseButton.setAttribute('aria-expanded', String(!collapsed));
+    collapseButton.setAttribute(
+      'aria-label',
+      collapsed ? 'Abrir dashboard' : 'Contraer dashboard',
+    );
+    collapseButton.textContent = collapsed ? '›' : '‹';
+    syncNumbers(collapsed);
+  });
+</script>

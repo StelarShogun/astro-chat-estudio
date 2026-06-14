@@ -1,0 +1,35 @@
+---
+import { methodRules, oralTemplate } from '../data/course-content';
+---
+
+<section class="screen-grid">
+  <article class="wide-card">
+    <div class="section-heading">
+      <p class="eyebrow">Regla principal</p>
+      <h2>Primero caracterizo el caso.</h2>
+    </div>
+    <p class="lead">
+      La guía rápida no reemplaza las transcripciones. Sirve para estudiar con dirección: se
+      caracteriza el comportamiento, se descartan opciones y luego se defiende la decisión con
+      lenguaje de examen.
+    </p>
+    <div class="rule-grid">
+      {methodRules.map((rule) => (
+        <article>
+          <h3>{rule.title}</h3>
+          <p>{rule.body}</p>
+        </article>
+      ))}
+    </div>
+  </article>
+
+  <article class="template-card">
+    <p class="eyebrow">Frases de defensa</p>
+    <h2>Plantilla oral</h2>
+    <ol>
+      {oralTemplate.map((step) => (
+        <li>{step}</li>
+      ))}
+    </ol>
+  </article>
+</section>

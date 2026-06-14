@@ -24,8 +24,15 @@
 html {
   min-width: 320px;
   min-height: 100%;
+  font-size: clamp(15px, 0.55vw + 13px, 18px);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   background:
     linear-gradient(180deg, #050607 0%, #080b0f 54%, #040506 100%);
+}
+
+body {
+  overflow-x: hidden;
 }
 
 body {
@@ -82,7 +89,7 @@ p {
 .app-shell {
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 330px minmax(0, 1fr);
+  grid-template-columns: clamp(260px, 23vw, 340px) minmax(0, 1fr);
   transition: grid-template-columns 180ms ease;
 }
 
@@ -155,34 +162,6 @@ p {
   line-height: 1.62;
 }
 
-.search-box {
-  display: grid;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.search-box span {
-  color: var(--muted);
-  font-size: 0.85rem;
-  font-weight: 800;
-}
-
-.search-box input {
-  width: 100%;
-  min-height: 48px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 0 13px;
-  outline: none;
-  background: #07090c;
-  color: var(--ink);
-}
-
-.search-box input:focus {
-  border-color: var(--cyan);
-  box-shadow: 0 0 0 4px rgba(85, 199, 255, 0.13);
-}
-
 .section-nav {
   display: grid;
   gap: 8px;
@@ -247,7 +226,6 @@ p {
 }
 
 .sidebar-collapsed .brand-block,
-.sidebar-collapsed .search-box,
 .sidebar-collapsed .section-nav button strong {
   position: absolute;
   width: 1px;
@@ -267,6 +245,14 @@ p {
   width: 100%;
   max-width: 1540px;
   padding: clamp(16px, 3vw, 36px);
+}
+
+.section-panel {
+  display: none;
+}
+
+.section-panel.is-active {
+  display: block;
 }
 
 .hero-panel,

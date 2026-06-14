@@ -8,10 +8,12 @@ import MediCore from '../components/MediCore.astro';
 import Tanenbaum from '../components/Tanenbaum.astro';
 import DocumentReader from '../components/DocumentReader.jsx';
 import CaseSolver from '../components/CaseSolver.jsx';
+import CaseViewer from '../components/CaseViewer.jsx';
 
 const sections = [
   { id: 'inicio', label: 'Método', short: 'M' },
   { id: 'resolver', label: 'Resolver caso', short: 'R' },
+  { id: 'casos', label: 'Casos interactivos', short: 'I' },
   { id: 'transcripciones', label: 'Transcripciones', short: 'T' },
   { id: 'obsidian', label: 'Notas', short: 'N' },
   { id: 'preguntas', label: 'Preguntas', short: 'P' },
@@ -58,7 +60,7 @@ const sections = [
         ))}
       </nav>
 
-      <p class="sidebar-hint">Atajos: teclas 1–9 cambian de sección.</p>
+      <p class="sidebar-hint">Atajos: teclas 1–9 y 0 cambian de sección.</p>
     </aside>
 
     <section class="content">
@@ -85,6 +87,9 @@ const sections = [
       </div>
       <div class="section-panel" data-section="resolver">
         <CaseSolver client:visible />
+      </div>
+      <div class="section-panel" data-section="casos">
+        <CaseViewer client:visible />
       </div>
       <div class="section-panel" data-section="transcripciones">
         <DocumentReader section="transcripciones" client:visible />
@@ -141,13 +146,15 @@ const sections = [
     button.addEventListener('click', () => activate(button.getAttribute('data-target')));
   });
 
-  // Atajos de teclado 1–8, ignorando cuando se escribe en un campo.
+  // Atajos de teclado: 1–9 van a las primeras nueve secciones y 0 a la décima.
+  // Se ignora cuando se escribe en un campo.
   document.addEventListener('keydown', (event) => {
     if (event.metaKey || event.ctrlKey || event.altKey) return;
     const tag = document.activeElement?.tagName;
     if (tag === 'INPUT' || tag === 'TEXTAREA') return;
-    const index = Number(event.key) - 1;
-    if (Number.isInteger(index) && index >= 0 && index < navButtons.length) {
+    if (!/^[0-9]$/.test(event.key)) return;
+    const index = event.key === '0' ? 9 : Number(event.key) - 1;
+    if (index >= 0 && index < navButtons.length) {
       activate(navButtons[index].getAttribute('data-target'));
     }
   });

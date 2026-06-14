@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { caseProcessFields, caseDecisionFields } from '../data/course-content';
+import { caseProcessFields, caseDecisionFields, medicoreCase } from '../data/course-content';
 
 const STORAGE_KEY = 'calidad-os-case-solver-v1';
 
@@ -113,6 +113,26 @@ export default function CaseSolver() {
     setState(fresh);
   };
 
+  const loadMediCore = () => {
+    const hasContent =
+      state.caseTitle ||
+      state.processes.some((process) => Object.values(process.traits).some(Boolean)) ||
+      Object.values(state.decisions).some(Boolean);
+    if (hasContent && !confirm('Esto reemplaza lo que tienes. ¿Cargar el caso MediCore en blanco?')) {
+      return;
+    }
+    const processes = medicoreCase.processes.map((process) => {
+      const fresh = emptyProcess(`${process.id} — ${process.name}`);
+      return fresh;
+    });
+    nextLetter.current = processes.length;
+    setState({
+      caseTitle: 'Caso MediCore',
+      processes,
+      decisions: Object.fromEntries(caseDecisionFields.map((field) => [field.key, ''])),
+    });
+  };
+
   const copyExport = async () => {
     try {
       await navigator.clipboard.writeText(exportText);
@@ -140,6 +160,9 @@ export default function CaseSolver() {
           />
         </label>
         <div className="solver-actions">
+          <button type="button" className="doc-action" onClick={loadMediCore}>
+            Cargar caso MediCore
+          </button>
           <button type="button" className="doc-action" onClick={copyExport}>
             {copied ? 'Copiado ✓' : 'Copiar como examen'}
           </button>

@@ -136,7 +136,7 @@ p {
 .brand-block span,
 .eyebrow,
 .source-panel span,
-.doc-buttons button span,
+.doc-pick span,
 .mini-heading span {
   color: var(--teal);
   font-size: 0.73rem;
@@ -185,7 +185,6 @@ p {
 }
 
 .section-nav button:hover,
-.doc-buttons button:hover,
 .exam-image-row a:hover {
   transform: translateY(-1px);
   border-color: var(--line-strong);
@@ -459,33 +458,59 @@ blockquote {
   gap: 8px;
 }
 
-.doc-buttons button {
+.doc-item {
   display: grid;
-  gap: 5px;
-  min-height: 86px;
+  grid-template-columns: minmax(0, 1fr) 40px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 12px;
   background: var(--panel);
-  text-align: left;
+  overflow: hidden;
   transition:
     transform 140ms ease,
     border-color 140ms ease,
     background 140ms ease;
 }
 
-.doc-buttons button.active {
+.doc-item:hover {
+  transform: translateY(-1px);
+  border-color: var(--line-strong);
+}
+
+.doc-item.active {
   border-color: rgba(53, 224, 189, 0.72);
   background: #0d1918;
 }
 
-.doc-buttons button strong {
+.doc-pick {
+  display: grid;
+  gap: 5px;
+  min-height: 86px;
+  border: 0;
+  padding: 12px;
+  background: transparent;
+  text-align: left;
+}
+
+.doc-pick strong {
   font-size: 0.98rem;
 }
 
-.doc-buttons button small {
+.doc-fav {
+  border: 0;
+  border-left: 1px solid var(--line);
+  background: transparent;
   color: var(--faint);
-  font-weight: 750;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.doc-fav[aria-pressed='true'] {
+  color: var(--amber);
+}
+
+.doc-fav:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--amber);
 }
 
 .doc-viewer {
@@ -693,6 +718,25 @@ blockquote {
 
 .markdown-body a:hover {
   text-decoration: underline;
+}
+
+button.wiki-link {
+  border: 0;
+  padding: 0;
+  background: none;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  border-bottom: 1px dashed rgba(131, 219, 255, 0.5);
+  line-height: 1.2;
+}
+
+button.wiki-link:hover {
+  border-bottom-style: solid;
+}
+
+.markdown-body li button.wiki-link {
+  text-align: left;
 }
 
 .markdown-body code {
@@ -1445,4 +1489,43 @@ blockquote {
   left: 0;
   background: #10161d;
   color: var(--teal);
+}
+
+/* ---- Navegación por capítulos del PDF de Tanenbaum ---- */
+.pdf-chapters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pdf-chapter {
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 7px 13px;
+  background: var(--panel-2);
+  color: var(--teal);
+  font-size: 0.82rem;
+  font-weight: 800;
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    background 140ms ease;
+}
+
+.pdf-chapter:hover {
+  transform: translateY(-1px);
+  border-color: var(--teal);
+  background: #0d1918;
+}
+
+.tanenbaum-open {
+  margin-top: 8px;
+  color: var(--cyan);
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.tanenbaum-open:hover {
+  text-decoration: underline;
 }

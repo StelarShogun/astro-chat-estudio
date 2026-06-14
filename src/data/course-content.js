@@ -415,6 +415,7 @@ export const oralTemplate = [
 export const tanenbaumGuide = [
   {
     chapter: 'Cap. 2 — Procesos e hilos',
+    page: 113,
     topic: 'CPU y planificación',
     pages: 'Planificación: 2.4',
     read: [
@@ -427,6 +428,7 @@ export const tanenbaumGuide = [
   },
   {
     chapter: 'Cap. 3 — Administración de memoria',
+    page: 205,
     topic: 'Memoria',
     pages: 'Particiones, intercambio y memoria virtual: 3.1–3.3',
     read: [
@@ -439,6 +441,7 @@ export const tanenbaumGuide = [
   },
   {
     chapter: 'Cap. 4 — Sistemas de archivos',
+    page: 285,
     topic: 'Archivos',
     pages: 'Archivos e implementación: 4.1–4.3',
     read: [
@@ -451,6 +454,7 @@ export const tanenbaumGuide = [
   },
   {
     chapter: 'Cap. 5 — Entrada/salida',
+    page: 359,
     topic: 'E/S, buffer y caché',
     pages: 'Principios de E/S y DMA: 5.1',
     read: [
@@ -463,6 +467,7 @@ export const tanenbaumGuide = [
   },
   {
     chapter: 'Cap. 6 — Interbloqueos',
+    page: 463,
     topic: 'Bloqueos',
     pages: 'Detección y evitación: 6.1–6.4',
     read: [
@@ -475,6 +480,7 @@ export const tanenbaumGuide = [
   },
   {
     chapter: 'Cap. 8 — Sistemas con múltiples procesadores',
+    page: 553,
     topic: 'Distribuidos',
     pages: 'Multiprocesadores y distribuidos: 8.1–8.2',
     read: [

@@ -17,7 +17,16 @@ import { tanenbaumGuide } from '../data/course-content';
       </div>
       <a class="doc-action" href="/tanenbaum.pdf" target="_blank" rel="noreferrer">Abrir PDF</a>
     </div>
-    <object class="pdf-frame" data="/tanenbaum.pdf#view=FitH" type="application/pdf">
+
+    <nav class="pdf-chapters" aria-label="Saltar a capítulo del PDF">
+      {tanenbaumGuide.map((entry) => (
+        <button type="button" class="pdf-chapter" data-page={entry.page}>
+          {entry.chapter}
+        </button>
+      ))}
+    </nav>
+
+    <object id="tanenbaum-frame" class="pdf-frame" data="/tanenbaum.pdf#view=FitH" type="application/pdf">
       <p class="pdf-fallback">
         No se encontró <code>/tanenbaum.pdf</code> en este entorno. Copia el archivo a
         <code>public/tanenbaum.pdf</code> para verlo embebido aquí.
@@ -32,6 +41,9 @@ import { tanenbaumGuide } from '../data/course-content';
           <span>{entry.topic}</span>
           <h3>{entry.chapter}</h3>
           <p class="tanenbaum-pages">{entry.pages}</p>
+          <a class="tanenbaum-open" href={`/tanenbaum.pdf#page=${entry.page}`} target="_blank" rel="noreferrer">
+            Abrir capítulo en el PDF →
+          </a>
         </div>
         <ul>
           {entry.read.map((point) => (
@@ -43,3 +55,14 @@ import { tanenbaumGuide } from '../data/course-content';
     ))}
   </div>
 </section>
+
+<script>
+  const frame = document.getElementById('tanenbaum-frame');
+  document.querySelectorAll('.pdf-chapter').forEach((button) => {
+    button.addEventListener('click', () => {
+      const page = button.getAttribute('data-page');
+      if (frame) frame.setAttribute('data', `/tanenbaum.pdf#page=${page}&view=FitH`);
+      frame?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>

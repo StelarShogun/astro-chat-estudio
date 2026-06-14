@@ -16,9 +16,9 @@ function resolveObsidianAsset(src) {
   return `/source-material/obsidian/${src.replace(/^\.?\//, '')}`;
 }
 
-function renderInline(text, keyPrefix = 'inline') {
+function renderInline(text, keyPrefix = 'inline', handlers = {}) {
   const pattern =
-    /!\[\[([^\]]+)\]\]|!\[([^\]]*)\]\(([^)]+)\)|\[\[([^|\]#]+)(?:#[^|\]]+)?(?:\|([^\]]+))?\]\]|\[([^\]]+)\]\(([^)]+)\)|`([^`]+)`|\*\*([^*]+)\*\*/g;
+    /!\[\[([^\]]+)\]\]|!\[([^\]]*)\]\(([^)]+)\)|\[\[([^\]|#]*)(?:#([^\]|]+))?(?:\|([^\]]+))?\]\]|\[([^\]]+)\]\(([^)]+)\)|`([^`]+)`|\*\*([^*]+)\*\*/g;
   const nodes = [];
   let lastIndex = 0;
   let match;
@@ -28,11 +28,13 @@ function renderInline(text, keyPrefix = 'inline') {
       nodes.push(text.slice(lastIndex, match.index));
     }
 
+    const key = `${keyPrefix}-${match.index}`;
+
     if (match[1]) {
       const [asset, label] = match[1].split('|');
       nodes.push(
         <img
-          key={`${keyPrefix}-${match.index}`}
+          key={key}
           className="markdown-inline-image"
           src={resolveObsidianAsset(asset.trim())}
           alt={(label ?? asset).trim()}
@@ -42,29 +44,53 @@ function renderInline(text, keyPrefix = 'inline') {
     } else if (match[3]) {
       nodes.push(
         <img
-          key={`${keyPrefix}-${match.index}`}
+          key={key}
           className="markdown-inline-image"
           src={resolveObsidianAsset(match[3].trim())}
           alt={match[2] || match[3]}
           loading="lazy"
         />,
       );
-    } else if (match[4]) {
+    } else if (match[4] !== undefined && (match[4] || match[5])) {
+      // Enlace interno de Obsidian: [[Nota]], [[#Encabezado]] o [[Nota#Encabezado|alias]]
+      const note = (match[4] || '').trim();
+      const heading = (match[5] || '').trim();
+      const alias = (match[6] || '').trim();
+      const label = alias || heading || note;
       nodes.push(
-        <span key={`${keyPrefix}-${match.index}`} className="wiki-link">
-          {match[5] || match[4]}
-        </span>,
+        <button
+          type="button"
+          key={key}
+          className="wiki-link"
+          onClick={() => handlers.onWikiLink?.(note, heading)}
+        >
+          {label}
+        </button>,
       );
     } else if (match[7]) {
-      nodes.push(
-        <a key={`${keyPrefix}-${match.index}`} href={match[7]} target="_blank" rel="noreferrer">
-          {match[6]}
-        </a>,
-      );
-    } else if (match[8]) {
-      nodes.push(<code key={`${keyPrefix}-${match.index}`}>{match[8]}</code>);
+      const href = match[8];
+      if (href.startsWith('#')) {
+        nodes.push(
+          <button
+            type="button"
+            key={key}
+            className="wiki-link"
+            onClick={() => handlers.onWikiLink?.('', href.slice(1).trim())}
+          >
+            {match[7]}
+          </button>,
+        );
+      } else {
+        nodes.push(
+          <a key={key} href={href} target="_blank" rel="noreferrer">
+            {match[7]}
+          </a>,
+        );
+      }
     } else if (match[9]) {
-      nodes.push(<strong key={`${keyPrefix}-${match.index}`}>{match[9]}</strong>);
+      nodes.push(<code key={key}>{match[9]}</code>);
+    } else if (match[10]) {
+      nodes.push(<strong key={key}>{match[10]}</strong>);
     }
 
     lastIndex = pattern.lastIndex;
@@ -250,7 +276,7 @@ function isTableStart(lines, index) {
   );
 }
 
-function MarkdownContent({ text }) {
+function MarkdownContent({ text, handlers }) {
   const { data, markdown } = useMemo(() => extractExcalidrawData(text), [text]);
   const cleanText = markdown.replace(/^---[\s\S]*?---\s*/, '');
   const lines = cleanText.split(/\r?\n/);
@@ -286,7 +312,7 @@ function MarkdownContent({ text }) {
     if (heading) {
       const HeadingTag = `h${heading[1].length}`;
       blocks.push(
-        <HeadingTag key={`heading-${index}`}>{renderInline(heading[2], `heading-${index}`)}</HeadingTag>
+        <HeadingTag key={`heading-${index}`}>{renderInline(heading[2], `heading-${index}`, handlers)}</HeadingTag>
       );
       index += 1;
       continue;
@@ -313,7 +339,7 @@ function MarkdownContent({ text }) {
             <thead>
               <tr>
                 {headers.map((cell, cellIndex) => (
-                  <th key={`th-${cellIndex}`}>{renderInline(cell, `th-${index}-${cellIndex}`)}</th>
+                  <th key={`th-${cellIndex}`}>{renderInline(cell, `th-${index}-${cellIndex}`, handlers)}</th>
                 ))}
               </tr>
             </thead>
@@ -322,7 +348,7 @@ function MarkdownContent({ text }) {
                 <tr key={`tr-${rowIndex}`}>
                   {row.map((cell, cellIndex) => (
                     <td key={`td-${rowIndex}-${cellIndex}`}>
-                      {renderInline(cell, `td-${index}-${rowIndex}-${cellIndex}`)}
+                      {renderInline(cell, `td-${index}-${rowIndex}-${cellIndex}`, handlers)}
                     </td>
                   ))}
                 </tr>
@@ -340,7 +366,7 @@ function MarkdownContent({ text }) {
         quote.push(lines[index].replace(/^\s*>\s?/, ''));
         index += 1;
       }
-      blocks.push(<blockquote key={`quote-${index}`}>{renderInline(quote.join(' '), `quote-${index}`)}</blockquote>);
+      blocks.push(<blockquote key={`quote-${index}`}>{renderInline(quote.join(' '), `quote-${index}`, handlers)}</blockquote>);
       continue;
     }
 
@@ -356,7 +382,7 @@ function MarkdownContent({ text }) {
       blocks.push(
         <ListTag key={`list-${index}`}>
           {items.map((item, itemIndex) => (
-            <li key={`li-${itemIndex}`}>{renderInline(item, `li-${index}-${itemIndex}`)}</li>
+            <li key={`li-${itemIndex}`}>{renderInline(item, `li-${index}-${itemIndex}`, handlers)}</li>
           ))}
         </ListTag>,
       );
@@ -377,7 +403,7 @@ function MarkdownContent({ text }) {
       paragraph.push(lines[index]);
       index += 1;
     }
-    blocks.push(<p key={`p-${index}`}>{renderInline(paragraph.join(' '), `p-${index}`)}</p>);
+    blocks.push(<p key={`p-${index}`}>{renderInline(paragraph.join(' '), `p-${index}`, handlers)}</p>);
   }
 
   return (
@@ -388,13 +414,44 @@ function MarkdownContent({ text }) {
   );
 }
 
+const FAV_KEY = 'calidad-os-fav-docs';
+
 export default function DocumentReader({ section }) {
   const docs = getSourceDocs(section);
   const [activeDocId, setActiveDocId] = useState(docs[0]?.id);
   const [documentText, setDocumentText] = useState('');
   const [status, setStatus] = useState('idle');
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [favorites, setFavorites] = useState(() => new Set());
   const viewerRef = useRef(null);
+
+  useEffect(() => {
+    try {
+      const stored = JSON.parse(localStorage.getItem(FAV_KEY) || '[]');
+      setFavorites(new Set(stored));
+    } catch {
+      // Sin almacenamiento disponible.
+    }
+  }, []);
+
+  const toggleFavorite = (id) => {
+    setFavorites((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      try {
+        localStorage.setItem(FAV_KEY, JSON.stringify([...next]));
+      } catch {
+        // Sin almacenamiento disponible.
+      }
+      return next;
+    });
+  };
+
+  const sortedDocs = useMemo(
+    () => [...docs].sort((a, b) => (favorites.has(b.id) ? 1 : 0) - (favorites.has(a.id) ? 1 : 0)),
+    [docs, favorites],
+  );
 
   useEffect(() => {
     const onChange = () => setIsFullscreen(document.fullscreenElement === viewerRef.current);
@@ -457,18 +514,36 @@ export default function DocumentReader({ section }) {
       );
   }, [documentText]);
 
+  const normalize = (value) =>
+    value
+      .replace(/[`*]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .toLowerCase();
+
   const scrollToHeading = (text) => {
     const root = viewerRef.current;
-    if (!root) return;
+    if (!root) return false;
+    const target = normalize(text);
     const headings = root.querySelectorAll(
       '.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4',
     );
+    let fallback = null;
     for (const heading of headings) {
-      if (heading.textContent.trim() === text) {
+      const current = normalize(heading.textContent);
+      if (current === target) {
         heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        return;
+        return true;
+      }
+      if (!fallback && (current.startsWith(target) || target.startsWith(current))) {
+        fallback = heading;
       }
     }
+    if (fallback) {
+      fallback.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return true;
+    }
+    return false;
   };
 
   const scrollToTop = () => {
@@ -476,6 +551,27 @@ export default function DocumentReader({ section }) {
       ?.querySelector('.markdown-body, .document-text')
       ?.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // Enlaces internos de Obsidian: [[#Encabezado]] salta dentro de la nota;
+  // [[Otra nota]] cambia de documento (y opcionalmente salta a su encabezado).
+  const onWikiLink = (note, heading) => {
+    if (note) {
+      const target = docs.find(
+        (doc) =>
+          doc.title === note ||
+          doc.title.replace(/\.(md|excalidraw)$/i, '') === note ||
+          normalize(doc.title) === normalize(note),
+      );
+      if (target) {
+        setActiveDocId(target.id);
+        if (heading) setTimeout(() => scrollToHeading(heading), 600);
+        return;
+      }
+    }
+    if (heading) scrollToHeading(heading);
+  };
+
+  const handlers = { onWikiLink };
 
   const kindLabel = (doc) =>
     doc.format === 'excalidraw' ? 'Mapa' : doc.kind === 'Obsidian' ? 'Nota' : 'Transcripción';
@@ -488,16 +584,23 @@ export default function DocumentReader({ section }) {
           <strong>{docs.length}</strong>
         </div>
         <div className="doc-buttons">
-          {docs.map((doc) => (
-            <button
-              key={doc.id}
-              type="button"
-              className={activeDoc?.id === doc.id ? 'active' : ''}
-              onClick={() => setActiveDocId(doc.id)}
-            >
-              <span>{kindLabel(doc)}</span>
-              <strong>{doc.title}</strong>
-            </button>
+          {sortedDocs.map((doc) => (
+            <div className={`doc-item${activeDoc?.id === doc.id ? ' active' : ''}`} key={doc.id}>
+              <button type="button" className="doc-pick" onClick={() => setActiveDocId(doc.id)}>
+                <span>{kindLabel(doc)}</span>
+                <strong>{doc.title}</strong>
+              </button>
+              <button
+                type="button"
+                className="doc-fav"
+                aria-pressed={favorites.has(doc.id)}
+                aria-label={favorites.has(doc.id) ? 'Quitar de favoritos' : 'Marcar como favorito'}
+                title={favorites.has(doc.id) ? 'Quitar de favoritos' : 'Marcar como favorito'}
+                onClick={() => toggleFavorite(doc.id)}
+              >
+                {favorites.has(doc.id) ? '★' : '☆'}
+              </button>
+            </div>
           ))}
         </div>
       </aside>
@@ -541,7 +644,7 @@ export default function DocumentReader({ section }) {
             {status === 'error' && <p className="error-note">No se pudo cargar el contenido.</p>}
             {status === 'ready' &&
               (activeDoc.format === 'md' || activeDoc.format === 'excalidraw') && (
-                <MarkdownContent text={documentText} />
+                <MarkdownContent text={documentText} handlers={handlers} />
               )}
             {status === 'ready' && activeDoc.format !== 'md' && activeDoc.format !== 'excalidraw' && (
               <pre className="document-text" aria-label={`Texto completo de ${activeDoc.title}`}>

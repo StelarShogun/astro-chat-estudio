@@ -347,8 +347,7 @@ p {
 .rule-grid,
 .question-grid,
 .theory-grid,
-.module-grid,
-.ux-grid {
+.module-grid {
   display: grid;
   gap: 12px;
 }
@@ -357,8 +356,7 @@ p {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
-.rule-grid article,
-.ux-grid article {
+.rule-grid article {
   border-left: 3px solid var(--teal);
   padding: 8px 0 8px 14px;
   background: transparent;
@@ -389,15 +387,6 @@ h4 {
   color: var(--ink);
   font-weight: 750;
   line-height: 1.45;
-}
-
-.ux-grid {
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-}
-
-.ux-grid span {
-  color: var(--amber);
-  font-weight: 950;
 }
 
 .stack {
@@ -594,6 +583,173 @@ blockquote {
   font:
     0.98rem/1.72 "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   tab-size: 2;
+}
+
+.markdown-body {
+  max-height: 78vh;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: clamp(18px, 3vw, 34px);
+  background: #06080a;
+  color: #edf2f8;
+  line-height: 1.72;
+}
+
+.markdown-body > *:first-child {
+  margin-top: 0;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin: 1.6em 0 0.55em;
+  line-height: 1.12;
+}
+
+.markdown-body h1 {
+  font-size: clamp(2rem, 4vw, 3.8rem);
+}
+
+.markdown-body h2 {
+  border-top: 1px solid var(--line);
+  padding-top: 1em;
+  font-size: clamp(1.55rem, 2.5vw, 2.4rem);
+}
+
+.markdown-body h3 {
+  color: #dff7ff;
+  font-size: 1.35rem;
+}
+
+.markdown-body p {
+  margin: 0.85em 0;
+}
+
+.markdown-body a,
+.wiki-link {
+  color: #83dbff;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.markdown-body a:hover {
+  text-decoration: underline;
+}
+
+.markdown-body code {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.13em 0.4em;
+  background: #10161d;
+  color: #bdf4e4;
+  font-family: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.92em;
+}
+
+.markdown-code {
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+  background: #0a0f14;
+}
+
+.markdown-code code {
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  display: grid;
+  gap: 0.45em;
+  margin: 0.8em 0 1em;
+  padding-left: 1.35em;
+}
+
+.markdown-body li {
+  padding-left: 0.25em;
+}
+
+.markdown-body hr {
+  height: 1px;
+  border: 0;
+  margin: 1.6em 0;
+  background: var(--line);
+}
+
+.markdown-table-wrap {
+  width: 100%;
+  overflow: auto;
+  margin: 1.2em 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.markdown-table-wrap table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+}
+
+.markdown-table-wrap th,
+.markdown-table-wrap td {
+  border-bottom: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  padding: 12px 14px;
+  vertical-align: top;
+}
+
+.markdown-table-wrap th {
+  background: #10161d;
+  color: var(--teal);
+  text-align: left;
+}
+
+.markdown-table-wrap tr:last-child td {
+  border-bottom: 0;
+}
+
+.markdown-inline-image {
+  display: block;
+  width: min(100%, 920px);
+  max-height: 680px;
+  object-fit: contain;
+  margin: 12px 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #000;
+}
+
+.markdown-table-wrap .markdown-inline-image {
+  width: min(320px, 100%);
+  max-height: 220px;
+  margin: 0;
+}
+
+.excalidraw-stage {
+  width: 100%;
+  height: min(78vh, 820px);
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin: 0 0 22px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    #050607;
+  background-size: 42px 42px;
+}
+
+.excalidraw-stage svg {
+  display: block;
+  width: max(100%, 1500px);
+  height: max(100%, 900px);
 }
 
 .split-hero {

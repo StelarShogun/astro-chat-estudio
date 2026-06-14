@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import Icon from './Icon.jsx';
 
 // Tabla editable reutilizable (controlada por el padre).
 //   - Edita celdas, agrega/elimina filas y restaura la tabla original.
@@ -67,8 +68,8 @@ export default function EditableTable({ table, rows, onChange }) {
           <h4>{table.name}</h4>
           {table.note && <p className="editable-table-note">{table.note}</p>}
         </div>
-        <button type="button" className="doc-action" onClick={restore}>
-          Restaurar original
+        <button type="button" className="doc-action" onClick={restore} title="Restaurar la tabla original">
+          <Icon name="restaurar" /> Restaurar
         </button>
       </header>
 
@@ -106,9 +107,10 @@ export default function EditableTable({ table, rows, onChange }) {
                       className="row-remove"
                       onClick={() => removeRow(rowIndex)}
                       aria-label={`Eliminar fila ${rowIndex + 1}`}
+                      title="Eliminar fila"
                       disabled={rows.length <= 1}
                     >
-                      ×
+                      <Icon name="quitar" size={16} />
                     </button>
                   </td>
                 )}
@@ -120,8 +122,8 @@ export default function EditableTable({ table, rows, onChange }) {
 
       <div className="editable-table-foot">
         {table.allowAddRows && (
-          <button type="button" className="solver-add" onClick={addRow}>
-            + Agregar fila
+          <button type="button" className="solver-add" onClick={addRow} title="Agregar una fila">
+            <Icon name="agregar" size={16} /> Agregar fila
           </button>
         )}
         {invalidCount > 0 && (

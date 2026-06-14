@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { caseProcessFields, caseDecisionFields, medicoreCase } from '../data/course-content';
+import Icon from './Icon.jsx';
 
 const STORAGE_KEY = 'calidad-os-case-solver-v1';
 
@@ -160,14 +161,14 @@ export default function CaseSolver() {
           />
         </label>
         <div className="solver-actions">
-          <button type="button" className="doc-action" onClick={loadMediCore}>
-            Cargar caso MediCore
+          <button type="button" className="doc-action" onClick={loadMediCore} title="Precargar el caso MediCore">
+            <Icon name="medicore" /> Cargar MediCore
           </button>
-          <button type="button" className="doc-action" onClick={copyExport}>
-            {copied ? 'Copiado ✓' : 'Copiar como examen'}
+          <button type="button" className="doc-action" onClick={copyExport} title="Copiar como respuesta de examen">
+            <Icon name={copied ? 'correcto' : 'copiar'} /> {copied ? 'Copiado' : 'Copiar'}
           </button>
-          <button type="button" className="doc-action solver-danger" onClick={reset}>
-            Reiniciar
+          <button type="button" className="doc-action solver-danger" onClick={reset} title="Borrar y empezar de cero">
+            <Icon name="reiniciar" /> Reiniciar
           </button>
         </div>
       </div>
@@ -191,9 +192,10 @@ export default function CaseSolver() {
                   type="button"
                   className="solver-remove"
                   aria-label={`Eliminar ${process.name}`}
+                  title="Eliminar proceso"
                   onClick={() => removeProcess(process.id)}
                 >
-                  ×
+                  <Icon name="quitar" size={16} />
                 </button>
               )}
             </header>
@@ -215,8 +217,8 @@ export default function CaseSolver() {
         ))}
       </div>
 
-      <button type="button" className="solver-add" onClick={addProcess}>
-        + Agregar proceso
+      <button type="button" className="solver-add" onClick={addProcess} title="Agregar un proceso">
+        <Icon name="agregar" size={16} /> Agregar proceso
       </button>
 
       <div className="mini-heading">

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { sourceDocuments } from '../data/source-manifest';
+import Icon from './Icon.jsx';
 
 const transcriptionDocs = sourceDocuments.filter((doc) => doc.kind === 'Transcripciones');
 const obsidianDocs = sourceDocuments.filter((doc) => doc.kind === 'Obsidian');
@@ -598,7 +599,7 @@ export default function DocumentReader({ section }) {
                 title={favorites.has(doc.id) ? 'Quitar de favoritos' : 'Marcar como favorito'}
                 onClick={() => toggleFavorite(doc.id)}
               >
-                {favorites.has(doc.id) ? '★' : '☆'}
+                <Icon name={favorites.has(doc.id) ? 'estrellaLlena' : 'estrella'} size={18} />
               </button>
             </div>
           ))}
@@ -615,13 +616,19 @@ export default function DocumentReader({ section }) {
               </div>
               <div className="doc-actions">
                 <button type="button" className="doc-action" onClick={scrollToTop} title="Ir al inicio del documento">
-                  ↑ Inicio
+                  <Icon name="arriba" /> Inicio
                 </button>
-                <button type="button" className="doc-action" onClick={toggleFullscreen}>
-                  {isFullscreen ? 'Salir de pantalla completa' : 'Pantalla completa'}
+                <button
+                  type="button"
+                  className="doc-action"
+                  onClick={toggleFullscreen}
+                  title={isFullscreen ? 'Salir de pantalla completa' : 'Ver en pantalla completa'}
+                >
+                  <Icon name={isFullscreen ? 'pantallaSalir' : 'pantalla'} />{' '}
+                  {isFullscreen ? 'Salir' : 'Pantalla completa'}
                 </button>
-                <a className="doc-action" href={activeDoc.path} target="_blank" rel="noreferrer">
-                  Abrir original
+                <a className="doc-action" href={activeDoc.path} target="_blank" rel="noreferrer" title="Abrir el archivo original">
+                  <Icon name="abrir" /> Abrir original
                 </a>
               </div>
             </header>

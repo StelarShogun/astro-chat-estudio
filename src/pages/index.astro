@@ -9,18 +9,19 @@ import Tanenbaum from '../components/Tanenbaum.astro';
 import DocumentReader from '../components/DocumentReader.jsx';
 import CaseSolver from '../components/CaseSolver.jsx';
 import CaseViewer from '../components/CaseViewer.jsx';
+import Icon from '../components/Icon.astro';
 
 const sections = [
-  { id: 'inicio', label: 'Método', short: 'M' },
-  { id: 'resolver', label: 'Resolver caso', short: 'R' },
-  { id: 'casos', label: 'Examen interactivo', short: 'I' },
-  { id: 'transcripciones', label: 'Transcripciones', short: 'T' },
-  { id: 'obsidian', label: 'Notas', short: 'N' },
-  { id: 'preguntas', label: 'Preguntas', short: 'P' },
-  { id: 'examenes', label: 'Exámenes', short: 'E' },
-  { id: 'medicore', label: 'Caso MediCore', short: 'C' },
-  { id: 'teoria', label: 'Teoría guía', short: 'G' },
-  { id: 'tanenbaum', label: 'Tanenbaum', short: 'L' },
+  { id: 'inicio', label: 'Método', icon: 'metodo', hint: 'Cómo razonar el examen' },
+  { id: 'resolver', label: 'Resolver caso', icon: 'resolver', hint: 'Plantilla en blanco' },
+  { id: 'casos', label: 'Examen interactivo', icon: 'examen', hint: 'Practica y recibe feedback' },
+  { id: 'transcripciones', label: 'Transcripciones', icon: 'transcripcion', hint: 'Clases en texto' },
+  { id: 'obsidian', label: 'Notas', icon: 'notas', hint: 'Notas del curso' },
+  { id: 'preguntas', label: 'Preguntas', icon: 'preguntas', hint: 'Banco de preguntas' },
+  { id: 'examenes', label: 'Exámenes', icon: 'examenes', hint: 'Fotos de los exámenes' },
+  { id: 'medicore', label: 'Caso MediCore', icon: 'medicore', hint: 'Caso resuelto' },
+  { id: 'teoria', label: 'Teoría guía', icon: 'teoria', hint: 'Resumen por tema' },
+  { id: 'tanenbaum', label: 'Tanenbaum', icon: 'libro', hint: 'Libro por capítulo' },
 ];
 ---
 
@@ -35,7 +36,8 @@ const sections = [
           aria-label="Contraer dashboard"
           aria-expanded="true"
         >
-          ‹
+          <span class="when-open"><Icon name="contraer" size={20} /></span>
+          <span class="when-collapsed"><Icon name="expandir" size={20} /></span>
         </button>
         <div class="brand-block">
           <span>Sistemas Operativos</span>
@@ -51,11 +53,14 @@ const sections = [
             class={index === 0 ? 'active' : ''}
             data-target={section.id}
             aria-current={index === 0 ? 'page' : undefined}
+            title={`${section.label} — ${section.hint}`}
           >
-            <span data-num={String(index + 1).padStart(2, '0')} data-short={section.short}>
-              {String(index + 1).padStart(2, '0')}
+            <span class="nav-icon"><Icon name={section.icon} size={20} /></span>
+            <span class="nav-text">
+              <strong>{section.label}</strong>
+              <small>{section.hint}</small>
             </span>
-            <strong>{section.label}</strong>
+            <span class="nav-key">{index === 9 ? '0' : index + 1}</span>
           </button>
         ))}
       </nav>
@@ -159,19 +164,11 @@ const sections = [
     }
   });
 
-  const syncNumbers = (collapsed) => {
-    document.querySelectorAll('.section-nav button span').forEach((span) => {
-      span.textContent = collapsed ? span.getAttribute('data-short') : span.getAttribute('data-num');
-    });
-  };
-
   const setCollapsed = (collapsed) => {
     shell.classList.toggle('sidebar-collapsed', collapsed);
     shell.classList.toggle('sidebar-open', !collapsed);
     collapseButton.setAttribute('aria-expanded', String(!collapsed));
     collapseButton.setAttribute('aria-label', collapsed ? 'Abrir dashboard' : 'Contraer dashboard');
-    collapseButton.textContent = collapsed ? '›' : '‹';
-    syncNumbers(collapsed);
     try {
       localStorage.setItem(STORAGE_SIDEBAR, String(collapsed));
     } catch {}

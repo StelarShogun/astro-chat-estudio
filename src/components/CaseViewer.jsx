@@ -3,6 +3,7 @@ import { caseModules } from '../data/cases.js';
 import { evaluateAnswer } from '../lib/caseEvaluator.js';
 import EditableTable from './EditableTable.jsx';
 import QuestionAnswer from './QuestionAnswer.jsx';
+import Icon from './Icon.jsx';
 
 // Visor de casos por módulo. Compone contexto, problema, material de
 // referencia, tablas editables, diagnóstico de consistencia en vivo y
@@ -86,8 +87,14 @@ function ConsistencyPanel({ issues, title }) {
       <summary>
         <span>{title || 'Diagnóstico de consistencia (en vivo)'}</span>
         <span className="consistency-badges">
-          {errors.length > 0 && <span className="consistency-badge is-error">{errors.length} errores</span>}
-          <span className="consistency-badge is-warn">{warns.length} avisos</span>
+          {errors.length > 0 && (
+            <span className="consistency-badge is-error">
+              <Icon name="alerta" size={14} /> {errors.length} errores
+            </span>
+          )}
+          <span className="consistency-badge is-warn">
+            <Icon name="mejorar" size={14} /> {warns.length} avisos
+          </span>
         </span>
       </summary>
       {issues.length === 0 ? (
@@ -215,14 +222,14 @@ function CaseContent({ activeCase }) {
           </div>
         </div>
         <div className="case-actions">
-          <button type="button" className="doc-action" onClick={copyExport}>
-            {copied ? 'Copiado ✓' : 'Copiar todo'}
+          <button type="button" className="doc-action" onClick={copyExport} title="Copiar tablas y respuestas">
+            <Icon name={copied ? 'correcto' : 'copiar'} /> {copied ? 'Copiado' : 'Copiar'}
           </button>
-          <button type="button" className="doc-action" onClick={downloadExport}>
-            Descargar .md
+          <button type="button" className="doc-action" onClick={downloadExport} title="Descargar todo en .md">
+            <Icon name="descargar" /> Descargar
           </button>
-          <button type="button" className="doc-action solver-danger" onClick={resetCase}>
-            Reiniciar caso
+          <button type="button" className="doc-action solver-danger" onClick={resetCase} title="Borrar respuestas y ediciones">
+            <Icon name="reiniciar" /> Reiniciar
           </button>
         </div>
       </div>

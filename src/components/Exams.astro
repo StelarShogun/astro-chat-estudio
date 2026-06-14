@@ -1,5 +1,6 @@
 ---
 import { examPhotoSets } from '../data/course-content';
+import Icon from './Icon.astro';
 ---
 
 <section class="stack">
@@ -20,7 +21,7 @@ import { examPhotoSets } from '../data/course-content';
           {exam.images.map((image) => (
             <a href={image.src} target="_blank" rel="noreferrer" title="Abrir imagen en tamaño completo">
               <img src={image.src} alt={image.label} loading="lazy" />
-              <span>{image.label}</span>
+              <span><Icon name="abrir" size={15} /> {image.label}</span>
             </a>
           ))}
         </div>

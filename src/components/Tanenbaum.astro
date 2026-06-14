@@ -1,5 +1,6 @@
 ---
 import { tanenbaumGuide } from '../data/course-content';
+import Icon from './Icon.astro';
 ---
 
 <section class="stack">
@@ -15,13 +16,13 @@ import { tanenbaumGuide } from '../data/course-content';
         <h3>Sistemas Operativos Modernos</h3>
         <p>El PDF se abre desde tu equipo. Tanenbaum es apoyo: la decisión se defiende por comportamiento, no por la definición del libro.</p>
       </div>
-      <a class="doc-action" href="/tanenbaum.pdf" target="_blank" rel="noreferrer">Abrir PDF</a>
+      <a class="doc-action" href="/tanenbaum.pdf" target="_blank" rel="noreferrer" title="Abrir el PDF completo"><Icon name="abrir" /> Abrir PDF</a>
     </div>
 
     <nav class="pdf-chapters" aria-label="Saltar a capítulo del PDF">
       {tanenbaumGuide.map((entry) => (
-        <button type="button" class="pdf-chapter" data-page={entry.page}>
-          {entry.chapter}
+        <button type="button" class="pdf-chapter" data-page={entry.page} title={`Saltar a ${entry.chapter}`}>
+          <Icon name="capitulo" size={15} /> {entry.chapter}
         </button>
       ))}
     </nav>
@@ -42,7 +43,7 @@ import { tanenbaumGuide } from '../data/course-content';
           <h3>{entry.chapter}</h3>
           <p class="tanenbaum-pages">{entry.pages}</p>
           <a class="tanenbaum-open" href={`/tanenbaum.pdf#page=${entry.page}`} target="_blank" rel="noreferrer">
-            Abrir capítulo en el PDF →
+            <Icon name="abrir" size={15} /> Abrir capítulo
           </a>
         </div>
         <ul>

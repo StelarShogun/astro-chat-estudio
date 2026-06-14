@@ -1,3 +1,5 @@
+import Icon from './Icon.jsx';
+
 // Panel de retroalimentación formativa. Nunca dice "correcto/incorrecto":
 // siempre estructura el feedback en bloques. Recibe el objeto que produce
 // evaluateAnswer() en src/lib/caseEvaluator.js.
@@ -10,11 +12,13 @@ const LEVEL_CLASS = {
   Insuficiente: 'level-insuficiente',
 };
 
-function Block({ title, items, tone, emptyText }) {
+function Block({ title, items, tone, emptyText, icon }) {
   const hasItems = items && items.length > 0;
   return (
     <div className={`feedback-block ${tone}`}>
-      <h4>{title}</h4>
+      <h4>
+        <Icon name={icon} size={15} /> {title}
+      </h4>
       {hasItems ? (
         <ul>
           {items.map((item, index) => (
@@ -35,7 +39,9 @@ export default function FeedbackPanel({ feedback }) {
   return (
     <div className="feedback-panel" role="status" aria-live="polite">
       <div className="feedback-head">
-        <span className={`feedback-level ${levelClass}`}>{feedback.level}</span>
+        <span className={`feedback-level ${levelClass}`}>
+          <Icon name="nivel" size={15} /> {feedback.level}
+        </span>
         <div className="feedback-score" aria-label={`Cobertura estimada ${feedback.score} por ciento`}>
           <div className="feedback-bar">
             <span style={{ width: `${feedback.score}%` }} />
@@ -46,31 +52,37 @@ export default function FeedbackPanel({ feedback }) {
 
       <Block
         title="Aspectos correctos"
+        icon="correcto"
         items={feedback.correct}
         tone="is-good"
         emptyText="Todavía no aparecen elementos clave del caso en tu respuesta."
       />
       <Block
         title="Aspectos por mejorar"
+        icon="mejorar"
         items={feedback.improve}
         tone="is-improve"
         emptyText="Sin observaciones: tu respuesta cubre lo esperado."
       />
       <Block
         title="Conceptos ausentes"
+        icon="ausente"
         items={feedback.missing}
         tone="is-missing"
         emptyText="No faltan conceptos obligatorios."
       />
       <Block
         title="Contradicciones detectadas"
+        icon="contradiccion"
         items={feedback.contradictions}
         tone="is-contra"
         emptyText="No se detectaron contradicciones con el material."
       />
 
       <div className="feedback-block is-reco">
-        <h4>Recomendación concreta</h4>
+        <h4>
+          <Icon name="recomendacion" size={15} /> Recomendación concreta
+        </h4>
         <p>{feedback.recommendation}</p>
       </div>
     </div>

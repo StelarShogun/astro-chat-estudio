@@ -1,0 +1,701 @@
+[Orador 1] (0:02 - 5:28)
+Ok, estamos listos, ahí estamos grabando Jorge, Jorge, una preguntilla, ¿y los proyectos? Las notas ya están Ah, ¿verdad? Sí, sí, ahora lo que hacemos es que al finalizar la clase, cada uno me manda una persona, un mensaje por grupo y les doy la nota, ¿ok?
+
+Ah, eso es lo bueno, eso es lo bueno Ok, ok, entonces, vamos a hacer esto grande aquí, ok, estamos listos ahí Bueno, cuando hablamos de memoria, cuando hablamos de memoria dentro del ciclo ejecución, ¿verdad? Que dentro del ciclo ejecución teníamos que un proceso es seleccionado por el planificador para entrar a ejecución Y que este tenía dos posibilidades, tengo una cola de listos que ven acá Una era devolverse de nuevo a listo, que aquí fallamos muchísimo en el examen Tuvimos serios, serios, serios problemas para poder identificar esto La única posibilidad de que este proceso pase de ejecución a listo es cuando se está ejecutando el run-robin No hay otra posibilidad de que esto no se devuelva aquí que no sea cuando se está ejecutando el run-robin, ¿ok? Entonces cuando se está ejecutando el run-robin, se termina el quantum y entonces por eso el proceso de nuevo vuelto a listo Se está ejecutando el run-robin y además el proceso, una vez concluido su tiempo de ejecución, aún tiene datos para avanzar ejecutando, ¿ok? Y la otra posibilidad es que el proceso vaya de ejecución a espera por entrada y salida En cuyo caso ya iba a ir a los diferentes dispositivos a una cola específica, ¿ok?
+
+Bueno, teniendo esto en consideración, teniendo esto en consideración, entonces tenemos que entender que nosotros hablamos de dos figuras importantes, ¿ok? Uno, el planificador de largo plazo, ¿ok? Que el planificador de largo plazo es el que se encargaba de estar atendiendo las solicitudes nuevas para ingresar al ciclo de ejecución, ¿ok?
+
+Ese era el planificador de largo plazo, pero también teníamos aquí, internamente, teníamos el planificador de corto plazo, ¿ok? Que el planificador de corto plazo se encargaba principalmente de decir, de esta cola que está acá, quién entra a ejecución, ¿ok? Entonces esto es el planificador de corto plazo, ¿ok?
+
+Miren, por favor, si no leen, me avisan para escribir más largo, para hacer alguna corrección, ¿ok? Entonces tengo aquí planificador de corto plazo, ¿ok? Ahora entra a jugar un concepto importante, ¿ok?
+
+Ese concepto le llamamos memoria y lo vamos a simplificar de esta manera, ¿ok? Esa va a ser nuestra representación, ¿ok? Entonces, ¿cómo visualizamos esta memoria?
+
+Bueno, en realidad la vamos a imaginar como un locker, ¿ok? Imagínese justamente como un locker. ¿Para qué funciona un locker?
+
+Para guardar cosas. Ok, para guardar cosas. ¿Quiénes guardan cosas?
+
+[Orador 2] (5:31 - 5:32)
+No es para guardar bien.
+
+[Orador 1] (5:34 - 5:37)
+Vamos al concepto primero. ¿Quién guarda cosas en un locker?
+
+[Orador 2] (5:41 - 5:43)
+Yo no sé qué es un locker.
+
+[Orador 1] (5:44 - 5:48)
+¿Un locker? No sé, ¿alguien tenía en el colegio un locker?
+
+[Orador 2] (5:50 - 5:52)
+No, era donde uno ponía los bolsos.
+
+[Orador 1] (5:52 - 6:02)
+Ajá, sí, ok. Sí, ok, eso es un locker, ok. ¿Qué guardaban en ese locker?
+
+[Orador 7] (6:06 - 6:06)
+Los bolsos.
+
+[Orador 1] (6:07 - 8:39)
+Ok, bueno, normalmente decimos que en el locker se guardan cosas de una persona, ¿verdad? Sí, así vamos a imaginar la memoria. La memoria es un locker en donde se guardan cosas de quién, de cada proceso.
+
+Entonces, cada bloque de estos está asignado a un proceso específico, ¿ok? Entonces, lo que vamos a entender es que, vamos a completar ahora sí el ciclo de ejecución. Un proceso pasa de ejecución a espera por entrada y salida, en espera de que ese dispositivo atienda esa petición.
+
+¿Cuál petición? Del dato que quiere sacar o del dato que está solicitando. Que puede ser una parte de un archivo, un archivo, una impresión, cualquier otro detalle, ¿ok?
+
+Normalmente, los dispositivos que son los que nos devuelven algo, son los que hacen uso de esos espacios de memoria. ¿Por qué? Porque una petición es, por ejemplo, ir a traer, digamos, si el proceso de ejecución es una consulta y esa consulta tiene implícitas dos o tres tablas, entonces yo tengo que estar, yo tengo que ir a consultar esas tablas.
+
+Esas tablas, cuando el dispositivo de entrada y salida, en este caso disco duro, las tenga ubicadas en su buffer, ¿a dónde creen ustedes que las pasa? Bueno, las va a pasar ahora del dispositivo de entrada y salida, ¿ok? De este dispositivo, ¿ok?
+
+Va a venir de su espacio del buffer, ¿verdad? Va a venir, ahora sí, al bloquecito correspondiente de ese proceso, ¿ok? Una vez que eso está copiado, una vez que el dispositivo de entrada y salida atiende la petición, tiene todo en el buffer, ya verificó que está bien, entonces viene y le dice al planificador, le dice, deme la dirección de memoria de este proceso para copiarle lo que me está solicitando ahí.
+
+Finalmente, él viene y hace la copia. Cuando termina de copiar, le dice al planificador de corto plazo, cambia el email de estado porque ya lo que él solicitó ya está copiado y lo tiene en su bloque de memoria. Ahora ese proceso entonces pasa de espera por entrada y salida y ahora se coloca en la cola de listo.
+
+Es el proceso que acaba de llegar acá, ¿ok? Entonces, ahora sí, ¿quién saca a un proceso de... Denme un chancecito, porque es que vieron que ayer a un estudiante le robaron una compu y la compu era de la U.
+
+[Orador 7] (8:39 - 9:54)
+Denme un toquecito. Ok, ok.
+
+[Orador 1] (9:55 - 10:59)
+Qué torta con eso, vieron. Hola, Patri. Sí, sí, ajá, Patri, no se le olvide darle al estudiante los datos de número de serie, número de placa, todo el detalle de la compu porque eso tiene que presentarlo en los tribunales.
+
+Ok, gracias. Miren qué bronca más grande es eso, pero bueno. Por si les llega a pasar, inmediatamente es indispensable que ustedes ubiquen a alguna persona testigo, eso es indispensable, ¿verdad?
+
+Y lo segundo es acudir a la instancia judicial para que les tomen la declaración de la denuncia, porque si ustedes no hacen este procedimiento, la instancia administrativa les va a cobrar el activo, ¿verdad? Entonces, que uno no esté exento tampoco es que esas cosas pasen, ¿verdad? Bueno, vamos a seguir.
+
+Entonces, este es el escenario, ¿sí? Tenemos bien claro cuándo es que un proceso pasa a listo. Dígame.
+
+[Orador 11] (11:00 - 11:04)
+Dice Heiner, si lo puede aceptar, por favor. ¿Quién? Heiner.
+
+[Orador 1] (11:04 - 11:27)
+Vamos a hacer una cosa, vean. Es que, ¿quién quiere colaborarme como host para que esté dando el acceso, por favor? Porque es que, miren, es que me queda muy incómodo estar, digamos, tener la pantalla aquí a vista de solicitudes y ese detalle.
+
+Pero tal vez alguien me ayude, se lo agradezco mucho.
+
+[Orador 11] (11:31 - 11:33)
+Bien, agrédyanme a mí, profe, ahí como host entonces.
+
+[Orador 1] (11:33 - 11:34)
+Ajá, ¿quién es?
+
+[Orador 11] (11:35 - 11:36)
+Pedro Vega.
+
+[Orador 1] (11:37 - 11:41)
+Pedro Vega, no está Pedro Vega. No aparece como Vega, nada más.
+
+[Orador 7] (11:43 - 11:43)
+Ajá.
+
+[Orador 1] (11:43 - 11:54)
+Ok, ok, listo. Ok. Pedro, revisa a ver si usted lo puede admitir a él.
+
+¿No le aparece?
+
+[Orador 11] (11:59 - 12:02)
+Profe, por el momento ya lo aceptó, entonces, ¿cómo lo voy a admitir?
+
+[Orador 1] (12:03 - 12:03)
+No, no, no.
+
+[Orador 11] (12:03 - 12:04)
+Ya me dijo que ya lo admitió.
+
+[Orador 1] (12:05 - 12:10)
+Ah, ya lo acepté, ok, ok. Pero ya usted tiene la asignación, me imagino que le va a aparecer a usted. Ok.
+
+[Orador 11] (12:10 - 12:12)
+Sí, sí, ya me apareció que ya se admitió.
+
+[Orador 1] (12:12 - 13:50)
+Ah, perfecto, perfecto. Ok, ok. Gracias.
+
+Muchas gracias, Pedro. Ok, entonces nos queda clarísimo, ¿verdad? Que ahora sí podamos entender cuándo es que un dispositivo, perdón, cuándo es que un proceso pasa del estado de espera por entrada y salida a listo.
+
+Es decir, hasta que el dispositivo que atiende la petición la ha atendido, ha verificado los datos y los ha trasladado al bloque de memoria del proceso a cual corresponde. Hasta que eso pase, él va a generar la interrupción al planificador de corto plazo para decirle, culano, cámbiale ahora sí el estado al proceso porque ya lo que él solicitaba ya lo tiene. Ya se lo acabo yo de escribir en su bloque de dirección de memoria.
+
+Ok, entonces, a esto, a esta sección es la que le llamamos el planificador de mediano plazo. Ok, ¿quién es el planificador de mediano plazo entonces? El planificador de mediano plazo es el que se encarga de administrar esto acá.
+
+Ok, esto es el planificador de mediano plazo. Él es quien lleva el control de lo que está pasando en memoria. Ok, ¿por qué es importante tener un planificador específico solo para administrar la memoria?
+
+¿Alguien tiene alguna idea? A ver, ¿alguien tiene alguna idea?
+
+[Orador 2] (13:55 - 13:59)
+Lo mejor es para que no entre en conflicto los datos.
+
+[Orador 1] (14:00 - 14:28)
+Los datos, ok. ¿Alguien con otra idea por qué es importante un planificador de mediano plazo? Don Kendall, cuénteme.
+
+Karina, ¿por qué es importante un planificador de mediano plazo? Don Eder, ¿por qué es importante? Cuénteme, Karina, a ver.
+
+[Orador 6] (14:31 - 14:56)
+Yo diría que, bueno, es que están, bueno, allá llevamos tres, ¿verdad?, planificadores. Ese tiene que ser igual para los procesos, para el bloque, digamos, en sí, porque usted dijo que para que pasara listo tenía que pasar primero por la memoria. Entonces, si no está ese planificador de mediano, ¿cuándo se determinaría que ya pasa listo?
+
+[Orador 1] (14:56 - 15:53)
+Ok, Axel, ¿cuál es su idea? ¿Por qué ocupamos un planificador de mediano plazo? Austin, ¿por qué ocupamos un planificador de mediano plazo?
+
+Nada, no ocupamos un planificador de mediano plazo. Entonces, ocupamos un planificador de mediano plazo porque esto que está aquí, que llamamos memoria, es un recurso, es quizás el recurso por, digamos, es el recurso por el que más competencia hay. ¿Eso qué quiere decir?
+
+Vamos a ver, ¿quiénes usaron locker en el colegio? ¿Sí, en el colegio?
+
+[Orador 2] (15:57 - 15:59)
+En el colegio no, pero en el kinder sí.
+
+[Orador 1] (16:00 - 16:11)
+Ah, en el kinder, ok, ok, ok. ¿Alguien quisiera locker en el cole? Yo.
+
+Ok, ok, la pregunta es, ¿de qué tamaño era su locker?
+
+[Orador 7] (16:17 - 16:18)
+No me acuerdo.
+
+[Orador 5] (16:19 - 16:27)
+Echele un cálculo ahí. Locker era de 6x6, no me acuerdo.
+
+[Orador 1] (16:28 - 16:28)
+¿Cuánto?
+
+[Orador 5] (16:29 - 16:30)
+6x6, tal vez.
+
+[Orador 1] (16:31 - 16:35)
+¿De 6x6? ¿De qué guardaba ahí el té? ¿O la taza de café?
+
+[Orador 5] (16:35 - 16:38)
+Ah, ok, bueno, yo estoy tomando toda la cuestión, digamos.
+
+[Orador 1] (16:38 - 16:43)
+No, no, no, no, su locker, ok. Usted no tiene que ver el total, su locker.
+
+[Orador 5] (16:45 - 16:49)
+Ah, no, yo no guardaba nada de eso. Guardaba nada más como los libros y listo.
+
+[Orador 1] (16:49 - 16:53)
+Ok, ok. ¿De qué tamaño hubiera querido usted un locker?
+
+[Orador 5] (16:55 - 17:00)
+Ahí está. No creo que me haga espacio eso para guardar bolsas.
+
+[Orador 1] (17:00 - 17:05)
+Ok, ¿de cuántas más dimensiones del que usted tenía asignado?
+
+[Orador 5] (17:07 - 17:07)
+Tal vez el doble.
+
+[Orador 1] (17:07 - 17:09)
+¿El doble? ¿Usted tenía bicicleta?
+
+[Orador 5] (17:11 - 17:11)
+¿Ah?
+
+[Orador 1] (17:11 - 17:12)
+¿Usted tenía bicicleta?
+
+[Orador 5] (17:13 - 17:14)
+Eh, sí.
+
+[Orador 1] (17:15 - 17:17)
+¿Le hubiera gustado tener bicicleta en el locker?
+
+[Orador 5] (17:18 - 17:30)
+Ah, no. Tampoco tenía así. Ok, ¿por qué no?
+
+Este, porque antes lo tenía y quedaba muy complicado, digamos, llevarla.
+
+[Orador 1] (17:30 - 17:57)
+Ok, ok, ok. Bueno, en el fondo donde quiero llegar es que todos queremos un tamaño de memoria completamente diferente. Y todos quieren el tamaño más grande, porque entre más grande es el tamaño, pues más facilidad va a tener para tener más cosas ahí.
+
+Entonces, ¿para qué yo quiero tener cosas en el locker? A ver, ¿para qué yo quería tener un locker grande y tener muchas cosas ahí?
+
+[Orador 3] (18:01 - 18:04)
+Para almacenar la mayor cantidad de cosas posibles.
+
+[Orador 1] (18:04 - 18:07)
+¿Para qué? ¿Para qué quería yo mantener las cosas en el locker?
+
+[Orador 3] (18:10 - 18:11)
+Por comodidad, no.
+
+[Orador 1] (18:11 - 18:12)
+¿Por qué por comodidad?
+
+[Orador 6] (18:12 - 18:13)
+Por seguridad, ¿no?
+
+[Orador 1] (18:13 - 18:29)
+¿Por qué por seguridad? La razón primordial por la que usted quisiera tener cosas en el locker es porque usted sabe que si no están en el locker, ¿a dónde van a estar?
+
+[Orador 2] (18:34 - 18:36)
+En el bolso de otra persona, ¿por qué?
+
+[Orador 1] (18:36 - 20:04)
+Ok, si no están en el locker, entonces probablemente estén en su casa. Ok, esa es la lógica, ¿cierto? ¿Por qué usted guardaba los libros en el locker?
+
+Porque si no estaban en el locker, entonces ¿dónde iban a estar? En su casa. Ok, entonces el sentido es el mismo, el sentido es el mismo.
+
+En la medida en que logremos hacer analogías razonables, ustedes van a entender las cosas. Si no hacen el esfuerzo, van a estar detrás del palo toda la vida. Entonces, ¿por qué yo quería entonces mantener cosas en el locker?
+
+¿O por qué quisiera que mi locker sea bastante grande? Porque entonces yo sé que las cosas siempre las voy a tener ahí. ¿Las voy a tener ahí dónde?
+
+A la mano, ¿verdad? Para cuando las ocupo. Si no las tengo en el locker, entonces ¿qué va a pasar?
+
+Voy a tener probablemente que desplazarme hasta la casa a traerlas, ¿ok? Y eso es lo que quiero evitar. Por eso es que me interesa que ese locker sea bastante grande, ¿ok?
+
+Entonces, ese es el mismo principio. La memoria es uno de los recursos por los que más se compite. Y yo quisiera que mi bloque de memoria sea el más grande.
+
+¿Para qué? Para tener todas las cosas aquí cerca y no tener que estar yendo a traerlas a otro lugar. ¿Ok?
+
+Esa es la filosofía, esa es la esencia, ese es el espíritu de la administración de ese recurso. ¿Ok? Vamos a...
+
+Vamos a aclarar tres conceptos importantes. ¿Ok?
+
+[Orador 7] (20:19 - 20:20)
+¿Dónde está esta calavera?
+
+[Orador 1] (20:39 - 20:54)
+Tres conceptos importantes. Memoria principal, buffer y caché. ¿Ok?
+
+Hasta el momento, por lo que hemos analizado, hemos escuchado de este concepto, de buffer. ¿Ok?
+
+[Orador 13] (20:56 - 20:57)
+¿Qué es un buffer?
+
+[Orador 7] (21:05 - 21:07)
+Es un espacio de memoria.
+
+[Orador 1] (21:07 - 21:32)
+Es un espacio de memoria. ¿Ok? ¿Dónde?
+
+¿En qué? Siguiendo... Ok.
+
+Siguiendo esta conceptualización, entonces diríamos que es un espacio aquí. Según su definición, que es un espacio aquí, diríamos. Entonces, ¿es así o estoy equivocado?
+
+[Orador 8] (21:36 - 21:42)
+No, no, porque es temporal, digamos. ¿Qué es temporal?
+
+[Orador 1] (21:46 - 21:56)
+¿Qué es temporal? A ver. ¿Qué es temporal?
+
+¿El buffer o la memoria?
+
+[Orador 9] (21:56 - 22:03)
+Sí. Que la memoria no sea... Bueno, el espacio de memoria no sea un tiempo establecido.
+
+[Orador 8] (22:04 - 22:08)
+Diría que el buffer es temporal. ¿El buffer es el que es temporal?
+
+[Orador 1] (22:11 - 22:19)
+Ok. Usted dice entonces que el buffer es temporal. ¿Alguien ha escuchado del concepto de caché?
+
+¿Tiene alguna idea de lo que es un caché?
+
+[Orador 3] (22:22 - 22:49)
+Bueno, es como... Bueno, no tengo como en sí claro el concepto, pero es como una memoria temporal ahí, digamos, que... Como cuando uno entra a una página, que registra como lo que ya uno hizo y si usted vuelve a entrar, por ejemplo, a llenar un formulario, y ya usted dice todo el correo, usted consulta lo que clique ahí y ya sale todo el correo.
+
+Es como una memoria temporal que a corto plazo... Ok.
+
+[Orador 1] (22:50 - 23:05)
+Una memoria temporal a corto plazo. Ok. ¿Alguien tiene alguna otra idea del caché?
+
+Ya nos explicaron un poquito de alguna funcionalidad, de dónde se puede implementar incluso. ¿Alguien tiene alguna otra idea de lo que es un caché?
+
+[Orador 2] (23:05 - 23:14)
+Yo qué me acuerdo... Es una memoria muy pequeñita, dos megas... O más, no me acuerdo.
+
+[Orador 1] (23:14 - 23:23)
+No hablemos de tamaño, pero usted tiene una base de conocimiento que le permite pensar que es algo muy pequeño.
+
+[Orador 2] (23:24 - 23:36)
+Eso, bueno, si la memoria caché se usaba era para procesos muy prioritarios de la máxima prioridad, todos los que se encontraban almacenados en la memoria principal. Ok.
+
+[Orador 1] (23:37 - 23:38)
+¿Qué es un proceso prioritario?
+
+[Orador 2] (23:38 - 23:44)
+De mayor frecuencia, o sea, procesos que se usan de mayor frecuencia.
+
+[Orador 1] (23:45 - 24:02)
+Ok, ok, ok. Vamos a quitarles esa palabra prioritario, ok. Vamos a quitarles esa palabra prioritario por ahora, ok.
+
+Aquí hay un concepto de frecuencia. Y hace un momento Jalen nos explicaba un ejemplo. ¿Cuál era Jalen?
+
+[Orador 3] (24:04 - 24:28)
+Digamos, es que yo no lo tengo como claro así. No, no, no, lo que usted mencionó, lo que usted mencionó, vamos a ver. Digamos, por ejemplo, en una página web siempre queda como una caché, digamos.
+
+Usted va al inicio de sesión de Facebook y digita su correo, y entra y luego se tiene que salir a meterse con otro correo. Donde usted cliquea en el espacio de su correo, ahí sale como el suyo, como una sugerencia, como que ya se digita una vez.
+
+[Orador 1] (24:29 - 25:41)
+Ok, ese es el mismo concepto, está asociado con una frecuencia. Es decir, ¿cuántas cuentas se han usado ahí? Pues probablemente ese no es una compu de uso comunal, ¿verdad?
+
+Que tenga varias cuentas. Probablemente si tuviera, si fuera de uso comunal, pues probablemente van a aparecer ahí las cuentas más importantes, las cuentas que más se conectan, ok. Pero sí, efectivamente, el concepto de caché está asociado con, digamos, con un principio de frecuencia.
+
+Muy importante, ok. Pregunta para todos ahora. ¿Qué habrá de diferente entre memoria principal, memoria offer y memoria caché?
+
+Por ahora, pareciera que hay un concepto de temporalidad, ¿verdad? Es decir, parece que esto es algo como temporal. No tenemos claro cuál dura un poquito más que otro.
+
+Pero por ahora, hay un concepto de temporalidad adscrito a esos tres referencias, ok. ¿Cuál será la diferencia entre esos tres componentes? ¿Será que esos tres componentes son tres dispositivos físicos completamente independientes, que cada uno funciona de una manera independiente?
+
+¿Tendrán funcionamientos similares? ¿Qué creen?
+
+[Orador 4] (25:49 - 26:19)
+Profe, lo que yo recuerdo es que la caché es un tipo de memoria más veloz que la memoria principal. Entonces, si fuera que ahí, bueno, le permite tener datos, bueno, la caché permite almacenar datos, que le facilita mucho la velocidad comparado a si lo estuviera en la memoria principal. Eso es lo que recuerdo yo.
+
+[Orador 8] (26:23 - 26:32)
+Profe, ¿y eso se debe a lo de que, digamos, el tamaño de la caché es menor a la memoria principal? ¿O no? ¿O sí?
+
+[Orador 1] (26:33 - 28:50)
+Entonces, estamos primero buscando referencias, ok. Ya hablamos del concepto de temporalidad, ya hablamos del concepto de velocidad, ahora apareció el concepto de tamaño también. Bueno, hasta ahora podemos decir que, yo tengo dentro del ciclo, ¿verdad?
+
+Acá tengo, este es el ocrecito, esto es lo que le llamamos memoria principal, ok. Y tenemos dispositivos de entrada y salida. Entonces, vamos a imaginarnos que aquí tenemos un dispositivo de entrada y salida, un disco, ok.
+
+Esto es una maravilla, ¿verdad? Yo tengo un disco, ¿verdad? Acá tenemos, lo que tenemos acá son platos, cuando hablamos de discos estamos hablando de, probablemente, ¿verdad?
+
+Un spoozie, ok, que son arreglos de discos, ok. No nos estamos imaginando un disquito nada más, como tal, ok. Entonces, cuando llega una petición, ¿verdad?
+
+Cuando llega una petición, ¿verdad? ¿Me dicen si se lee? Ok.
+
+Ok, tenemos una petición, ¿verdad? Y esa petición, ¿a dónde creen ustedes que llega? Ya viendo la parte física del dispositivo, ¿a dónde llega esa petición?
+
+[Orador 7] (28:55 - 28:56)
+¿A memoria?
+
+[Orador 1] (28:57 - 33:28)
+No, al dispositivo, al dispositivo propiamente, ok. El proceso fue enviado a espera por entrada y salida, y ahora ya determinamos que esta petición es de este disco, ok. Entonces, la pregunta es, ¿a quién le llega esa petición?
+
+Bueno, esa petición le llega a algo que le llamamos un controlador. Controlador de disco es quien toma la petición, ok. Y entonces ese controlador determina que es esta sección del disco, esta de este otro, y esta de este otro.
+
+Eso es lo que conforma el archivo que se está solicitando, ok. Incluso podría ser que para muchas partes del mismo disco, tengamos estas tres partes de este disco, este bloque acá, y este bloque acá, ok. En el fondo, ¿qué sabemos?
+
+Bueno, en el fondo sabemos que todo eso son, en el fondo sabemos que todo eso son, ve qué lindo, se salió el host. Qué bonito, ¿ah? Ok, entonces sabemos que el controlador va a hacer una lista, va a hacer una lista y va a determinar cuáles son los bloques.
+
+Al final esto es una suma, esa petición es una suma, una suma de sectores, ok. Esa suma de sectores es lo que va a determinar el total del archivo, ok. La pregunta del millón de pesos es, ¿dónde se va a colocar, dónde se van a colocar todos esos sectores?
+
+¿Dónde creen ustedes que van? El disco, el disco tiene un área que nosotros le llamamos el buffer, ok. ¿Qué es lo que va a hacer ese buffer?
+
+Va a coger y va a empezar a poner acá, este bloque, este bloque, este bloque, este bloque, y este otro bloque, ok. ¿Por qué los pone aquí? Porque él tiene que colocarlos en algún lugar y después de eso, una vez que ya están todos los bloques unidos, tienen que conjuntarlos y tienen que llevar a cabo algo que llamamos un CRC, un código de redundancia cíclica.
+
+¿Qué es un código de redundancia cíclica? Un código de redundancia cíclica es una estrategia que permite decir, la suma de este bloque, más este, más este, más este, más este, si es el archivo completo. Es decir, no hay ninguna inconsistencia, no falta ningún sector aquí, ok.
+
+Y además, el archivo se da por consistente, es decir, no hubo ningún error en la lectura de algún sector, ok. Eso hace el código de redundancia cíclica, ok. Una vez que esto se logra verificar a ese nivel, ¿qué es lo que va a pasar?
+
+Ahora sí, esto ya no como bloques, sino como archivo completo. ¿Va a venir a dónde? Va a venir, ahora sí, va a venir a el espacio en memoria correspondiente para ese proceso.
+
+Entonces probablemente venga directamente acá. Y entonces ya ahí se hace la escritura, se hace la escritura de ese archivo, ok. Es el espacio que ocupa en memoria de ese archivo que fue traído.
+
+¿Qué más hay en ese bloque de memoria? ¿Qué creen ustedes? ¿Qué hay más en ese bloque de memoria?
+
+¿Jordan, qué crees que hay en ese bloque?
+
+[Orador 14] (33:35 - 33:35)
+¿Junit?
+
+[Orador 1] (33:37 - 33:48)
+Dígame, Jordan. ¿Junit, qué hay ahí? ¿Kenia, qué hay ahí?
+
+[Orador 7] (33:55 - 33:56)
+¿Kevin, qué hay ahí?
+
+[Orador 1] (34:20 - 39:09)
+Ahí lo que hay es el bloque de control de procesos y la tabla de procesos. Es decir, todas las variables del proceso van a estar ubicadas en ese bloque de memoria, más los datos propiamente del proceso. Es decir, aquí van a estar todas las variables más los datos propiamente que son los que se procesan.
+
+¿Ok? Entonces esta es la información que va a estar contenida en esos bloques. Ahora sí, nos devolvemos.
+
+¿Para qué serviría el buffer? Efectivamente, como un espacio temporal. ¿Ok?
+
+Aquí lo tenemos, como un espacio temporal. ¿Está escrito sobre él un criterio de velocidad? No, no hay velocidad.
+
+Tendrá que ver un aspecto de tamaño. Bueno, en realidad, ese buffer tiene que ser capaz de contener cualquier solicitud que sea, que se ejecute sobre ese dispositivo. ¿Ok?
+
+Pero también podríamos decir, podríamos decir, ese segmento que se recuperó es la tabla, es la tabla cliente. ¿Ok? Y los sectores más consultados son los de los índices, los índices cuyo apellido, cuyo apellido empieza con la letra B, C y F.
+
+¿Ok? Entonces, él sí puede diferenciar estos sectores de manera específica. ¿Por qué?
+
+Porque son como sectores. Y entonces aparece otra figura acá que puede ser el caché. ¿Ok?
+
+¿Qué hace ese caché? Ese caché lo que hace es que determina estos sectores específicos que son, ahora sí, los de este principio de frecuencia. ¿Ok?
+
+Que efectivamente está asociado al principio de rapidez. Frecuencia de uso. ¿Ok?
+
+Si yo mantengo, si yo mantengo no todos los bloques, sino mantengo tres o cuatro sectores que son los más frecuentemente utilizados en este espacio de caché, entonces, la siguiente vez que venga ese proceso a hacer solicitud, pues entonces yo ya no tengo que ir físicamente hasta el disco a traerlos, sino que los tengo acá, en esos espacios. En otras palabras, el concepto que se usa es que los tengo cachados. ¿Ok?
+
+¿Qué quiere decir que los tengo cachados? Que están ubicados en estos bloques que son unos bloques privilegiados. ¿Ok?
+
+Por eso es que entonces nos resulta aquí que es veraz el concepto de rapidez. ¿Por qué el concepto de rapidez? Porque la siguiente vez que vine a buscarlos ya no tuve que ir a mover los platos, a ubicar la cabeza lectura-escritura, sino que ya los tengo acá en ese recurso que se llama caché.
+
+¿Ok? Entonces, ¿qué tenemos acá? Tenemos la memoria principal, tenemos el concepto de buffer y tenemos el concepto de caché.
+
+¿Ok? ¿Qué podemos resumir? Que la memoria principal sí es un recurso.
+
+¿Ok? Eso es un recurso. Y que el buffer y el caché pueden ser recursos.
+
+Es decir, pueden ser dispositivos. Puede ser algún firmware que viene pegado al disco duro o a cualquiera otro de los dispositivos de entrada y salida. Pero también esto en realidad puede ser un concepto.
+
+Puede ser perfectamente que yo implemente una estructura de datos llamada buffer o puede ser que implemente una estructura de datos llamada caché y la mantenga en memoria perfectamente. Entonces, no necesariamente está como un dispositivo dentro de los recursos de entrada y salida, sino que también puede ser un concepto. ¿Estamos claros hasta aquí?
+
+¿Claras?
+
+[Orador 7] (39:13 - 39:30)
+Sí, profesor. Una pregunta. ¿Sí?
+
+Espera para fijar esto. Esto. Esa...
+
+[Orador 2] (39:34 - 39:38)
+¿Cómo fue que lo dijo justo ahora cuando nos preguntó sobre esto, sobre los cuadritos?
+
+[Orador 1] (39:40 - 39:40)
+Los lockers.
+
+[Orador 2] (39:41 - 39:42)
+Los lockers.
+
+[Orador 1] (39:43 - 39:44)
+Lockers, lockers, lockers.
+
+[Orador 2] (39:45 - 39:48)
+¿Y cuál es el nombre que recibe ese? ¿Esos cuadritos?
+
+[Orador 1] (39:49 - 39:50)
+¿Estos de aquí?
+
+[Orador 2] (39:50 - 39:52)
+Sí. No, todos esos.
+
+[Orador 1] (39:54 - 40:10)
+A todo esto le llamamos memoria principal. ¿Ok? ¿Y esa memoria principal está dentro de...? Esa memoria principal es un dispositivo independiente. ¿Ok? Es un dispositivo independiente. Es lo que ustedes frecuentemente llaman como memoria RAM.
+
+[Orador 2] (40:13 - 40:21)
+Ok. Esa era una de las dudas que tenía también. Entonces, ¿y eso es administrado por el controlador de memoria principal?
+
+[Orador 1] (40:21 - 40:23)
+¿Cómo se llama ese controlador?
+
+[Orador 2] (40:24 - 40:26)
+Bueno, usted le puso ahí controlador HD.
+
+[Orador 1] (40:27 - 40:28)
+¿Cómo se llama?
+
+[Orador 2] (40:29 - 40:31)
+Planificador mediano a mediano plazo.
+
+[Orador 1] (40:32 - 40:39)
+Planificador de mediano plazo. El planificador de mediano plazo es el que se encarga de administrar la memoria principal.
+
+[Orador 2] (40:39 - 40:42)
+Ok. ¿Y cada cuadrícula de eso?
+
+[Orador 1] (40:43 - 40:43)
+Cada bloque.
+
+[Orador 2] (40:44 - 40:44)
+Cada bloque.
+
+[Orador 1] (40:44 - 40:46)
+Aquí nos referimos como un bloque, como un bloque de memoria.
+
+[Orador 2] (40:48 - 40:50)
+¿Cuál es el nombre que recibe?
+
+[Orador 1] (40:51 - 40:54)
+Cada cuadrito. Bloque de memoria.
+
+[Orador 2] (40:55 - 40:59)
+Bloque de memoria. ¿Y cada cuadrito del bloque de memoria lo que almacena tú?
+
+[Orador 1] (41:00 - 41:02)
+Cada bloque de la memoria principal, ¿qué?
+
+[Orador 2] (41:03 - 41:05)
+¿Qué es lo que almacena?
+
+[Orador 1] (41:07 - 41:11)
+¿El bloque? ¿Usted estaba siguiendo esta ilustración que hice aquí?
+
+[Orador 2] (41:12 - 41:17)
+¿Se desconectó? No, no, sí lo estaba siguiendo, pero me confundí porque aquí hay esos cuadritos.
+
+[Orador 7] (41:22 - 41:23)
+Bufers.
+
+[Orador 1] (41:26 - 42:03)
+Estamos mal. Cada bloquecito de estos son sectores que en suma hacen un archivo y ese archivo es el que un proceso está solicitando para avanzar en ejecución. Entonces por eso hago una operación de entrada y salida, mando la solicitud al dispositivo y el dispositivo ubica dónde están físicamente, en qué platos del disco está y los trae.
+
+Cuando los trae los coloca en el buffer. Kenia, ¿para qué coloco yo estos bloquecitos en el buffer?
+
+[Orador 7] (1:06:40 - 1:06:42)
+Vamos a continuar, a ver.
+
+[Orador 1] (1:08:08 - 1:08:19)
+Bueno, el primer modelo de administración de memoria es monoprogramación sin intercambio. Memoria sin intercambio o monoprogramación.
+
+[Orador 2] (1:08:22 - 1:08:25)
+No sé si soy solo yo, pero se escucha muy, muy bien.
+
+[Orador 1] (1:08:27 - 1:13:46)
+Ahora, tenemos el primer modelo de administración de memoria que es memoria sin intercambio. La memoria sin intercambio tiene varios modelos. El primero es monoprogramación que la programación es algo ya muy conocido por ustedes.
+
+Y era aquel modelo en el cual yo tenía tenía donde yo tenía lo que llamábamos la memoria de solo lectura que básicamente era lo que llamábamos el BIOS. Luego tenía el conjunto básico de servicios o lo que llamábamos sistema operativo y tenía un único programa de usuario. Por eso era lo que llamábamos monoprogramación.
+
+En ese modelo solo se ejecutaba un proceso y hasta que ese proceso finalizara podía ejecutarse un proceso 2 cuando finalizaba un proceso 3 y así sucesivamente. En este modelo efectivamente no había absolutamente nada de de maximizar el rendimiento de los recursos en función de que teníamos una entrada de datos un procesamiento y una salida. Todo se ejecutaba automáticamente en un único proceso.
+
+Es decir, esto no estaba no estaba independizado. Ese fue el primer modelo de monoprogramación siempre sin intercambio. En el siguiente modelo tenemos lo que es la multiprogramación pero ya con particiones fijas.
+
+Con particiones fijas. Esas particiones fijas en primera instancia son todas del mismo tamaño. Todas del mismo tamaño.
+
+Y lo que estamos diciendo es que recuerden que una de las grandes innovaciones fue cuando cogimos la memoria principal y esa memoria principal se dividió. Si dividíamos la memoria principal en un bloque teníamos el sistema operativo y podía tener varios procesos de usuario al menos. Ok.
+
+La pregunta del millón era ¿cuántas cuántas particiones de la memoria podía hacer yo? Esa era la gran pregunta. Es decir ¿por qué ese bloque de memoria ese mismo bloque ¿por qué no cogerlo y hacerlo ya no en cuatro sino hacerlo ahora en ocho?
+
+O ese mismo bloque no hacerlo en ocho sino ¿por qué no lo hacemos en dieciséis? Aquí tengo ocho aquí tengo dieciséis procesos Entonces la pregunta era ¿qué es lo mágico de esa división posible de la memoria? Esa era la gran pregunta ¿qué era más conveniente si tener la memoria con cuatro bloques, con ocho bloques, con dieciséis, incluso con treinta y dos, con sesenta y cuatro, con ciento veintiocho, etcétera?
+
+[Orador 10] (1:13:46 - 1:13:58)
+Para resolver eso Una pregunta ¿hay un límite de particiones?
+
+[Orador 1] (1:14:00 - 1:23:08)
+Eso es lo que andamos buscando ¿cómo determinar ese límite de particiones? Voy a buscarme un marcador más fino Normalmente los bloques son de doscientos K eso quiere decir que tendría el proceso uno, el proceso dos, el proceso tres, el proceso cuatro y este primero que tenemos acá es reservado porque ese es donde se albergan los procesos del conjunto básico de servicios Entonces yo tendría algo como esto ¿qué tengo acá? ¿cuánto tengo acá?
+
+Si yo tengo un mega de memoria quiere decir que voy a tener el primer bloque para sistema operativo ¿ok? Y tendría cuatro procesos de usuario Entonces lo que vamos a entender es ¿cuánto yo puedo partir esto? ¿cuánto puedo picar esto?
+
+De tal manera que el rendimiento siga siendo aceptable ¿ok? En otras palabras, lo que andamos buscando es algo como esto lo que andamos buscando es algo como esto y probablemente va a pasar esto va a empezar, va a aumentar acá pero va a llegar a un punto en el cual la curva ya se mantiene se expresa casi constante entonces ya a partir de este de esta cantidad de particiones ya no es funcional eso es lo que andamos buscando Siguiendo la regla que conocemos, 80-20 en la que los procesos hacen 80% de aprovechamiento y un 20% de desperdicio tendríamos entonces que para el proceso uno porque el el bloque del sistema operativo no cuenta como proceso como consumo digamos que aquí tenemos el 50 aquí tenemos el 100 si el primer proceso hace hace un el primer proceso hace un aprovechamiento de 20 ¿se logra ver o no se ve? el siguiente entonces ese proceso tiene ah perdón, este es el sistema operativo este no se cuenta este no se cuenta para el proceso uno tenemos un 20% de aprovechamiento y un 80% de desperdicio eso es cuando tenemos un proceso siguiendo la regla siempre voy a seguir jugando con el desperdicio eso quiere decir que ahora voy a jugar con el 80% de 80 y el 80% 80 son 64 64 eso quiere decir que tendría aquí como 36 más o menos como de aquí para arriba para el proceso dos tendría un 36% de aprovechamiento y un 64 de desperdicio sigo jugando con el desperdicio ¿cuánto es el 80% de 64 64 por .8 51.2 para el proceso tres vamos a ir poniendo aquí arriba 51.2 y esto sería 49 más o menos aproximadamente vamos con el desperdicio para ajustar el mega 52 por .8 40.96 estamos diciendo que andaría casi el 60 40.96 si tiene 40.96 el aprovechamiento es de prácticamente que el 60% más o menos 60% entonces hasta este momento podemos concluir que cuando tengo según este dibujo cuando tengo un mega de memoria tengo un aprovechamiento del 60% aproximadamente ¿qué es lo que andamos buscando? lo que andamos buscando es ¿hasta dónde yo puedo llegar en ese nivel de división de la memoria para que la curva de aprovechamiento no empiece a caer ahora vamos a hacer el análisis cuando tengo dos megas ¿qué pasa cuando tengo dos megas? si tengo dos megas si tengo dos megas entonces ahora puedo agregar cinco procesos más de usuario los bloques son de 200k 1 2 3 4 5 proceso 5 6 7 8
+
+[Orador 7] (1:23:09 - 1:23:10)
+9
+
+[Orador 1] (1:23:14 - 1:25:34)
+habíamos quedado en 40.96 de desperdicio seguimos con ese desperdicio para representar el proceso 5 esto va a ir haciéndose cada vez un poquito más pequeño 6 7 8 1 2 3 4 me falta 1 5 todavía tengo 5 procesos más entonces lo que voy a determinar es cuál es la tasa de de desperdicio de esos procesos recuerden que el número mágico había quedado en 40.96 vamos a sacar el 80% esto me da este valor me da 32.7 7 por .8 26 .21 por .8 20.97 por .8 16.77 por .8 13.42 ok es decir con ese con ese proceso 9 tengo una tasa de desperdicio apenas del 13.42% y una tasa de aprovechamiento pues entonces que rondaría el 87% más o menos ok 87 ok entonces con 2 procesos tengo una tasa de aprovechamiento 87% ok ahora lo que necesito saber es cuánto mejoré de el caso cuando tenía un mega ahora que tengo 2 megas cuánto estoy mejorando el aprovechamiento
+
+[Orador 2] (1:25:39 - 1:25:44)
+en el anterior tenía un 60% mejoró un cuando tenía un mega
+
+[Orador 1] (1:25:44 - 1:27:11)
+cuando tenía un mega el aprovechamiento era el 60% ahora necesito saber poniendo 2 megas cuánto mejoré ok y para eso aplicamos una una regla de 3 aquí únicamente y decimos que decimos que con un mega con un mega era el 60% ok con 2 megas es el 87% ok eso me da una diferencia de 27% eh perdón si, si de 27 entonces necesito saber a cuánto corresponde ese 27 ok entonces digo que que 87 es mi 100% y que 27 es el porcentaje que ando buscando eh alguien lo puede hacer ahí en la calculadora por favor para no perder el dato que llevo aquí de la tasa de desperdicio esa regla de 3 cuánto les da
+
+[Orador 2] (1:27:13 - 1:27:16)
+profesoría 87 dividido entre 37 verdad sería
+
+[Orador 1] (1:27:17 - 1:27:21)
+eh 27% dividido entre 87 ok
+
+[Orador 7] (1:27:22 - 1:27:22)
+pero
+
+[Orador 13] (1:27:24 - 1:27:34)
+pero 31.03 perdón cuánto 31.03
+
+[Orador 1] (1:27:35 - 1:27:38)
+31.03 profes
+
+[Orador 4] (1:27:39 - 1:27:44)
+es el 100% verdad que si usted puso 27 yo creo que es 13 no
+
+[Orador 1] (1:27:46 - 1:28:05)
+eh no porque ok lo que pasa es que mi 100% no es 87 mi 100% la referencia es 60 ok aquí estamos equivocados 60 era mi 100% y esto fue lo que yo mejoré ok ese es el error que tengo
+
+[Orador 8] (1:28:08 - 1:28:13)
+45 profes ah 45 ok
+
+[Orador 1] (1:28:13 - 1:29:30)
+45 es correcto ok 45 voy a ponerlo acá entonces decimos que pasar de un mega a dos megas me permite mejorar en un 45% ok y si lo vemos si vemos el comportamiento de la curva pues tiene sentido verdad tiene sentido si ustedes lo ven verdad más o menos se va comportando de esta manera ok hasta ahí el crecimiento ha sido ascendente aquí tenía un crecimiento un aprovechamiento del 60% con otro mega más ya no mantuve el crecimiento del 60 pero ahora tengo una ganancia en un 45% ok entonces recuerden que lo que andaba buscando este este este este número mágico ok eh alguna duda hasta aquí
+
+[Orador 2] (1:29:32 - 1:29:37)
+si profesor usted puso ahí de abajo puso de 200k en 200k
+
+[Orador 1] (1:29:37 - 1:30:21)
+ok porque recuerde que nuestro modelo nuestro modelo de memoria se llama multiprogramación pero con particiones fijas todas del mismo tamaño ese es nuestro primer modelo ok y esto era lo que representaba yo tenía un bloque total y decía ese bloque lo parto en 4 lo parto en 5 en la cantidad de bloques y defino un tamaño de bloque ok yo estoy partiendo del supuesto de que de que estos bloques son de 200k para este ejercicio los bloques pueden ser de 100k pueden ser de 150k verdad eso se determina este eh dependiendo cual sea el contexto ok
+
+[Orador 2] (1:30:21 - 1:30:32)
+mi duda era iba más que era a que como un mega son 1000k entonces por eso era que estaba como yo porque decía que era un mega pero tenía los 200k
+
+[Orador 1] (1:30:33 - 1:31:04)
+si si si es correcto es correcto o sea es decir si yo digamos si tengo bloques si me dicen bueno los bloques son son de en unidades de megas verdad un mega dos megas entonces yo puedo decir bueno los bloques todos son por ejemplo 200k pueden ser de 100k incluso pueden ser solo 4 bloques solo 4 bloques de de 250k en este caso por ejemplo que está aquí son 4 bloques entonces serían de 250k por ejemplo ya ok
+
+[Orador 2] (1:31:04 - 1:31:05)
+listo
+
+[Orador 1] (1:31:06 - 1:31:08)
+ok ok
+
+[Orador 9] (1:31:21 - 1:31:29)
+entonces este el número proceso sería por el dependiendo del número de megas que se estarán dando entonces
+
+[Orador 1] (1:31:29 - 1:31:30)
+correcto
+
+[Orador 7] (1:31:30 - 1:31:31)
+es correcto ok
+
+[Orador 1] (1:31:31 - 1:32:17)
+ok entonces el número mágico había quedado en
+
+[Orador 13] (1:32:24 - 1:32:24)
+ok
+
+[Orador 1] (1:32:32 - 1:36:25)
+que madre ya perdí el dato ok 13.42 ok ese es el desperdicio vamos a agregar un mega más si agregamos un mega más entonces nos vamos a ir al proceso 10 11 12 13 y 14 vean que vean que digamos eso sí eso sí es muy claro vean que aquí un mega más de aquí a acá es otro mega aquí ya 5 procesos aquí cuantos hay 5 procesos más del sistema operativo y aquí voy a agregar un tercer mega otra vez 5 procesos ok 10 11 12 13 y 14 ok mi número mágico estaba en 300 perdón en 13.42 por 0.8 eso me da vamos a ponerlo acá 1 2 3 4 y 5 por ahí más o menos sería 10 0.7 por 0.8 8.5 por 0.8 6.8 por 0.8 5.49 finalmente por 0.8 4.3 ok es decir ya aquí la tasa de aprovechamiento con 14 procesos me da una tasa de aprovechamiento casi del 96% 96% ok ahora vamos a ver cuánto es eso en mejora porcentual ok teníamos que 3 megas ok teníamos que 2 megas me da 87% ok 87% en mi 100% ok y la diferencia que sería 9 es lo que necesito saber cuánto es cuánto nos da esa regla de 3 987
+
+[Orador 8] (1:36:28 - 1:36:30)
+10.34 ok
+
+[Orador 1] (1:36:30 - 1:38:12)
+10.34% ese es ese es en esto mejoré el aprovechamiento pasando de 2 megas a 3 megas ok vean que el primer número mágico el primer número mágico era 60% cuando tenía 1 mega cuando tenía 2 megas mejoré un 45% pero ahora que puse un 3er mega solo mejoré un 10.34% ok ¿por qué?
+
+porque vean que la curva evidentemente ya busca ya busca estabilizarse ok es decir ya de aquí para allá ¿cuál va a ser ese comportamiento de la curva? ya pues va a ser completamente lineal prácticamente ok entonces vamos a hacer el cálculo rápidamente para para que ustedes tengan una idea de cuánto mejoré el aprovechamiento si incremento un mega más es decir llegando a 19 procesos 1 2 3 4 5 si tengo 19 procesos entonces esto pasaría a por .8 3.5
+
+[Orador 12] (1:38:17 - 1:38:31)
+.8 2.8 .8 2.25
+
+[Orador 1] (1:38:33 - 1:41:19)
+por .8 1.8 por .8 1.4 ok 1.4 eso quiere decir que el aprovechamiento teniendo 19 procesos va a ser de 98.6 98.6 se rondea casi a 99 ok es más grande el aprovechamiento a 99 teniendo teniendo ese escenario entonces diríamos que 4 megas solo con esto pasa nada 4 megas 3 megas me dan 96 4 megas me dan 99 es decir 96 es mi 100% y 3 corresponden a x ¿cuánto me da eso? 300 entre 96 3.1 3.1 esa es la nueva tasa de aprovechamiento si pongo un cuarto mega ¿cuál es la conclusión? la conclusión es que para ese contexto de ejecución con una regla 80-20 teniendo bloques de 200k yo podría apilar un máximo de 3 megas ya un cuarto mega un quinto un sexto ya de aquí para abajo ya de aquí para abajo esto ya no es ya no es provechoso ok es decir se justifica todavía poner un tercer mega pero ya un cuarto mega ya en realidad lo que vamos a hacer es que vamos a desperdiciar el recurso ok entonces este es nuestro modelo de administración de memoria cuando tenemos particiones todas
+
+[Orador 3] (1:41:19 - 1:41:20)
+ok
+
+[Orador 1] (1:41:20 - 1:41:22)
+fijas todas del mismo tamaño
+
+[Orador 3] (1:41:22 - 1:41:31)
+entonces dígame o sea ahí en ese caso no sería como el hecho de que pensar de que por meter más megas uno va a aprovechar más o
+
+[Orador 1] (1:41:31 - 1:41:50)
+eso precisamente es la intención lograr entender que no necesariamente porque usted mantenga una gran cantidad de megas que en realidad eso se va a ver proporcionalmente reflejado en el aprovechamiento ok
+
+[Orador 7] (1:41:54 - 1:41:55)
+ok
+
+[Orador 1] (1:42:12 - 1:48:11)
+el siguiente modelo que tenemos es particiones fijas de varios tamaños aquí hay una pregunta aquí hay una pregunta importante tamaño del bloque ¿cómo determinar el tamaño del bloque? ¿cómo determinar si es doscientos si es cien si es cincuenta si es doscientos cincuenta es decir ¿cómo determinar ese número mágico del tamaño del bloque no de la cantidad de memoria? en particiones fijas que es este modelo que tengo acá en particiones fijas como la palabra lo dice los tamaños de los bloques no se pueden modificar es decir una vez que se toma la decisión de el tamaño de ese bloque esos bloques no pueden no pueden redimensionarse no se pueden juntar dos bloques eso quiere decir que si el proceso crece y ya no es capaz de contenerlo el bloque eso es un problema grave ¿ok?
+
+entonces la forma de poder determinar la forma de poder determinar de qué tamaño es ese bloque es conociendo previamente cuál es el proceso que más memoria consume de todo lo que se ejecuta en ese contexto ¿ok? es decir si yo sé que el proceso que más consume memoria es de 200k entonces esto me sirve y si no entonces tendría que utilizar bloques probablemente si hay un proceso de 230k entonces tendría que usar bloques de 250 si hay un proceso que consume perdón si el proceso más grande en un contexto consume 130 puedo usar bloques de 200 si consume 180 puedo todavía usar bloques de 200 pero si el proceso consume 75 tengo que usar bloques de 100 cinco bloques de 100 siempre dividiendo la unidad en en números iguales ¿ok? vamos ahora a particiones fijas de varios tamaños ¿ok?
+
+vamos a vamos a a a ejemplificar aquí porque aquí hay algo interesante que entender yo puedo tener bloques fijos todos del mismo tamaño proceso uno, dos, tres y el primer bloque para sistema operativo ¿ok? estos son estos recordemos estos eran de 250 ¿ok? perfectamente puede pasar que este es el área del bloque uno únicamente perfectamente puede pasar que el bloque dos perdón que el que el proceso dos ocupe solo ese solo ese ese pedacillo perfectamente puede pasar que el bloque tres ocupe solo la mitad del bloque ¿ok?
+
+¿por qué pasa eso? porque los procesos todos ocupan espacios diferentes de memoria ¿ok? pero si esto está así es muy práctico entender que evidentemente el proceso uno tendrá que ser el proceso que consuma los 256 ¿ok?
+
+entonces este proceso el proceso uno es el único que hace aprovechamiento total de su bloque de memoria el proceso dos tiene un desperdicio casi el 80% de su bloque y el proceso tres tiene un desperdicio como del 65% entonces aún y cuando particiones fijas todos del mismo tamaño obligue a que todos los procesos tienen que ser exactamente del mismo tamaño de gran redundancia no necesariamente eso implica que todos vayan a hacer un aprovechamiento que todos vayan a ocupar el bloque total asignado nos devolvemos entonces a particiones fijas de varios tamaños en particiones fijas de varios tamaños lo que tenemos es que tengo este es mi espacio mi bloque de memoria entonces pueden definirse vamos a decir que esto es un mega
+
+[Orador 12] (1:48:19 - 1:48:21)
+digamos que esto es como la mitad
+
+[Orador 1] (1:48:24 - 1:54:39)
+512 podríamos decir que esto es la mitad podría decir que aquí tengo 5 bloques de 100 esos bloques son de 100k 5 bloques de 100k tengo 5 bloques de 100k pero perfectamente puedo tener por aquí estos son 250k aquí estos puedo tener aquí estos bloques serían de 50k 10 bloques de 50k aquí todavía me quedan 250k estos puedo dividir en bloques bloques de 50k puedo coger 100k 100k y estos 50k puedo dividirlo en 2 de 25k es decir vean que lo que estoy haciendo es estoy haciendo bloques fijos porque esos bloques no se dividen o no se conjuntan en tiempo de ejecución ya están definidas las unidades y lo que estoy haciendo es diciendo que voy a crear de diferentes tamaños aquí me embarqué aquí puse estos bloques de 100k aquí puse otra vez de 100k esto está mal ¿verdad? pero bueno la intención es saber que hay bloques de diferentes tamaños es decir aquí hay un conjunto de bloques de 100k probablemente pueden ser de 250k creo que es lo más sensible más bien estos serían de 125k cada uno y quitamos estos de aquí nuevamente la intención es que siempre haya un bloque lo suficientemente grande como para contener al proceso que más memoria consume para ello para ello lo que hacemos es que vamos a ver lo que hacemos es que la intención es meter meter al proceso en la solicitud más ajustada posible es decir si viene una solicitud el proceso 2 solicita solicita 87k ¿ok?
+
+bueno ¿dónde lo vamos a meter? esto voy a corregirlo acá vamos a asumir que estos son bloques de 200k ¿ok? si el proceso solicita 87k no tiene sentido que yo meta este proceso 2 en un bloque de 200k ¿verdad?
+
+¿por qué? porque estaría despobliciando la mitad entonces la idea es meter al proceso en el bloque más ajustado ¿ok? otro aspecto importante es que esta política no precisa crecimiento cuando hablamos de que no precisa crecimiento de una vez estamos dejando implícito aquí el principio de que los procesos que están en ejecución pueden llegar a crecer con respecto a la cantidad de memoria solicitada es decir de aquí en adelante nos vamos a acostumbrar que lo más frecuente que puede pasar es que usted solicite un locker un espacio de 30x30cm pero que rápidamente usted va a empezar a querer meter cosas y ya ese locker no le va a caber y usted va a querer usar un locker que tiene otra persona que es mucho más grande es decir esto es lo que normalmente va a pasar ¿ok? es decir los procesos se presentan con una con una con una etiqueta de el consumo de memoria que necesitan pero no necesariamente eso se cumple muy probablemente ese proceso vaya a crecer y vaya a demandar más memoria de la que está solicitando esa es una premisa fundamental de aquí en adelante como esa política como esta política de asignación de memoria todos los bloques del mismo tamaño todos los bloques de tamaño fijo pero con diferentes numeraciones de bloques entonces aquí tenemos que considerar dos operaciones importantísimas reasignación y protección
+
+[Orador 7] (1:54:39 - 1:54:40)
+¿ok?
+
+[Orador 1] (1:54:41 - 2:02:38)
+¿en qué consiste la reasignación y protección? bueno la reasignación y protección consiste en decir bueno es posible es posible que que es posible que ese proceso crezca ¿ok? pero no me voy a echar a morir por eso ¿por qué?
+
+porque si ese proceso crece lo que voy a hacer es que lo voy a reasignar ¿ok? eso quiere decir que si si esto este es el proceso vamos a ver este es el proceso este es el proceso siete ¿ok? lo que está en azul y tenemos acá al proceso ¿ok?
+
+tenemos acá al proceso nueve con problemas ¿ok? este es el proceso nueve nueve con problemas de memoria creció y ya ocupó su volumen de memoria y está demandando más memoria ¿ok? en el proceso en ese momento es cuando aplicamos cuando aplicamos la política de reasignación y protección entonces la pregunta es ¿esto este bloque nueve que se está ejecutando en un espacio de 100k buscaría otro bloque libre que sea mayor o puede tomar espacios libres de otro proceso para avanzar ahí en su ejecución es decir para poder para poder utilizar esto y continuar y buscar tratar de finalizar es muy caro mejor dicho es más caro que este proceso nueve se mude completamente a otro bloque ¿por qué? porque primero que tendría que pasar que haya un bloque libre o esperar a que uno de los bloques más grandes se llegue a liberar eso tardaría un tiempo considerable de hecho no tenemos una medida exacta de cuánto tiempo tendría que esperar para que eso llegue a pasar entonces lo que sí aplica es que ese proceso empieza a utilizar busca algún bloque en donde ya hayan procesos y entonces empieza a utilizar segmentos de el bloque de este proceso teniendo en consideración que él puede poder disponer de segmentos del bloque de memoria de otro proceso eso implica entonces o eso no se explica porque es que llamamos a esta operación reasignación y protección ¿por qué?
+
+porque eso implica que estos datos de acá tienen que protegerse y decir este espacio es exclusivo del proceso 7 y eso 8 corresponde al proceso 9 ¿por qué? que se almacena en esos bloques de memoria en esos bloques de memoria se almacenan información de los procesos en cuyo caso es muy poco probable que los dos vayan a tener o vayan a a estar trabajando con información igual lo que sí es perfectamente posible que suceda es que lo que yo mandé a guardar en esos bloques sean aspectos o variables como el bloque de control de procesos o la tabla de procesos en cuyo caso es muy probable que variables del bloque de control de procesos del proceso 9 se llamen exactamente igual que variables del bloque de control de procesos del proceso 7 entonces cuando yo acceda a ese espacio y no haya diferenciación de cuál corresponde al proceso 7 y cuál al proceso 9 se vaya a generar una operación de sobrescritura o lectura de variables de drones por eso es que entonces llevamos a cabo la implementación de reasignación y protección pasamos ahora al siguiente modelo de administración de memoria que llamamos modelos de particiones variables en este modelo de particiones variables lo que tenemos es tres implementaciones que en realidad ya aquí no importa ya no importa el modelo del tamaño del bloque aquí no importa aquí lo que se va haciendo es que se va asignando conforme se va solicitando ok entonces el primer modelo que tenemos se llama mapa bits el segundo modelo se llama listas ligadas y el tercer modelo es algo que llamamos socios ok y lo que vamos a hacer es lo siguiente vamos a crear tres alas vamos a crear no, son demasiadas alas vamos a crear 6 salas, ok.
+
+Sala 1, 2, 3, 4, 5 y 6. Aquí está especificado, sala 1 hace mapa bits, la sala 1 y 4 hacen mapa bits, la sala 2 hacen la 2 y 5 listas ligadas y la sala 3 y 6 hacen socios. ¿Qué es lo que van a hacer?
+
+Van a hacer un clipcito de vídeo explicando cómo es que funciona esa implementación, ok. Vamos a crear las salas.

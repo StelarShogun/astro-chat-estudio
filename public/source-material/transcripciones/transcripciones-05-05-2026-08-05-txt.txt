@@ -1,0 +1,658 @@
+[Orador 1] (0:01 - 1:38)
+Aparecen particiones de varios tamaños. Es decir, siempre los tamaños son vivos, la memoria no varía, los tamaños son vivos. Pero ahora tenemos bloques de un tamaño, bloques de un tamaño menor, bloques de otro tamaño menor, bloques de otro tamaño menor, etc.
+
+Eso tiende a evitar el problema del desperdicio. Y aquí categorizamos el desperdicio de dos maneras. Desperdicio interno y desperdicio externo.
+
+El desperdicio interno era el que se daba dentro del bloque. Y el desperdicio externo es cuando teníamos bloques que no estaban siendo utilizados, ¿verdad? Y probablemente en la mayoría de los casos van a ser considerablemente bloques grandes.
+
+Ese va a ser el problema principal. Y o probablemente van a tener colas muy saturadas. Luego tenemos, ah bueno, en particiones fijas de varios tamaños, tenemos una técnica para resolver el crecimiento.
+
+¿Verdad? Porque el crecimiento, como podamos meter una solicitud en un bloque lo más ajustado posible, podemos incurrir en el problema de que el proceso crezca en consumo y vaya a requerir más. En cuyo caso, ¿cómo se llama la estrategia?
+
+Eliano, por el juicio, que ya acaba de pasar. Ven acá. ¿Cómo se llama la estrategia cuando se mete un proceso en un bloque y ese proceso crece, pero el bloque ya no lo va a cumplir?
+
+¿Cómo se llama la estrategia?
+
+[Orador 3] (1:40 - 1:42)
+¿Cómo se llama la estrategia? ¿Ah?
+
+[Orador 1] (1:44 - 3:47)
+Ok. Reasignación y protección. ¿Cuál era la naturaleza de esa estrategia?
+
+¿Qué naturaleza tenía esa estrategia? La naturaleza era la atomicidad, es decir, las dos cosas que tienen que disputar de manera inmediata. Reasigno y protejo.
+
+¿Por qué reasigno y protejo? Porque había segunda oportunidad. ¿Por qué reasigno y protejo?
+
+¿Sí? ¿Y para qué otro bloque no sea? ¿Para qué otro bloque es?
+
+¿Para qué otro bloque es? Para que el proceso primario de ese bloque, del cual estoy pellizcando una porción, no, en el caso de que tenga variables iguales a las que yo estoy pretendiendo escribir ahí, no vaya a llegar a cumplir. ¿Verdad?
+
+¿Sí? Es principalmente por eso. Para garantizar que si en ese espacio donde yo voy a escribir, perfectamente puede pasar que el proceso tenga una variable que se llame exactamente igual, ¿verdad?
+
+Entonces vamos a entrar en un conflicto. Entonces, ¿cuál es la protección? Para garantizar la integridad de lo que en ese espacio se coloque.
+
+¿Ok? Y eso eran particiones fijas, particiones inamovibles. ¿Ok?
+
+Lo único, en el segundo caso yo podría pasar un proceso de, digamos, a pellizcar a otro lado. No existe la posibilidad de que un proceso migre completamente en particiones fijas de varios tamaños y que migre completamente a otro bloque más grande. ¿Verdad?
+
+Eso no pasaba. Solamente voy a ubicar un espacio donde pueda terminar de crecer y finalizar. ¿Ok?
+
+Luego teníamos particiones variables. Es decir, ya que íbamos a hacer una asignación de la memoria sin estar con esa fuerza ajustada a un tamaño específico, sino que la memoria la partimos en unidades y repartimos unidades en función de lo que el proceso requiera.
+
+[Orador 5] (3:56 - 4:00)
+¿Ok? En donde va a meterse un proceso.
+
+[Orador 1] (4:00 - 6:31)
+¿Verdad? Y que la junta de esos bloquecitos perfectamente no exime del problema que teníamos en particiones fijas de varios tamaños. Que era que eso tendría que crecer.
+
+Eso también puede pasar ahí. Y cuando eso pasa, sabemos que tenemos que ahora sí irnos completamente a otro lado. ¿Verdad?
+
+¿Ok? Ok. Entonces la primera versión que tenemos es mapaviz.
+
+Que consiste en coger y dibujar toda la memoria. ¿Verdad? Como si fueran unidades de bloquecitos.
+
+Y empezar a decir, bueno. ¿Cuántos tamaños reparto yo? Divido eso entre la unidad que tengo.
+
+Si son bloques de 4K, de 8K, de 16K, de 32K, etc. Entonces divido eso. Y entonces digo, ok.
+
+Entonces usted ocupa 5 bloques. Vamos a buscar 5 bloques juntos. ¿Ok?
+
+No, 2 aquí, 3 por allá. No me sirve. 5 bloques juntos.
+
+Entonces tengo que empezar a barrer toda la memoria hasta ubicarlo. ¿Ok? ¿Cuál es el problema que genera mapaviz?
+
+¿Por toda la lista? Ajá. ¿Principalmente?
+
+¿Principalmente dónde? Sí, pero principalmente. O sea, ese problema de huecos inútiles.
+
+Es un fenómeno que se presenta. ¿Principalmente dónde? ¿Principalmente dónde?
+
+¿Ah? Principalmente al inicio de la memoria. ¿Por qué?
+
+Porque el algoritmo siempre empieza desde la primera posición de la memoria. Entonces. Y el fenómeno de los huecos inútiles, ¿verdad?
+
+Se va a dar. Pero se va a ir dando paulativamente siempre del inicio de la memoria hasta el final. ¿Calidad?
+
+¿Todo bien? ¿Cómo resolvíamos el problema de calidad de los huecos inútiles en mapaviz? Ya pasó el juicio, así que se va a juzgar con esa pregunta.
+
+¿Pagamos con el motor y el suelo este viejo?
+
+[Orador 4] (6:33 - 6:33)
+¿Vale?
+
+[Orador 1] (6:35 - 6:37)
+¿Cómo resolvíamos eso, el problema de los huecos inútiles?
+
+[Orador 4] (6:39 - 6:41)
+¿Ah? Ok.
+
+[Orador 1] (6:41 - 7:41)
+Aplicamos una estrategia que se llama desfragmentación de la memoria. ¿En qué consiste esto? Consiste en apagar el motor y dedicarnos solamente a estructurar la memoria.
+
+Pasar todas las solitudes al inicio y dejar todos los huecos libres al final. ¿Ok? ¿Si?
+
+Eso se llama desfragmentación. Era una rutina sumamente cara, ¿verdad? Era una rutina sumamente cara porque implica parar completamente el contexto de función.
+
+¿Ok? Eso quiere decir que las variables como tiempo de respuesta, rendimiento, tiempo de la tasa de retorno, se van a ir completamente a suelo en ese dato de tiempo. Mapaviz, listos.
+
+Listas ligadas. ¿Qué resuelve listas ligadas versus mapaviz?
+
+[Orador 2] (7:46 - 7:47)
+Ok.
+
+[Orador 1] (7:48 - 9:20)
+Uno de los problemas que tenía listas ligadas es que cuando me encontraba un hueco libre tenía que empezar a contar y hacer un contador. Hueco libre 1, hueco libre 2, hueco libre 3, hueco ocupado, listo. Perdón, bloqueo ocupado, murió el contador.
+
+Entonces, siempre tengo que empezar a contar la cantidad de huecos para saber dónde hay una cantidad donde pueda meterse el proceso. Y lo que tratamos con listas ligadas es de tener un campo del nodo que sea el tamaño del hueco. ¿Ok?
+
+Entonces, lo primero es que voy a tener un indicador para saber si está asignado un proceso de bloqueo o si está libre. En cuyo caso, en este libre, inmediatamente pregunto por el tamaño. ¿Me sirve?
+
+¿No me sirve? Paso al siguiente nodo. ¿Ok?
+
+¿Primer ajuste? ¿Qué significa el primer ajuste? ¿En el primero que le quepa?
+
+En el primero que le quepa se mete. En el primero que le quepa. ¿Siguiente ajuste?
+
+Lo mismo, solamente que él mantiene un contador de la última posición donde asignó. Y va recorriendo toda la memoria. ¿Sí?
+
+La pregunta más importante es, ¿cuál es el beneficio de implementar el siguiente ajuste? ¿Para qué?
+
+[Orador 2] (9:20 - 9:22)
+¿Para qué quiero yo recorrer toda la memoria?
+
+[Orador 1] (9:46 - 11:33)
+¿Cuál es el espíritu de esa mejora, verdad? ¿Siguiente ajuste es una mejora? ¿Primer ajuste?
+
+¿Cuál es el espíritu? ¿Qué es lo que se llama? Tengo una oportunidad, ¿alguien dice Calián?
+
+Calián Díganme, ¿cuál era la mejora del siguiente ajuste? Vamos a ver ¿Primer ajuste? ¿Primer ajuste se comporta exactamente igual que?
+
+¿Primer ajuste se comporta exactamente igual que más? ¿Qué hacemos, wey? ¿Qué hacemos, wey?
+
+¿Siempre empieza? Siempre empieza la primera función de la memoria, ¿verdad? Entonces siempre va a triggear ese inicio Entonces, ¿primer ajuste?
+
+¿Primer ajuste? Provoca el mismo problema que tenemos en Mapavís Cuerpos inútiles al inicio siempre Entonces lo que trata de hacer Siguiente ajuste es repartir ese fenómeno en toda la memoria ¿Sí, Calián? Pero, digamos, el chiste no es recorrer todo la memoria El chiste es distribuir el fenómeno este De los cuerpos inútiles ahora por toda la memoria Para evitar que eso solo suceda al inicio Y no caiga en un estado Un cataclismo, ¿verdad?
+
+En donde tenga que aplicar ¿Cómo se llamaba la operación, Calián? ¿Cómo se llamaba la operación? Por el quiz, Calián, segunda oportunidad ¿Por tercera?
+
+[Orador 3] (11:36 - 11:37)
+¿Cómo se llamaba la operación, Calián?
+
+[Orador 1] (11:38 - 12:47)
+Por el quiz Es decir ¿Por qué es que tengo que aplicarle esta aplicación? Porque es que, digamos, la memoria padece un fenómeno Que como siempre empieza a buscar desde el inicio Entonces ese fenómeno se va pasando ahí desde el inicio Para allá se va a poner esa problema hasta que llega un punto En el que no hay manera ¿Pero cuál es el beneficio a que esté distribuido los huecos? A que solo estén como al inicio Porque, digamos, porque la búsqueda siempre pasa por toda la memoria No solamente al inicio No se trilla ese inicio, ¿verdad?
+
+¿Sí? Recuerden, el problema que va a pasar al inicio va a ser este Si este es, digamos, el mapa Esto probablemente va a ser así Entonces, ¿qué es lo que pasa? Casi huecos inútiles ¿Ok?
+
+Casi, casi huecos inútiles Entonces, ese es el problema que queremos evitar ¿Peor ajuste? ¿Peor ajuste? Verónica, tiene unas ganas de...
+
+Verónica, ¿peor ajuste? ¿Para qué lo utilizamos?
+
+[Orador 6] (12:58 - 12:58)
+¿Había?
+
+[Orador 1] (12:58 - 13:11)
+¿Peor ajuste? ¿Y eso por qué haría eso?
+
+[Orador 2] (13:17 - 13:46)
+¿El proceso crece o no puede crecer? Sí, sí, pero eso para acomodar la memoria Para utilizar esas espaldas de memoria De esos procesos que van a comenzar Es un algoritmo probabilístico ¿Qué es lo que estamos diciendo?
+
+[Orador 1] (13:47 - 17:34)
+Oye, metámoslo ahí Metámoslo ahí Pensando en que si el proceso crece Tal vez alguien no haya ocupado el bloque Que él no va a usar Eso es lo que estábamos pidiendo Es un algoritmo hipotético, ¿verdad? Pero, evidentemente, la pregunta es ¿Por qué aplicamos? ¿Peor ajuste?
+
+¿Aplicamos peor ajuste? Porque hemos identificado un proceso problema Un proceso que crece Es decir, si tenemos Si tenemos una concurrencia De procesos problemas Entonces yo no le mando por ese algoritmo ¿Por qué? Porque ya sabemos que es sumamente deficiente En la asignación En la asignación racional Que siempre nos interesa hacer ¿Mejor ajuste?
+
+¿Mejor ajuste? Bueno Es precisamente el espíritu De lo que estamos buscando siempre Hacer una asignación de los recursos Lo más ajustado posible Ahora ¿Mejor ajuste tiene un costo? ¿Cuál es el costo de aplicar mejor ajuste?
+
+Que para saber cuál es el juego que más le contiene Tiene que recorrer toda la memoria Ese es el costo que tiene ¿Y? ¿Ajuste rápido? Ordenar las listas por tamaño ¿Ah?
+
+Ordenar las listas por tamaño Ordenar las listas por tamaño ¿Alguien tiene otra idea? Ordenar las listas ¿Cuáles listas ordenan primero? ¿Cuáles listas ordenan primero?
+
+¿Ah? Ok Vamos a ver ¿Ajuste rápido? Empecemos Lleva una lista aparte ¿Verdad?
+
+Lleva una lista aparte donde están Donde hay Donde hay huecos Pero De las solicitudes que más frecuentemente Se solicitan ¿Verdad? Porque no tiene sentido Tener como una lista Con un espejo ¿Me entienden? No tiene sentido tener una lista espejo Porque no ganamos nada No, lo que yo tengo es una Una sublista Una minilista En donde dice Bueno, aquí los tamaños que más se utilizan son 14, 37 y 140 Ya tengo identificados 5 posiciones donde Donde hay huecos de tamaño 14 Ya tengo identificados 4 huecos Con posiciones Perdón De tamaño 37 Entonces, cuando llega la solicitud de una vez Ya yo sé donde hay Huecos lindos de ese tamaño ¿Si? Entonces, ajuste rápido ¿Cuál se llama ajuste? Primero rápido El concepto rápido es Porque tengo una minilista Pero lo que tengo en esa minilista Lo que tengo es Las direcciones Donde hay bloques libres De las solicitudes más frecuentemente utilizadas ¿Si?
+
+Porque no tiene sentido Si yo replico Si yo replico la lista Si yo veo una imagen de la lista Tiene el mismo sentido Y voy a buscar A la lista original Que a la lista de imágenes Perdón, no va a dar nada Porque ya me va a ajuste rápido, ¿verdad? Y que tengo ahí Solamente tengo Solicitudes de los tamaños Más frecuentemente utilizados No de procesos No, no Tengo direcciones Donde están Huecos De los tamaños que más frecuentemente se utilizan ¿Si?
+
+[Orador 4] (17:37 - 17:57)
+Vamos con el sistema de los socios Pero perdón En esa de ajuste rápido Siempre que llega un proceso Así no El tamaño no me favorezca Siempre se tiene que ir a fijar esa lista A la lista de la minilista Si porque Digamos Es la inmediatez ¿Verdad?
+
+[Orador 1] (17:58 - 22:57)
+Es lo más inmediato De lo que yo tenía referencias O sea Esto es como decir Si yo encuentro Si yo encuentro Un bloque Perdón Si encuentro un bloque En esa minilista Del tamaño De lo que De los que hay ahí Bingo Bingo Me ahorro un montón Un montón de deberes ¿Verdad? Ese sería el principio ¿Verdad? Y si no Y si no Aplica Ahora si el algoritmo ¿Ok?
+
+Antes de Antes de analizar Los socios Voy a Vamos a A hablar un poquito De dos conceptos Importantes Pero vamos a Para que no se nos olvide nada Para que salga La próxima semana ¿Sí? Vamos Vamos Ok vamos a aclarar Dos conceptos Que son importantes Ya sabemos lo que es Memoria principal ¿Verdad? ¿Qué es memoria principal?
+
+¿Cómo podemos definir Memoria principal? Podríamos definirlo Como El bloque El bloque Asignado A un proceso Donde Están Los elementos Que ese proceso requiere Al menos Para ejecutar La siguiente instrucción ¿Verdad? Esto es Nuestra Nuestra memoria principal ¿Ok?
+
+Ahora Teniendo claro Ahora sí Que la memoria principal Es como nuestra Nuestra Memoria principal Es decir lo que es Yo puedo hacer Yo puedo hacer Lo que se indique Con lo que tengo ahí Podemos Si no está ahí Si no está ahí ¿Qué tengo que hacer? Una operación De espera Por entrar y salir Para traer El recurso que requiere ¿Ok? Entonces En este contexto ¿Qué nos imaginamos Que es?
+
+Un caché ¿Y qué nos imaginamos Que es un caché? ¿Ok? Porque normalmente Cuando hablamos De este concepto De memoria Flotan en el aire Estos dos conceptos ¿Si?
+
+A ver ¿Alguien tiene Alguien escuchó Vio Alguna Alguna aplicación Del concepto ¿Si? Si escucho que un caché Es como memoria temporal Ok Ok Esto es muy importante ¿Verdad? Porque bueno Ya nosotros Como informáticos Tenemos que diferenciar Claramente Ese es el sentido ¿Verdad?
+
+Es decir Nuestra memoria principal ¿De qué tipo es? ¿Es permanente O es temporal? Para hacer esa categorización Primero Nuestra memoria principal ¿Es permanente O es temporal?
+
+¿Están ya sin miedo? Permanente Permanente Permanentemente temporal ¿Verdad? ¿Si?
+
+¿Por qué? Porque este bloque O sea, este bloque En un momento Está asignado a usted Como proceso Pero Usted finalizó Ojalá Y después Ese bloque no va a estar aquí Eternamente Esperando a que usted En algún momento Duerma otra vez ¿Verdad? ¿Si?
+
+Entonces Recordemos Estos bloques de memoria Estos bloques de memoria Son temporales Es decir Este casillero Es para usted De manera temporal Esto es Mientras usted Está en este ciclo ¿Verdad? Es más La siguiente vez Que usted venga Perfectamente puede ser Que caiga a otro bloque ¿Si?
+
+[Orador 2] (22:58 - 22:59)
+¿Dónde? ¿Si?
+
+[Orador 1] (22:59 - 24:01)
+Tal vez me permito Que eso hablando de caché No Hablando de memoria principal Memoria principal ¿Si? El principio Que el compañero Eh Trae a corazón Es el concepto de Temporalidad ¿Verdad? Entonces Quien escuchó Que el caché Es una memoria temporal ¿Si?
+
+Entonces si hablamos Del concepto de temporalidad Lo que quiero decir es que La memoria principal Es una memoria De tipo temporal La memoria caché Es una memoria De tipo temporal ¿Verdad? Y nuestra memoria offer Es de tipo temporal También Los tres Son de tipo temporal ¿Ok? ¿Si?
+
+¿Cuál es Nuestro almacenamiento Permanente? Nuestra memoria permanente ¿Cuál es? Y los datos De control De proceso Son datos Que están O aquí O están aquí O están aquí Perfectamente Ok Son temporales ¿Cuál es Nuestra referencia De memoria permanente?
+
+[Orador 4] (24:05 - 24:06)
+¿Si?
+
+[Orador 1] (24:07 - 24:47)
+Almacenamiento primario Es decir Disco Dur Un impresor ¡Ok! Cualquier dispositivo en donde yo perpetúo la información ¿ok?, ¿si? todo lo demás, para este efecto nuestro es de carácter temporal ¿ok?
+
+entonces, ahora si ¿qué será la memoria? ya yo sé claramente que es la memoria principal, ¿verdad? o, si le quieren poner un nombre yo no me gusta llamar memoria RAM, porque o sea, la tecnología cambia y directamente puede aparecer en una variante de nombre, pero es el principio, memoria principal es para nosotros, siempre, ¿ok?
+
+pero entonces, ¿qué tenemos como memoria cache o que tenemos como memoria buffer?
+
+[Orador 2] (24:48 - 25:02)
+¿qué es lo que hemos escuchado? el buffer lo hemos utilizado en programación para leer archivos grandes yo me imagino que será algo así como una función que asigna un bloque de memoria y lo está trabajando en el tiempo ok, es una excelente aplicación y nos sirve mucho un ejemplo, ¿ok?
+
+[Orador 1] (25:02 - 29:20)
+¿para qué lo usamos también entonces? para leer archivos ok mejor dicho, para vaciar el contenido de un archivo y poder realizar sobre él cualquier operación una actualización, descargar un dato en una actualización, etc, ¿cierto? ok entonces, hablemos del principio de ubicación ya yo sé donde está ubicada la memoria principal ok, de hecho ya sabemos que es una integrada, ok, pero entonces este buffer al que el compañero se referencia es el que me sirve de traer un archivo para poder hacerle cualquier operación a él ¿dónde lo colocaría?
+
+¿dónde colocaría este dibujito? ese dispositivo, ese recurso como tal y aquí nace la primera pregunta ok corresponde a un recurso físico o a un recurso lógico ok, ¿por qué? porque si estamos hablando de que un buffer es de carácter físico, entonces yo tendría que decir bueno, es que hay un integrado que está que funciona como ese espacio de almacenamiento donde pongo el archivo pero también puedo decir podría ser una estructura lógica ¿sí?
+
+cuando usted manipula un archivo en la programación ¿en qué estructura de datos va a ser eso? no, en estructura de datos para usted manipular el archivo ¿ok? por ejemplo por ejemplo, lo vaciaría un string ¿verdad?
+
+entonces, lo que tenemos que entender es que esto no es un concepto adscrito a un dispositivo o a una estructura de datos, sino que puede funcionar de cualquiera de las dos maneras buenos días, puede funcionar de cualquiera de las dos maneras entonces, en ese contexto yo podría decir el ejemplo era de un archivo ¿verdad? de la estructura de un archivo para manipularlo ¿ok? ¿dónde está el archivo?
+
+¿dónde está el archivo? digamos que está en almacenamiento secundario, en disco nuestro archivo está en almacenamiento secundario en disco, por ahora está ahí así lo entendemos ¿ok? entonces la pregunta es la pregunta es ¿ese archivo ese archivo, dónde tendría que tenerlo para ya poderlo manipular?
+
+evidentemente todo lo que yo voy, recuerden todo lo que yo vaya a manipular de un proceso, tiene que estar en el bloque de memoria principal asignado al proceso ¿verdad? ¿si? entonces ese archivo tiene que estar acá evidentemente el archivo probablemente excede al tamaño de ese bloque perfectamente, porque se sabe que la memoria es súper limitada ¿verdad?
+
+entonces, pues lo que yo probablemente vaya haciendo es que vaya trayendo bloques en cuyo caso esperaría que el archivo tenga una estructura que esté organizada por registros donde yo no puedo traer por un número de carnet o por un apellido o por un número de cédula, voy trayendo registros de 10 en 10, de 20 como tenga disponibilidad ¿si? entonces no los puedo traer directamente no los puedo traer directamente del espacio ¿cómo está almacenado información de un disco? en sectores la junta, la unión de 50 sectores es el total del archivo ¿si?
+
+porque el archivo no está monstruo de sectores ¿verdad? está dividido en varios sectores entonces, esos sectores cuando los recupero, ¿dónde los coloco? ¿los voy trayendo directamente para almacenamiento secundario para almacenamiento primario?
+
+¿o los coloco en otro lado?
+
+[Orador 2] (29:22 - 29:39)
+yo pensaría en los que hemos visto utilizar una referencia en el almacenamiento principal y el archivo como tal, si bien en el dispositivo y entonces, ¿dónde está y qué parte del dispositivo mantendría? ¿dónde están las memorias?
+
+[Orador 1] (29:39 - 31:57)
+no, ¿se me está diciendo en el dispositivo principal? ajá, ok, ¿y en qué parte del disco? sí, es que vamos a ver si me entienden, a ver a ver, yo tengo yo tengo el disco ¿ok?
+
+pero en el disco ¿qué es lo que tengo? en el disco yo tengo dos sectores dispersos ¿si? pero yo no ocupo sectores dispersos, yo ocupo un archivo ¿ok?
+
+yo ocupo un archivo entonces, y yo no le puedo trasladar, en el mejor de los casos no puedo trasladar el archivo completo para acá ¿verdad? ¿por qué? porque hay limitaciones les voy trayendo conforme él va utilizando, ¿ok?
+
+por eso es que la tasa de espera por entrar y salir siempre se lea el sueño sería tener el archivo completo aquí, pero eso nunca va a pasar nunca va a pasar, solo voy a tener posibilidad de tener una porción del archivo, y mi operación sobre ese archivo va a ir va a ser que vaya trayendo porciones del archivo para ir haciéndole la operación ¿si? ¿así lo tenemos claro? el asunto es que yo no puedo traer, yo no le digo traigan el sector tal porque no funciona así es decir, yo necesito que ese archivo esté ubicado en alguna posición ¿ok?
+
+y esa posición es un ¿ok? es decir ahora ya entendemos que esto es un concepto que puede ser lógico o puede ser físico en nuestro caso para un dispositivo de espera por entrar y salir como almacenamiento primario nos interesa que sea físico es decir, que el disco tenga un integrado que sea un área de memoria temporal, ¿para qué? para poder escribir el resultado de las solicitudes que me hacen ¿ok?
+
+y una vez que yo escribo el resultado de las solicitudes ahora sí, a disposición del proceso y de su bloque de memoria él va a ir trayendo o va a ir llevando entonces el bloque lo que hace es arreglar una parte de memoria ¿de cuál memoria?
+
+[Orador 2] (31:57 - 32:06)
+de la memoria del disco ¿el disco tiene memoria? el almacenamiento ¿ok?
+
+[Orador 1] (32:06 - 32:53)
+eso es lo que tenemos que hacer precisamente es decir, yo tengo aquí yo tengo aquí la memoria física ¿ok? permanente almacenamiento secundario ¿pero para qué? para que algo pueda ser trasladado al bloque de memoria principal, tengo que juntarlo primero y colocarlo en un lugar, ese lugar es lo que llamamos ese buffer ¿entonces el archivo va a ser copiado dentro del buffer?
+
+no va a ser copiado, ¿qué es lo que va a hacer? ¿copiado directamente? imagínese este estilo ¿cómo es el estilo?
+
+¿ok? imagínese que el archivo que usted anda buscando ¿verdad? lo conforma todo de bloque rojo ¿cuántos son?
+
+[Orador 2] (32:53 - 32:54)
+¿qué es bloque rojo?
+
+[Orador 1] (32:54 - 35:19)
+perdón, los de camisa roja perdón ok, son solamente dos ¿ok? pero vea que vea dónde están ¿ok? para poder usted hacer una operación sobre ellos, ¿dónde tendría que colocarlos?
+
+moverlos más cerca usted debería tenerlos porque usted los va a trasladar a otro lado, ¿a dónde los va a trasladar? a memoria principal ¿qué es esto? esto es almacenamiento primario, es donde están escritos permanentemente, entonces usted necesita colocarlos en un espacio para decirle al proceso aquí está su solicitud ¿sí?
+
+entonces, ¿esos dónde los coloca? todavía, ¿no? usted necesita disponerlos en un lugar para o sea, lo que usted va a hacer es lo siguiente, usted va a preguntar aquí ¿rojo, rojo, rojo?
+
+no ¿rojo, rojo, rojo? no ¿rojo, rojo, rojo? ahí hay uno ¿y qué va a hacer con él?
+
+ya lo dijo, ya sabe que hay un rojo ¿qué va a hacer con él? ¡prim! ni siquiera llegaba a otro solo tiene uno ¿qué tiene que hacer con él?
+
+¿qué tiene que hacer con él? trasladarlo a un espacio y lo que es, usted se va a esperar aquí porque tengo que buscar todos los que están en el rojo no sé cuantos hay ¿verdad? siguió con la búsqueda, al final encontró otro y lo trajo, ahora sí aquí inicia y aquí termina, solo son dos bloques aquí inicia y aquí termina, ese archivo aquí inicia y aquí termina ese archivo ahora sí, usted le va a decir al proceso la solicitud que usted pidió ya está completada ¿sí?
+
+ahora sí, el proceso eso le va a la dirección del bloque que tiene asignado para que haya trasladado, pero perfectamente puede ser que no pueda contener a los dos bloques, incluso ni uno, puede ser solo una porción de uno ¿pero ya no tiene que ir a recorrer todo el dispositivo? ya lo tiene, ya lo tiene en un almacenamiento que es temporal, es decir el disco como tal o el dispositivo, el traer y salir tiene que tener un almacenamiento temporal ¿ok? y entonces ese almacenamiento temporal para nosotros sería buffer la pregunta es la pregunta es ¿y por qué no un caché?
+
+¿por qué estoy hablando de un buffer y por qué no estoy hablando de un caché?
+
+[Orador 4] (35:23 - 35:30)
+¿pero ese buffer fue el que usted mencionó en la clase pasada que si se llenaba, el dispositivo dejaba de atender peticiones? ¿sí?
+
+[Orador 1] (35:31 - 38:26)
+¿qué pasa? este es mi almacenamiento primario ¿ok? yo estoy atendiendo tantas peticiones ¿verdad?
+
+que resulta que bueno, los bloques no hay problema porque está solamente los bloques ¿pero qué pasa cuando de otro lugar los negros? son un montón ¿ok? justo todos los negros ya se me hacen un montón ¿verdad?
+
+es decir, ya para la siguiente petición ya no tengo campo en este temporal ¿verdad? ¿sí? entonces ya no puedo atender más peticiones hasta que el proceso que estaba solicitando el archivo negro haya terminado ya yo lo guardo y debo mi almacenamiento temporal del dispositivo de entrada y salida no de memoria principal ¿sí?
+
+tienen claro eso, son dos cosas una cosa es el almacenamiento temporal en memoria principal que es donde le cortaron el pelo a los a los de rojo ¿verdad? donde les cortaron las mangas, lo que se le hizo es diferente, ¿dónde es eso? en memoria principal, mientras que en almacenamiento de almacenamiento en el buffer de almacenamiento secundario solamente están nada más, están ¿qué es lo que se hace normalmente?
+
+yo voy buscando los rojos que hay unos que uno lo traigo busco un rojo, rojo, rojo y otro lo traigo le pregunto ¿ok? ¿usted es el primero? ¿sí?
+
+¿usted es el segundo? ¿sí? ¿usted es el último?
+
+¿sí? ¿cuál es su nombre? ¿cuál es su nombre?
+
+eso lo que estoy haciendo es aplicando una técnica que normalmente se llama un código de redundancia cíclica es decir, esa es una estrategia que a mi me permita decir estos dos que están aquí estos dos bloques que están aquí conforman y dan consistencia del total del archivo ¿ok? ¿sí? entonces, eso es una una estrategia que utilizo en el dispositivo para que no pase que yo traigo nada para allá pero aquí falta gente ¿verdad?
+
+aquí falta gente o sea, la última vez eran como doce rojos, y ahora solo tengo dos ¿verdad? no, no, no eso efectivamente es lo que se guardó es decir, el dispositivo puede hacer de que ese archivo es consistente ¿estamos? entonces para eso es que utilizamos un buffer entonces la pregunta del millón pensemos en cualquier dispositivo y la valoración es la siguiente ¿requiere ese dispositivo de un buffer?
+
+por ejemplo, es algo muy sencillo como una impresora ¿requiere? ¿requiere una impresora de un buffer?
+
+[Orador 4] (38:33 - 38:34)
+creo que sí ¿ah?
+
+[Orador 1] (38:35 - 38:41)
+creo que sí la pregunta inmediata es ¿para qué? ¿verdad? es decir, ¿para qué hay que abrir un buffer?
+
+[Orador 4] (38:41 - 38:45)
+para guardar el archivo que antes ¿cuándo el archivo va a imprimir?
+
+[Orador 1] (38:47 - 39:05)
+¿qué pasa si la impresora, si es una impresora de red, y recibe, ya estaría saliendo tiempo? ¿dónde va el dispositivo a colocar esa cola de sustitutas? ¿dónde creemos es que la coloca?
+
+¿ah? ¿dónde?
+
+[Orador 4] (39:06 - 39:07)
+¿dónde?
+
+[Orador 1] (39:07 - 42:03)
+¿dónde la coloca Calea? eso no sería con caché ahorita vamos a ver la diferencia el hecho es que si tengo una impresora para recibir varias peticiones, bueno, aunque sea una impresora local, que yo puedo mandarle dos o tres, dos o tres salas de inspección ¿verdad? ¿dónde los colocó ese dispositivo y trae salida?
+
+¿verdad? porque el método viene igual, el primero imprime una cosa, el dispositivo otra, entonces ¿dónde los está guardando? los está guardando en un recurso de almacenamiento, ¿de quién?
+
+de el dispositivo ¿ok? ¿sí? ahora vamos a ahora sí vamos a la diferencia de si ese recurso es un caché o es un buffer ¿ok?
+
+¿qué creen ustedes que utilizaríamos para diferenciar un caché de buffer? ¿Calea tiene alguna idea de cómo diferenciar un caché de buffer? ¿alguna idea?
+
+¿alguien tiene alguna idea? para efectos nuestros hasta ahora los dos son simplemente almacenamiento temporal ¿sí? para ahora, hasta este momento los dos son exactamente lo mismo ahora sí vamos a establecer la diferencia ¿ok?
+
+vamos a ver ¿alguien tiene en el cuaderno que tienen ahí alguna hoja alguna hoja al principio donde escriban algunas cosas? normalmente uno juega el cuaderno como de trabajo, y lleno la primera hoja va la segunda, llena la segunda va la tercera, ¿alguien tiene alguna hoja en su cuaderno donde escucha algunas cosas ahí relevantes? bueno solo les estoy preguntando ¿alguien en el total del cuaderno tiene una hoja la primera o la última donde escriben algunas cosas?
+
+ok ¿ok? aquí tenemos un ejemplo tenemos aquí el muro de cuentas apunten aquí hay unas cosas importantes o sea, el cuaderno es el cuaderno de trabajo diario pero aquí al principio hay unas cosas importantes ¿ok? entonces lo que entenderíamos es que tenemos una diferenciación aquí, esto que tenemos acá es lo que llamamos un caché el resto es un buffer ¿ok?
+
+¿cuál es la diferencia entonces? que el caché tiene lo más importante el caché tiene lo más importante ¿y por qué me interesa tenerlo en el caché? ¿por qué le interesa tenerlo acá en la primera página?
+
+para poder acceder rápido rápido, ese es el principio el principio es un concepto de rápido es decir, es lo que más rápido pueda acceder pero, ojo ¿de qué tamaño es el caché?
+
+[Orador 3] (42:04 - 42:09)
+¿ahí? es guardar el caché y demás y todo ¿una hoja?
+
+[Orador 4] (42:09 - 42:16)
+¿y de qué tamaño es el buffer? ¿entonces?
+
+[Orador 1] (42:18 - 42:57)
+así, de la misma manera funciona para que nosotros podamos distinguir qué es un buffer y qué es un caché existe una diferenciación en cuanto a la data de un buffer y caché los dos son datos ¿pero qué es lo que pasa? que el caché es algo que voy a utilizar, ya sabemos ¿de qué tamaño? ¿de qué tamaño es el caché?
+
+¿ah? es mínimo el tamaño del caché es íntimo ¿qué pasa si yo en vez de tener un caché de una página tengo un caché de 250 páginas?
+
+[Orador 2] (42:59 - 43:00)
+¿pierdo qué?
+
+[Orador 1] (43:02 - 43:42)
+pierdo el principio de rapidez que es principalmente lo que estamos privilegiando entonces vean que sea físico o sea lógico sea físico o sea lógico en realidad esto va a depender de la oportunidad de información es decir, ahora yo tengo claro que si yo tengo un archivo ¿verdad? que si yo tengo un archivo en el buffer ¿verdad? entonces ¿qué creen ustedes?
+
+que yo si yo les digo a ustedes bueno, es que mi disco también tiene un caché entonces ¿qué pondríamos en ese caché?
+
+[Orador 2] (43:45 - 43:46)
+¿qué pondríamos en ese caché?
+
+[Orador 1] (43:50 - 45:34)
+no, porque eso serían las direcciones y ya eso lo determina digamos la tabla de localización de archivos ¿verdad? ¿sí? vamos a ver yo tengo en el buffer ya un archivo ¿ok?
+
+yo tengo en el buffer el archivo que lo componen las camisas negras ¿ok? vale ponganse de pie un título de camisa negra es que a veces ustedes que no hay mención ¿verdad? ok, nada más nada más vean el tamaño del archivo que ocupamos ¿verdad?
+
+ok, ahora sí la pregunta es si yo tuviera que aplicar un principio para colocar caché aquí ¿cuál utilizaría? no porque estoy duplicando imaginen que este es el buffer para poder asegurar que son todos ¿ok? yo soy uno yo soy uno de doce yo soy dos de doce tres de doce ¿están doce de doce?
+
+¿sí? listo ¿quién es el inicio? ¿quién es el fin?
+
+¿quién es el medio? y apliqué código ordenado al proceso su petición ya está en almacenamiento secundario ¿ok? usted decide cómo trasladar y en qué momento ¿estamos?
+
+ahora la pregunta es si queremos aplicar un caché para este archivo ¿cuál sería el criterio?
+
+[Orador 4] (45:36 - 45:37)
+el próximo que va a necesitar ¿no?
+
+[Orador 1] (45:39 - 45:49)
+el próximo que va a necesitar no lo sé tendría que ser un pre-ejecutado para saber quién es el siguiente que voy a utilizar depende del proceso es que ¿y por qué depende del proceso?
+
+[Orador 2] (45:50 - 46:19)
+el proceso le da la lista, el dispositivo le dice aquí está su buffer el proceso le devuelve una lista el buffer ya aquí está este es el total de bloques bien las ocho de la mañana las ocho de la mañana a ver la pregunta es ¿tiene sentido que yo creo la imagen de este mismo buffer en un caché?
+
+[Orador 1] (46:19 - 48:33)
+no ¿entonces qué pondría en ese caché? vean, cada uno de ustedes es un bloque que podemos notar en un archivo, ¿cierto? lo cierto del caso es que este proceso normalmente no va a utilizar todos los bloques ¿ok?
+
+normalmente va a algunos bloques de manera más recurrente pero yo necesito el total del archivo porque si no, si muestro una parte va a quedar inconsistente entonces lo que tendría en caché este es mi buffer, lo puse aquí y ahí se los van a ir llevando para el mueble principal pero en caché voy a mantener de los doce bloques que componen este archivo voy a mantener una copia por lo menos de los dos bloques que más frecuentemente son modificados o más frecuentemente son leídos es lo que quisiera mantener es decir, en el caché voy a tener una imagen de lo que más frecuentemente se utiliza en un archivo y así la siguiente vez si me preguntan por el registro por el registro número de cédula ¿qué número de cédula se llama?
+
+4 ¿cuántos quieren son 4? 4, 0, 2, 5, 6, 0, 4, 3, 0 la siguiente vez que vengan las solicitudes de este registro, yo sé que está en este bloque y entonces lo cacho es decir, lo tengo cachado ¿sí? ¿estamos?
+
+lo tengo en un caché entonces la siguiente vez que el proceso solicite ese registro para que voy a traer todo el archivo al buffer, ¿no? le digo en el caché aquí están ¿verdad? aquí están ya si me pide otro registro entonces si te entre otra vez que traer todo y montarlo acá en el buffer para trabar ese sector que se requiere, ¿estamos?
+
+[Orador 4] (48:33 - 48:45)
+gracias ¿cómo sabe cuáles son los que más utilizan? ¿cómo sabe cuáles son exactamente los que más utilizan?
+
+[Orador 3] (48:47 - 48:48)
+¿qué?
+
+[Orador 1] (48:49 - 50:51)
+eso eso es precisamente la diferencia entre un buffer y el caché lo que ellos están mencionando ¿sí? ¿cuál es la diferencia? entre un buffer y el caché que se tiene que aplicar un algoritmo para tener un control de la tasa de uso de esos bloques es decir el caché necesita un histórico de uso y lo más importante y aquí es donde hacemos una dirección sumamente sencilla el caché es una memoria de tipo estructural es decir, ¿cómo hace?
+
+o trae o vacía punto mientras que el caché dice ¿qué es lo que más se utiliza? eran 12 sectores ¿cuántos fueron los que se usaron esta vez? ¿cuántos se usaron la vez anterior?
+
+entonces ya saben que son los bloques 1 y 17 y esos son de esos mantienen la copia entonces el caché es el que es caro porque aplica un algoritmo ¿pero qué pasa? si lo que encuentro si lo que busco está en el caché bingo me abrió un montón de vez entonces el caché es sumamente dinámico sumamente inteligente su algoritmo pero no pero no puede predecir lo que se va a utilizar lo único que yo hago es que mantengo una estadística de lo que se ha usado trato de prever, de mantener lo que se vaya a utilizar trataría eso es lo que andaría buscando con esa proyección probabilística
+
+[Orador 2] (50:53 - 50:58)
+¿pero es que las páginas piden cargarlo del caché? ¿o permiso para dar acceso al caché?
+
+[Orador 1] (51:02 - 51:27)
+no sé para yo abrir una página la primera vez me pide acceder al caché entonces ya la próxima vez que yo abro la página ya la permiso lo que va a hacer es lo que le está pidiendo para incluirla dentro de ese algoritmo para que el algoritmo ya la valore ¿verdad? no es que una vez la incluyo es para que el algoritmo empiece a lograrla ¿verdad?
+
+[Orador 4] (51:27 - 51:34)
+y empiece a ponderarla ya lo mencionó ¿pero el caché dónde estaría ubicado en el dispositivo?
+
+[Orador 1] (51:35 - 54:06)
+una pregunta muy importante Marcelo ¿dónde pondría por la tercera función del juicio ¿dónde podría ser el caché? vamos a ver el asunto es que tanto el caché como el buffer los dos pueden ser o físicos o los dos pueden ser lógicos ¿ok? es lo primero que tenemos que tener claro como tengo tantos, son los dos aquí los dos más rápido, caliente esa gente de la Victoria espero hola ok entonces tengo que los dos pueden ser ¿verdad?
+
+físicos, lógicos, estamos de acuerdo ok y eso implica además que entonces ahora el ejercicio es el ejercicio es requerimos requerimos un caché y un buffer físicos para un dispositivo de salida como una impresora por la pregunta de Luis ¿regresaron? bien se lo van a ver, o sea, requerimos pregunta es pregunta, examen es examen para un dispositivo de salida como una impresora requerimos o recomiendo a usted la implementación de un caché y un buffer ¿ok? buffer ya sabemos que sí buffer ya sabemos que sí ¿verdad?
+
+¿si? porque el dispositivo va a recibir falsificación entonces tengo que ir los guardando en algún lugar, buffer sí requiere una impresora, un caché ¿cuál es la probabilidad de que usted imprima frecuentemente frecuentemente un archivo o que imprima frecuentemente la misma parte del archivo ¿verdad? ¿si?
+
+ese es el principio teniendo clarísimo entonces, teniendo clarísimo que tengo estos dos criterios ¿verdad?
+
+[Orador 2] (54:08 - 54:28)
+ahora si me resulta bastante importante definir que en una impresora podría haber caché en procesos del sistema o sea, en tareas ok, la impresora es un dispositivo de salida el hecho que recibe es una tarea para imprimir ¿si?
+
+[Orador 1] (54:32 - 56:29)
+la pregunta es ¿en qué condiciones ¿verdad? ¿en qué condiciones? en el examen requeriríamos implementar un caché para una impresora es lo que tenemos que valorar ahora es decir, requiere este dispositivo un caché requiere este dispositivo un buffer ¿recuerden?
+
+¿recuerden? de carácter logico pero la pregunta es si funcionalmente es importante es decir cuando yo mando a imprimir yo requiero hacer algún procesamiento de información pero a que llegue la impresora si por ejemplo si usted me dice es que se debe se debe determinar por ejemplo los tamaños como los márgenes ¿verdad? no sé si a ustedes les ha pasado que manden a imprimir lo que sale es un montón de códigos de códigos ASCII ¿qué creen que pasó ahí?
+
+un formato un formato incorrecto ¿verdad? y eso es a nivel del dispositivo no es a nivel del dispositivo, es a nivel logico ahí si hubo que haber hecho una verificación a nivel logico es decir, a ver si ese formato debe ser conocido por esa impresora, es un formato estándar ¿verdad? es una validación que debe ser a nivel logico entonces, si valió la pena un buffer un buffer logico en ese caso más allá del buffer en el dispositivo que recibe la previsión y la pone con la cola ¿verdad?
+
+[Orador 2] (56:30 - 56:45)
+ahí en ese mismo ejemplo podría entrar también el cache para la memoria principal de la administración de las actividades vamos a ver a una impresora lo que manda es un archivo ¿verdad?
+
+[Orador 1] (56:45 - 57:23)
+un archivo o una sección de un archivo es decir, ¿dónde está eso? ¿está en memoria principal? ¿o está en el área de buffer?
+
+en el área de impresora ok hay una técnica de eso luego vamos a entrar en detalle hay una técnica que yo puedo pasar directamente el buffer a la impresora ¿verdad? pero la pregunta es, si yo pongo un cache es porque hay algo que yo frecuentemente es lo que uso se usa en ese dispositivo, en ese archivo pero en el caso de la impresora es un complejo normalmente usted lo va a definir siempre en la misma página ¿verdad?
+
+[Orador 2] (57:24 - 57:30)
+¿eso es como para los procesos que utilizan memoria en esas procesiones?
+
+[Orador 1] (57:30 - 1:00:20)
+eso es como por ejemplo para un dispositivo en transarea como disco en donde si frecuentemente se utiliza solamente 20 registros de todos los mismos cientos, entonces cacho ese bloque donde están esos registros ok, entonces los algoritmos son para eso los dispositivos principalmente entonces teniendo claro esta estructura yo diría, bueno ¿dónde colocaría ¿qué hora es? ok, entonces teniendo claro esta lógica ¿verdad? si yo tengo el CPU normalmente se habla de un cache de CPU normalmente se habla de un cache de CPU eso quiere decir que todo lo que se deputa ¿dónde está?
+
+en el bloque de memoria principal asignado al proceso ahí está todo lo que se deputa del proceso está en el bloque de memoria asignado a ese proceso ¿pero qué pasaría entonces si yo lo tengo en otro espacio en otro espacio más inmediato ¿verdad? aunque ya habíamos hablado de que la memoria principal era limitada y tenía todos los todos los problemas ¿verdad? ¿pero qué pasa ahora si colocamos un cache intermedio entre ejecución y la memoria principal?
+
+entonces ¿qué quiere decir? ¿qué pondrían ustedes en ese cache de un proceso? ¿qué pondrían en ese cache de un proceso?
+
+del proceso que está en ejecución vamos a ver lo cierto del caso es que yo tengo un cache en ese cache no tiene sentido tener una réplica de la memoria porque entonces perdería el espíritu ¿verdad? entonces esto va a ser super limitado ¿ok? es decir si aquí tengo más o menos 140 procesos y un bloque para cada uno de ellos pues lo lógico aquí es que tenga más o menos unos 20 bloques nada más los 20 bloques de los 20 procesos que más frecuentemente se ejecutan ¿sí?
+
+¿pero qué tendría ¿qué pondrían ustedes en ese bloquecito de un cache de un proceso?
+
+[Orador 4] (1:00:22 - 1:00:24)
+¿cómo se utiliza ese proceso que tenga asignado en ese momento?
+
+[Orador 1] (1:00:30 - 1:02:05)
+pondríamos el bloque de control del proceso en ese cache cada vez que se ocupa un proceso independientemente de lo que haga ¿qué es lo primero que va a modificar? independientemente de lo que él haga ¿qué es lo que el siguiente va a modificar? el bloque bueno para ser más puntual no todas las variables del bloque de control del proceso siempre las va a modificar ¿sí?
+
+pero algunas variables entonces lo más lógico es que en ese cache estén las variables del bloque de control del proceso que más frecuentemente son modificadas ¿ok? eso es cómo es el espíritu ¿sí? ¿estamos?
+
+eso es lo que nos interesa en el fondo, entonces así tenemos que ver el cache entonces ya más o menos tenemos una idea de verdad de cuál es la función del cache es decir, es algo sumamente selectivo pero es caro mantener un cache es caro ¿por qué? porque yo tengo que estar haciendo esas operaciones esa lógica, el algoritmo, para decir qué es lo que está ahí es caro ¿ok?
+
+[Orador 3] (1:02:05 - 1:02:20)
+entonces ¿sí? digamos que cuando se empieza un proceso ahora tiene su cache y todo pero cuando termina ese proceso ese cache va a ser ok, ok, déjame hacerlo sencillo
+
+[Orador 1] (1:02:20 - 1:04:01)
+ok ese es tu node que me va a ver en principal ese que usted tiene ahí ese es el que usted tiene ahí pero aquí resulta que yo tengo el CPU que estaba aquí ejecuta y esto es un cache nada más eso quiere decir que esto es de un proceso de todos aquí, esto es de otro proceso es decir, aquí tengo probablemente las dos o las tres variables que más frecuentemente se utilizan de los cinco o siete procesos que más frecuentemente se ejecutan ¿ok? más bien, aquí la pregunta es la pregunta primero es digamos que esta es la variable de este proceso para todos, esta variable esta variable que yo tengo cachada está también en su bloque de memoria principal la pregunta es ¿la memoria de lo que se encuentra en el cache es de compañeras?
+
+tenemos algo muy inconveniente ¿no? aquí la vaya pueden ir afuera a conversarlo no pasa nada ¿está bien? entonces vean, la pregunta es si esto que yo tengo aquí es complemento todo eso que está ahí es la data de este proceso ¿ok?
+
+entonces la pregunta es si esto que está aquí es un complemento con lo que él tiene ahí o él debería también tener una imagen de esto ahí, o yo soy el que tengo un caché, una imagen de esta variable que él tiene una idéntica ahí ¿cómo lo vemos? ¿cómo se lo imaginan ustedes?
+
+[Orador 2] (1:04:02 - 1:04:17)
+lo que usted tiene es complemento de lo que él debería tener en la tabla en el caché ¿les parece? siguiendo lo del popel de antes, que no duplica que mueve ¿no?
+
+[Orador 1] (1:04:17 - 1:05:03)
+¿por qué ese sentido? ese sentido es no es un complemento es una imagen ¿por qué? porque recuerden que cuando entra en discusión este proceso cuando sigue este proceso y entonces yo digo, ¿estamos con el borrador?
+
+¿sí? la discusión que sigue, ¿sigue con el borrador? genial, bingo genial, ok, la pegamos ¿sí?
+
+en el momento en el que me digan, no, no, ya aquí ahora usamos el celular o ya usamos el cuaderno ¿verdad? entonces ya cambia el algoritmo entonces ya esto empieza a perder puntos como contador de variables entonces ahora si quedó el cuaderno, ¿por qué interviene ese borrador ya? ¿ok?
+
+¿es una imagen o es no es un complemento?
+
+[Orador 2] (1:05:07 - 1:05:11)
+usted hace preguntas trampas ¿es imagen o es complemento?
+
+[Orador 1] (1:05:11 - 1:07:30)
+es complemento la pregunta es, ¿qué pasa? o sea, si es imagen implica una operación de actualización cada vez que finalizamos yo le digo escriba el todo borrador de esta variable porque usted tiene ahí es una imagen, pero si es complemento esta variable solo está aquí y cuando cambiamos cuando cambiamos de variable por incremento en el contador de luz de otra variable común entonces esta se va para allá y se queda la otra variable aquí ¿entonces es complemento o es imagen?
+
+¿cómo lo manejamos? depende del contexto ¿cómo lo manejamos? ¿cómo creen ustedes que sea lo más sano?
+
+¿lo más seguro? tener esto aquí ¿verdad? la única ventaja es que cuando entra a ejecución si está aquí vengo más rápido ¿verdad?
+
+pero no es seguro este caché o sea, esto no puede ser un complemento de aquello, porque perfectamente yo puedo decir otro proceso que más frecuentemente se está utilizando es este, y este no tiene ningún espacio caché, entonces tengo que hacerle un espacio y se fue ¿ok? ¿qué pasaba si esto era un complemento de aquello? ya no existe, exactamente ¿ok?
+
+entonces es una imagen pero eso implica un costo ¿verdad? es decir, cuando el proceso sale yo le digo que escriba el valor actualizado de esta variable, porque esto que tengo aquí es la imagen de aquello, y yo proceso sobre esto ¿verdad? ¿si?
+
+¿si lo tengo clarísimo? es decir, el caché el caché no puede ser un complemento de lo que cada proceso tiene en su log que es memoria principal el caché en realidad es una imagen porque en el momento en que algo ya deje de ser frecuente porque otro proceso requiere un espacio aquí eso yo simplemente lo desecho ¿y qué pasa cuando ese proceso viene bien? eso que usted lo curraba, usted lo tenía no tengo nada pero bueno, el buffer dice que era un complemento entonces ok no, porque recuerda que el buffer es la totalidad ¿si?
+
+[Orador 4] (1:07:30 - 1:07:45)
+el buffer es una totalidad digamos el dato dentro del buffer se le va a entrar un dato a la memoria principal y ese dato se quita del buffer vamos a ver en el mejor de los casos ¿verdad?
+
+[Orador 1] (1:07:45 - 1:08:15)
+que sean variables muy pequeñas se trata todo, pero eso es una excepción ¿ok? en muchos de los casos, hay archivos ¿verdad? hay archivos que se mantienen en el buffer ¿verdad?
+
+se copian acá se copia acá se procesa se procesa cuando el archivo se cierra que se escribe ese contenido aquí en el buffer, y el buffer actualiza ahora sí sus posiciones en almacenamiento optimizado ¿ok? ¿qué cambió?
+
+[Orador 3] (1:08:16 - 1:08:44)
+bueno, es como para dar clareza de una comparación de este buffer que está rompiendo ¿sabíamos de la duda? un compañero había hablado algo en términos de web digamos para una cerca de cookies las cookies tienen algo parecido como un cache, porque las cookies guardan como, la primera vez se presenta una página, la cerca de las cookies y para la próxima ya guardan como información de la sesión ¿cuál es eso?
+
+[Orador 1] (1:08:46 - 1:08:51)
+es una cookie digamos que es como que guarda
+
+[Orador 3] (1:08:51 - 1:08:58)
+información de tu última sesión cuando entres a la página lo que yo tengo entendido
+
+[Orador 1] (1:08:58 - 1:09:12)
+lo que tengo entendido es que las cookies es un servicio que Juanín está consumiendo es decir, que está rastreando todo lo que usted toca en la página
+
+[Orador 3] (1:09:12 - 1:09:15)
+es decir, que guarda
+
+[Orador 2] (1:09:15 - 1:09:21)
+información sobre inicios de sesión cuando ustedes entren a
+
+[Orador 3] (1:09:22 - 1:09:24)
+las comparaciones no sé si está bien
+
+[Orador 2] (1:09:24 - 1:09:41)
+pero guarda como información varias dice que el cookie es un archivo de texto que se guarda en el navegador sobre la página de inicios de sesión digamos digamos que entremos
+
+[Orador 3] (1:09:43 - 1:09:48)
+yo le pregunté que si eso tiene que pasar una vez
+
+[Orador 1] (1:09:50 - 1:12:24)
+mejor vean a ver si nos ayudan nadie en los temas de investigación tiene asignado el proxy no nadie tiene asignado el proxy en los temas de investigación que tiene nadie tiene asignado un proxy bueno, un proxy vamos a ver digamos si nosotros nos conectamos aquí al internet a las redes ¿a cual red se conecta usted normalmente? Eduroam ok ese Eduroam es un servicio que pasa por un filtro es decir hay un equipo que es un switch que tiene la configuración y hace la distribución entonces si yo instalo un servicio proxy en ese dispositivo que distribuye el Eduroam entonces el proxy lo que hace es que cancha las páginas más frecuentemente utilizadas entonces vamos a ver si usted abre si usted abre su navegador ¿cuál página abre ese canal? ¿ese canal? ya no lo estoy creyendo abre su navegador ¿ese canal?
+
+¿youtube? ¿ese canal? ok entonces lo que él va haciendo es ese servicio que se llama proxy ese servicio que se llama proxy lo que va haciendo es que va canchando las páginas que más frecuentemente se consultan y entonces lo que pasaría es lo siguiente usted le hace la consulta a ese servicio proxy ese proxy encadena con el servicio youtube o con el servicio que sea con las páginas que sea si la página es frecuentemente utilizada entonces él empieza a cachar empieza a cargar contenido de esa página ¿verdad? si por ejemplo si tienen más o menos el mismo algoritmo de youtube les van a aparecer casi las mismas recomendaciones de videos ¿eso por qué es?
+
+porque están cachadas porque se cacharon, porque están localmente quiere decir que están localmente, que están aquí en ese proxy local no tienen que estar haciendo la consulta hasta allá ok y ahora digamos que en parte ¿este tiene tema de investigación?
+
+[Orador 3] (1:12:25 - 1:12:28)
+no ¿no tiene?
+
+[Orador 1] (1:12:28 - 1:12:29)
+¿qué es ese?
+
+[Orador 3] (1:12:29 - 1:12:57)
+con hardware calidad es un servicio proxy para que lo vean y se animen a empezar ahora llegando a la parte del servidor que digamos el servidor eso ahora es ¿qué es eso por ejemplo? 0 a 0 ¿qué es eso por ejemplo? bien, digamos que yo como usuario de investigación y todo ¿verdad?
+
+y como se acaba de decir él guarda como las páginas más visitadas ok, ¿qué es eso?
+
+[Orador 1] (1:12:58 - 1:14:25)
+ya se conectó a la aplicación se conectó a la aplicación ahora si ya le entendí el tema de las cookies ahora si ya le entendí el tema de las cookies digamos ¿una cookie para qué es? una cookie es para para garantizar una sesión permanentemente abierta aunque no lo vemos en muchas aplicaciones requieren aplicaciones de sockets o ciertos puertos habilitados permanentemente ustedes saben que la red que nosotros utilizamos no funciona así funciona por paquetes ¿verdad? entonces no mantiene un canal permanentemente abierto si nosotros quisiéramos un canal permanentemente abierto teníamos que tener una conexión como ISN es decir un proveedor exclusivo que brinda un canal permanentemente abierto con cualquier lugar ¿verdad?
+
+pero como eso no pasa entonces mi aplicación cada vez que yo envío una solicitud o él me manda una confirmación él va a estar pidiendo mi logueo entonces al aceptar esa cookie lo que él dice cada vez que yo mando una solicitud agréguenle un onlogging y un pago y eso es lo que se cacha lo que mantengo en el caché no es la solicitud como tal sino es mi logueo y mi pago para que él en cada petición que vaya a traer vaya mi usuario y mi contraseña entonces no tengo yo que estar metiendo cada vez
+
+[Orador 3] (1:14:25 - 1:14:42)
+digamos que el protocolo más usado en la web es el HTTPS el HTTPS y entonces el que tiene mi caché en realidad es como los servidores yo no tengo digamos por decirlo así el caché de los servidores
+
+[Orador 1] (1:14:42 - 1:17:03)
+no, no efectivamente y de eso va a depender digamos el tiempo de respuesta que si le pongo ahora que se habla el protocolo HTTPS lo que me interesa es el tiempo de respuesta para eso que utilizamos el caché para mejorar ese tiempo de respuesta bueno vamos a ir aquí a socios bueno entonces en el fondo si yo quiero implementar un caché entre CPU y novia principal pues y mi tasa de aciertos es efectiva pues entonces es genial estoy mejorando el rendimiento al tiempo de respuesta pero perfectamente puede ser que lo que esté solicitando sea nuevo entonces de ahí no el caché no está sirviendo se va a actualizar el caché entonces el caché me sirve no solamente para aquellos procesos que se ejecutan más frecuentemente sino también para aquellos procesos que frecuentemente en su ejecución hacen acceso a los mismos datos eso es lo que más privilegio me da si no sirve para todo entonces en el sentido que yo estaba encachado ahí para todos los procesos y los procesos no frecuentan los mismos datos ok bueno vamos a hablar entonces de sistema de los socios bueno el sistema de los socios funciona haciendo aplicaciones de memoria de bloques de 2HN anteriormente de aquí para arriba el tamaño de los bloques era fijo aquí más frio que nunca aquí un poco de variabilidad en el tamaño pero aquí en mapa list lo que hemos definido es que los requisitos siempre tenían un formato entonces si eran de 4K si eran de 8K de 6K etc eso iba a ser para todos pero aquí ahora en mapa en el sistema de los socios la unidad de asignación es dinámica es decir pero siempre siguiendo el patrón de 2HN es decir, se pueden describir tamaños de 2
+
+[Orador 5] (1:17:04 - 1:17:18)
+de 4 de 8 de 16 de 32, de 64, de 128 de 256 de 512 y de 1024
+
+[Orador 1] (1:17:18 - 1:17:54)
+ok entonces cada vez que hay una solicitud cada vez que hay una solicitud o que hago es que empiezo a hacer esa declaración para determinar que tamaño de bloque es el que le asigno ok entonces por ejemplo vamos a hacerlo aquí vamos a tener un bloque de 256 si yo tengo una petición de 12K entonces yo sé que tendría que coger
+
+[Orador 5] (1:17:58 - 1:18:22)
+sé que voy a tener aquí un bloque de 128 sé que voy a tener aquí un bloque de 128K libre verdad y voy a trabajar con este bloque de 128 pero yo sé entonces que como mi solicitud de 12 me va a quedar una aquí de 64 libre libre
+
+[Orador 1] (1:18:29 - 1:18:49)
+y voy a trabajar con la de 64 pero son 12 pues todavía puedo arranjar esto en uno de 32 libre y este de 32 voy a hacer la asignación pero todavía puedo partirla en 256 libre y una de 16 y entonces aquí pondría
+
+[Orador 5] (1:18:51 - 1:18:52)
+la petición de 12
+
+[Orador 1] (1:18:52 - 1:19:21)
+ok la pregunta de millones cual es el sentido porque se llama los socios primero porque creen que se llama los socios se llama los socios porque siempre hay uno contiguo exactamente igual ok siempre va a crear uno justamente al lado exactamente igual ok la pregunta es porque es que estamos buscando tener
+
+[Orador 3] (1:19:21 - 1:19:44)
+un socio igual digamos tiene que estar exactamente igual pero en la celda donde se colocó la petición digamos por ejemplo se la colocó ahí en la 16 entonces si se colocó en la 16 se crea otra igual siempre si
+
+[Orador 1] (1:19:49 - 1:21:17)
+veamos si este que tamaño es 64 ok y este que tamaño es ahora si tengo uno de 32 su socio de cuanto es tengo uno de 16 y su socio de cuánto es esa es la filosofía si es decir lo que tenemos que tener claro es que el socio de este bulano es este bloque si yo perforo este y aquí me queda uno libre de 16 este y este nunca van a ser socios ok nunca van a ser socios si ok que es lo que estamos buscando con el sistema de los socios dos cosas uno poner una previsión de que si el proceso crece tal vez, espera porque es probabilístico tal vez el bloque su socio todavía no haya sido asignado entonces genial lo puedo utilizar ok, esa es la primera digamos la primera suposición que favorecería el uso de esta política segundo cuando el proceso uno finalice si el proceso uno finalice que es lo que va a hacer, el se va a juntar con su socio si está libre, entonces ya en vez de tener un hueco de 16 ahora vamos a tener uno de 32 recuerden cuál era el problema con más países cuál era el problema con más países
+
+[Orador 4] (1:21:19 - 1:21:19)
+bloques inútiles
+
+[Orador 1] (1:21:21 - 1:22:30)
+bloques inútiles verdad, osea que la cantidad de bloques inútiles era tan grande que ya no podían ir a hacer asignaciones entonces más países lo que pretende es resolver ese problema y decir bueno cada vez que un proceso sale pregunta si su socio está libre, su socio porque recuerden si ese libera es uno de 16 asumamos que ya estés ocupado pero por aquí tengo uno de 16 este nunca va a ser socio entonces nunca se va a poder juntar entonces lo que anda buscando es que una vez que un proceso finalice inmediatamente va a preguntar mi socio está libre y entonces ya no estoy nada más liberando un hueco sino que además estoy liberando la posibilidad de juntar ese hueco en algo más grande cosa que hasta aquí no tenía esa posibilidad es lo que estoy tratando de favorecer entonces pongamos otro caso imaginemos que tenemos una solicitud de 22k ¿dónde lo colocaríamos?
+
+[Orador 5] (1:22:36 - 1:22:39)
+¿dónde colocaríamos el 22k?
+
+[Orador 6] (1:22:41 - 1:22:44)
+tenemos que colocarlo en este espacio ¿verdad?
+
+[Orador 1] (1:22:46 - 1:26:51)
+mantenemos AP1 0x16 0x34 y el 128 ponemos otra petición de 3k entonces la colocamos ¿dónde colocamos la petición de 3k? en el segundo tenemos AP1 entonces tenemos que colocarlo acá pero no lo colocamos aquí no colocamos AP3 ¿verdad? que no tiene sentido este bloque es de 16, es decir, tenemos que rajarlo y este bloque va a ser de 8 libre y este va a ser de 8 libre con tanto tenemos que rajarlo este de 4 libre y aquí estaría el proceso 3 entonces el asunto es que cuando finalice el proceso 1 tendría que estar libres todos sus socios yo lo puedo juntar 16k con 4k en el caso de que esta estuviera libre ¿ok?
+
+o yo lo puedo decir bueno, este proceso, este 3 no lo coloco acá, mejor lo coloco de este lado como este libre, si este es libre lo sumo los 16k y 4k y llego a 20k, no existen ¿ok? esta es la posibilidad esto es lo que tenemos que tener clarísimo ¿estamos? tenemos otro proceso, 4 tiene 7k libre libre 2 ¿ok?
+
+¿dónde lo vamos a colocar? tengo hasta 1, no ha salido tengo el proceso 3 tengo uno de 4 y tengo uno de 8 el 4 se mantiene libre y metemos aquí al proceso 4 ¿ok? igual en el momento en que el proceso 2 finalice y el proceso 4 yo puedo juntar este bloque de 16 con este de 32 ¿ok?
+
+los sus socios son exactamente del mismo tamaño ¿ok? y si en algún momento tenemos que demostrar que eso es consistente tenemos que construir una tablita y diríamos que tengo entonces yo diría que aquí la posición 0 la posición 0 de tamaño 16 tenemos aquí al proceso 1 tengo en la dirección 16 de tamaño 4 tengo al proceso 3 en la dirección 20 de tamaño 4 tengo un bloque libre en la dirección 24 de tamaño 16 tengo al proceso 4
+
+[Orador 5] (1:26:55 - 1:27:02)
+no, esto es de 8 de 8
+
+[Orador 1] (1:27:03 - 1:29:49)
+¿correcto? luego en la posición 32 que está acá tengo al proceso 2 de tamaño 32 luego en la dirección 64 tengo un bloque libre de tamaño 64 y en la dirección 128 tengo un bloque libre de tamaño 128 ¿y cuándo tenemos esto? tenemos que verificar ¿cómo lo hacemos?
+
+tenemos un bloque de 4 4 y 4 son 8 y 8 de 16 este bloque este socio con este este socio con estos este socio con estos estos son socios con este estos son socios con este aquí tenemos 8 aquí tenemos 8 de 16 16 y 16 32 32 y 32 64 64 y 64 128 y 128 y 128 256 que es justamente lo que tenemos aquí ahí porque ningún punto no ha finalizado pero ese es el principio entonces busca dos elementos de fondo uno primero hacer una proyección pensando en que si el proceso crece tal vez su socio no haya sido asignado y puedas crecer ahí y dos quizás lo más importante del espíritu del arreglo es que cuando el proceso finaliza tal vez su socio no haya sido asignado y entonces ahora en vez de ir con la totalidad del proceso que estaba va a sumarse con su socio y tal vez su socio también esté, entonces la posibilidad de que pueda crecer el tamaño del bloque libre sea lo más grande al finalizar el proceso ¿de ventaja de socios? ¿qué ventajas vemos?
+
+[Orador 3] (1:29:51 - 1:29:51)
+¿qué talía?
+
+[Orador 1] (1:29:52 - 1:30:44)
+el problema es simplemente el hecho de que crezca el socio no, el problema es lo que está tratando de favorecer que si él crece que si él crece tal vez su socio todavía no sea asignado ¿y si el proceso es pequeño? sí, porque igualmente ¿qué onda? aquí metimos a lo pequeño y su bloque socio está libre ¿sí?
+
+si crece, bien, si no tiene que emigrar ¿verdad? se acaba de mencionar eso de que si creció y su compañero su socio ya está ocupado cuando se muera, ya se muera eso sí por ejemplo, si el proceso 3 crece y este bloque libre ya fue asignado él tiene que emigrar hasta otro hueco que sea capaz de contenerlo ¿completamente?
+
+[Orador 2] (1:30:47 - 1:31:07)
+¿otro problema? ¿alguien quiere hablar de caja? si hay muchos procesos, entonces sería ineficiente porque los procesos estarían ocupando espacio de memoria y ya no tendría sentido el socio digamos que no es que sea ineficiente nada más que pierde el principio de las posibilidades de crecimiento ¿verdad?
+
+[Orador 1] (1:31:08 - 1:32:34)
+eso sería lo que pierde la efectividad ¿otro problema que tenga? ¿otro problema? ¿qué pasa?
+
+cuando ocupa cuando ocupa más espacio del que tiene para poder crecer se tiene que emigrar a otro bloque completamente más grande es decir aquí no hay aquí no hay reasignación y protección aquí no hay reasignación y protección aquí no hay que me voy a buscar un capítulo en nuestro labo para finalizarlo me muevo con todo otro de los problemas que tiene evidentemente es el desperdicio interno tengo aquí un bloque de 22 metidos pero un proceso con una solicitud de 22 metidos un bloque de 32 es decir dependiendo de la solicitud puede haber desperdicio interno si el proceso no crece ¿qué pasó? hay desperdicio interno y también podría darse ¿qué tengo aquí?
+
+[Orador 3] (1:32:37 - 1:33:04)
+desperdicio externo, tengo bloque de la memoria que tal vez no vaya a ser utilizado digamos que hay un proceso pequeño hubo una partición más pequeña ¿ese proceso se puede mover o ya acaba de ir permanentemente? la única posibilidad de que se mueva es que crezca
+
+[Orador 1] (1:33:04 - 1:33:08)
+en su solicitud de memoria y su socio no esté libre
+
+[Orador 3] (1:33:08 - 1:33:13)
+digamos que el proceso llegó y se produce nuevamente en el mismo espacio
+
+[Orador 1] (1:33:18 - 1:33:39)
+si crece si crece y su socio no está libre tiene que ir completamente a buscar otro espacio pero si su socio está libre simplemente va a seguir creciendo va a tomar ese bloque porque es parte del espíritu prever que él va a crecer y que entonces su socio va a estar libre ¿y el mejor de los casos?
+
+[Orador 4] (1:33:42 - 1:34:17)
+directamente él es como mapa de bits que desde el inicio va y se trata de buscar uno del que mejor se ajuste o él puede ir a agarrar allá al final y clavarlo siempre va a ir tratando de ocupar su memoria desde el inicio siempre necesita ir partiendo Gracias

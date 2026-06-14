@@ -1,0 +1,326 @@
+[Orador 1] (0:01 - 0:34)
+Bueno, como todos tienen el examen ahí, tal vez lo podemos ir siguiendo, ¿verdad?, para estar bien claritos. Me dicen cómo se ve esa pizarra. Creo que está muy largo, me parece.
+
+¿Cómo se ve ahí?
+
+[Orador 4] (0:39 - 0:40)
+Sí, sí se ve.
+
+[Orador 1] (0:42 - 0:43)
+¿Se lee bien?
+
+[Orador 2] (0:45 - 0:50)
+Sí, con un órgano se ejemplifica mucho, ¿verdad? Esa raya de luz, pues, corta la luz y todo eso, ¿verdad?
+
+[Orador 1] (0:50 - 0:55)
+Este, vamos a ver si lo acercamos un toquecito más. ¿Cómo se ve ahí?
+
+[Orador 4] (0:58 - 0:59)
+Sí, ahí se ve mejor, pues.
+
+[Orador 1] (0:59 - 1:00)
+¿Un poquito mejor?
+
+[Orador 4] (1:00 - 1:01)
+Sí.
+
+[Orador 1] (1:05 - 4:03)
+Ok, me dicen para este lado hasta dónde se logra ver, para ver si empezamos acá, desde este lado. Entonces los procesos van del A al F, ok. Entonces, el primer proceso es la de codificación de ADN, ok.
+
+El proceso B es el de monitorización de bebés, ok. Y lo que hace es que graba los latidos, patrón de respiración, ok. El proceso C, que es el que se encarga del análisis de datos masivos para predecir pandemias.
+
+Esto es a través de perfiles públicos. Tenemos un proceso D, que es el que consume el web service de... Vamos a hacer esto un poquito más grande, porque si no vamos a tener unas solicitudes que aquí...
+
+¿Galeán, ya estás de conecto?
+
+[Orador 5] (4:14 - 4:15)
+¿Cuál es usted, Galeán?
+
+[Orador 1] (4:19 - 22:43)
+¿Cuál es usted? ¿Cubillo? Sí.
+
+Lo voy a hacer, Joss, por si alguien solicita acceso para que usted lo... ok. Luego tenemos un proceso D, ah bueno, el D es el del web service, ok.
+
+Y esto lo alimentan las clínicas y las farmacias, ok. Y eso es para determinar el perfil del historial clínico de una persona, un perfil unificado. El proceso E, que es el que valida la inclusión al historial clínico de la persona para determinar la condición tributaria.
+
+Básicamente eso es un cruce con Hacienda, ok. Y F, un proceso que perfila hábitos alimenticios, ok. Y eso es contra compras, compras en comercios, ok.
+
+Bueno, básicamente esos eran los seis procesos que teníamos, ok. Ahora lo que nos interesa es determinar qué cosas es lo que vamos a evaluar de esos procesos para que nos ayuden a poder resolver las preguntas, ok. Bueno, tenemos que evaluar definitivamente el tema de la ráfaga para determinar el algoritmo.
+
+Sería importante determinar si alguno de ellos es de tiempo real. Por supuesto que el consumo de memoria. También tenemos que evaluar el crecimiento en el consumo.
+
+Tengo orden. El crecimiento en consumo de memoria. La frecuencia de uso de memoria.
+
+Por supuesto que tenemos que evaluar cuál es el consumo de entrada y salida. Y el otro elemento importantísimo para poder analizar el tema de los archivos es cuál es la naturaleza de las operaciones que realizan. Si es de lectura a escritura, solo lecturas o solo escritura, ok.
+
+Ok, listo. Entonces vamos a empezar con el primer proceso que es el que decodifica la cadena de ADN. Recuerden que ahí lo tenemos en el dibujito.
+
+Lo que hace es una, va definiendo patrones, pero hace un análisis exhaustivo de la repitencia de esos patrones. Y bueno, la cadena es bastante, bastante extensa. Evidentemente es un proceso que consume muchísima, muchísima ráfaga.
+
+Evidentemente no es de tiempo real. Ok. Sobre el consumo de memoria.
+
+En realidad lo que analiza, las variables que analiza, lo que recibe producto del dispositivo de entrada y salida son cadenas de caracteres. Entonces lo que va haciéndose va evaluando la repitencia de esos caracteres. Por lo tanto el consumo de memoria es mínimo, verdad.
+
+Es un archivo de caracteres, un archivo de texto. Básicamente lo que está analizando no son imágenes. El crecimiento de memoria, pues no va a crecer, verdad.
+
+La frecuencia, pues bastante constante. Ok. La entrada y salida, pues bastante exhaustiva porque depende de la lectura de un dispositivo, verdad.
+
+Ok. Y pues es un procedimiento que tanto lee como que también va escribiendo los resultados de las cadenas. Vamos con el proceso de monitoreo de los bebés a través de los dispositivos.
+
+Uno para latidos y otro para respiración. Evidentemente esto será un proceso exhaustivamente intensivo en consumo de entrada y salida. Verdad.
+
+¿Cómo será la ráfaga? Bueno, la ráfaga en realidad relativamente pequeña, verdad. Digamos, lo que procesa es muy sencillo.
+
+Donde se concentra principalmente es en hacer la lectura de los dispositivos. ¿De tiempo real? Bueno, en realidad no dice que el dispositivo producto de una lectura vaya a disparar una alerta, verdad.
+
+Es decir, lo que hace es que manda medidas recomendatorias. Por lo tanto no es de tiempo real. Y además aunque fuera de tiempo real, tenemos claro que la lectura que se hace es de cinco centros médicos.
+
+Y en cada centro médico probablemente hayan varios de esos. Por lo tanto no puede ser de tiempo real porque no existe solo un único proceso, sino que hay varios de ellos. En cuanto al consumo de memoria que requiere este proceso, pues diríamos que por el tipo de información que generan los dispositivos, podría ser ahí relativamente mediana.
+
+Crece en consumo de memoria, pues diríamos que el crecimiento prácticamente queda nulo, verdad. Porque las escrituras, lo que se está generando es un reporte tipo texto. Solamente se va escribiendo en un archivo.
+
+Entonces eso no tiene mayor dimensión, verdad. La frecuencia de uso es bastante alta. Es de lectura, evidentemente, y es de escritura porque el reporte que genera tiene que escribirlo.
+
+El proceso SEM, que es el análisis de los perfiles de redes sociales para determinar posibles brotes. La ráfaga, ¿cómo es? Bueno, es una ráfaga bastante alta.
+
+¿Por qué? Porque recuerden que lo que se analiza son bodegas de datos. Bodegas de datos donde están chats, por ejemplo.
+
+Entonces el consumo de CPU es bastante alto. No es de tiempo real para nada. El consumo de memoria es exageradamente alto.
+
+Son bodegas de datos, aunque sean archivos de texto. Pero lo que pesa es el volumen, la cantidad. Evidentemente va a crecer en consumo de memoria.
+
+La tasa de frecuencia de uso es exageradamente alta. Sobre los dispositivos de entrada y salida. Bueno, si estamos hablando de bodegas de datos, evidentemente los dispositivos son altamente consultados.
+
+Y es un proceso que no solamente lee, sino que también escribe resultados. Luego tenemos el proceso DEN, de los web service con las cajas, clínicas, farmacias y todo otro centro médico que genere o dispense un medicamento, una receta médica y todo lo demás. La ráfaga en realidad es bastante poca, porque lo único que hace es actualizar un expediente clínico en base a la información del reporte que está recibiendo.
+
+No es de tiempo real. Su consumo de memoria, por la naturaleza de los XML que recibe, es relativamente baja. Pero sí tiende a crecer, evidentemente por la cantidad de transacciones que realiza.
+
+La frecuencia de uso es bastante alta. La entrada y salida, evidentemente, si estamos analizando que es un web service, está constantemente recibiendo información. Lee y actualiza los expedientes clínicos de cada persona.
+
+El proceso E, que es el de tributación y hacienda, pues ese prácticamente que no computa absolutamente nada. No es de tiempo real tampoco. Su consumo de memoria es bastante bajo.
+
+No va a crecer. Su frecuencia de uso es relativamente baja. Solo una vez, solo cuando una persona hace uso de un servicio médico.
+
+Sobre las operaciones de entrada y salida, pues el uso de dispositivos externos es mínimo. Lee y escribe. Pues básicamente lee únicamente.
+
+Y lo que genera es una alerta. El F, el de hábitos alimenticios. Lo que hace es que evalúa todas las compras que realiza una persona y perfila un hábito alimenticio.
+
+Evidentemente, ya sabemos que esto es altísimamente consumidor de memoria y evidentemente tiende a crecer. Una vez que se está ejecutando. Y pues su frecuencia de uso es bastante, bastante alta.
+
+La gráfica, el procesamiento. El procesamiento diríamos que es relativo. ¿Por qué?
+
+Porque los archivos que compara son archivos de texto. Son strings. Lo que hace es que coge una factura de compra y esa factura la convierte en un string.
+
+Y eso es lo que evalúa. No es de tiempo real. La tasa de entrada y salida es bastante alta.
+
+Producto de todos los reportes que genera. Lee y escribe resultados del procesamiento para modificar algún hábito. Ok.
+
+Ahora sí. Con ese análisis tenemos las preguntas. La primera pregunta es.
+
+Explique cuál es su posición si tuviera que aplicar la política de administración de memoria virtual a este caso. Y si lo justifica. ¿Cuál sería la política de reemplazo que usted recomendaría?
+
+Bueno. Teniendo en consideración que, por ejemplo. Los procesos que más consume memoria.
+
+Ok. Que serían los procesos de análisis masivo de redes sociales. El otro que también analiza los tickets de compras a través de los hábitos alimenticios.
+
+¿Verdad? Que esos procesos lo que hacen es que utilizan prácticamente bodegas de datos. ¿Verdad?
+
+Son altamente consumidores de memoria. Y son altamente crecientes en memoria. Ok.
+
+Teniendo en consideración que están esos dos procesos que son de análisis masivo de información. Pues evidentemente la memoria. Ninguno de los modelos de administración de memoria fija nos sirve.
+
+Es decir. No nos sirve ni memoria con particiones fijas. Todas del mismo tamaño o de varios tamaños.
+
+No nos sirve mapa bits. No nos sirve listas ligadas. Y no nos sirve tampoco socios.
+
+¿Ok? ¿Por qué? Porque esos procesos ya nos comprometen.
+
+Y ya sabemos que va a sobrepasar las capacidades de cualquier memoria que se dé. Entonces obligatoriamente necesitamos aquí memoria virtual. ¿Ok?
+
+La pregunta del millón de colores. ¿Cuál es el modelo de la cual la política de reemplazo de páginas que ocuparía? Evidente entonces.
+
+Evidentemente memoria virtual. Ok. Ahora sobre la política de reemplazo de páginas.
+
+La pregunta. La pregunta del millón de colores para definir la política de reemplazo de páginas es. ¿Qué me interesa privilegiar aquí?
+
+Que en cada iteración que se ejecuten esos procesos. Necesito mantener cargado en memoria principal aquellos procesos. Perdón.
+
+Aquellas páginas que más frecuentemente se utilizan o no me interesa. Es decir, que en cada iteración de ejecución de estos procesos. Pues la información que se va a ejecutar prácticamente es toda nueva.
+
+Es decir, hay que hacer todo el intercambio. Llevar a memoria virtual y traer de memoria virtual para memoria principal. Esa es la pregunta que hay que responderse.
+
+Evidentemente, si estamos tratando de definir perfiles. Si estamos tratando de definir hábitos alimenticios. Si estamos tratando de identificar el historial clínico.
+
+Pues evidentemente me interesa mantener cargado en memoria principal. Las páginas que más frecuentemente se utilizan. Ok.
+
+Entonces, ¿qué me interesa privilegiar? Las páginas frecuentemente utilizadas. Ok.
+
+Entonces, para aplicar esa política. ¿Cuáles serían los algoritmos que me servirían para eso? Bueno, me serviría NRU, ¿verdad?
+
+Que analiza bit R y M. Me podría servir segunda oportunidad. También me podría servir reloques.
+
+Una variante segunda oportunidad. Ok. Y pues el óptimo.
+
+Jamás, porque es en este caso imposible de implementar. FIFO. No me sirve porque FIFO cambia las páginas.
+
+Sin saber si se usan o no se usan. Y el NRU. No me interesa porque eso es por tiempo.
+
+Por el tiempo en el que fueron traídas. No por la tasa de uso. Ok.
+
+Entonces. Estos serían los posibles algoritmos que yo podría utilizar. Ok.
+
+Como si me interesa privilegiar que se mantenga. Las que más frecuentemente se utilizan. Yo podría incluso.
+
+Descartar NRU. Y apostar por segunda oportunidad. Ok.
+
+En el caso del reloj. Pues prácticamente. Es una variante.
+
+Es una variante de segunda oportunidad. Nada más que levando vuelta todas las páginas. Ok.
+
+Entonces en este caso cualquiera de estas dos es justificada. Ok. Pero lo más importante es cuál es el criterio.
+
+¿Por qué yo escojo una política? La política es. Me interesa mantener.
+
+En memoria principal. Las páginas que son más frecuentemente utilizadas. Eso es lo que me interesa privilegiar ahí.
+
+Ok. Ya llevamos 25 puntos. La pregunta 2 dice.
+
+Consideran. Consideraría la posibilidad de aplicar Mapavits. Para beneficiar algún proceso.
+
+Sus respuestas afirmativas. ¿Cuál sería ese proceso? En caso contrario.
+
+¿Por qué cree que no aplicaría para ninguno? Ok. Lo primero que tenemos que hacer es recordar.
+
+¿Cuáles son las ventajas de Mapavits? Ok. La ventaja principal.
+
+O el espíritu. De esta implementación de Mapavits. Es.
+
+Que. Junta. Huecos.
+
+Esa es la principal. Ese es el espíritu de esa política. Que junta huecos.
+
+Es decir, que una vez que un proceso termina. Y una vez pregunta si su vecino. Entonces hago uno solo.
+
+Y pregunto. Si el vecino cercano también está libre. Y hago otro hueco mucho más grande.
+
+Ok. Esa es la principal bondad que tiene. ¿Cuál es la principal desventaja?
+
+La principal desventaja que tiene es. Evidentemente. El desperdicio.
+
+Interno. ¿Por qué? Porque las asignaciones las hace en potencia.
+
+De X a la N. Porque el tamaño que le asignemos. Vaya a ser muy grande.
+
+Ok. Entonces por eso es que decimos. Que una de las ventajas principales.
+
+Es el desperdicio interno. Ok.
+
+[Orador 6] (22:45 - 22:53)
+Profe disculpe. Ese de 2 a la N. No era el de socios.
+
+¿Perdón? El de 2 a la N. No era el de socios.
+
+[Orador 1] (22:53 - 23:05)
+Ah si, si, si, si. Tiene toda la razón. Sí, sí, sí.
+
+Lo que estamos hablando es Mapavits.
+
+[Orador 5] (23:10 - 23:10)
+Ok.
+
+[Orador 1] (23:21 - 34:43)
+Ok. Es que Mapavits es la pregunta número 3. Por eso es que me enredé aquí.
+
+Porque aquí tengo Mapavits. Entonces esta va a ser la pregunta 3. ¿Sí?
+
+No, no, no. La 3 es la de socios. Sí, sí, por eso es que me enredé aquí.
+
+Ok. Porque ese es el análisis para la pregunta 3. Vamos a la pregunta 2.
+
+¿Cuál es la principal ventaja? ¿Cuál es la principal ventaja de Mapavits? Bueno.
+
+Que ocupa poca memoria para administrar el mapa. Ok. Ocupa poca memoria para administrar ese mapa.
+
+Vamos a ver. Mapavits. Listas ligadas.
+
+Y socios. Ok. Mapavits no es el que ocupa poca memoria.
+
+Esto es una desventaja. Ok. Recuerden que el Mapavits era una estructura bastante grande.
+
+Entonces consumía una porción considerable de toda la memoria. Ok. Entonces era una desventaja.
+
+Ok. Esa estructura ocupa una cantidad grande de memoria. Ok.
+
+Otra de las desventajas que tenía es la cantidad de huecos inútiles que se iban generando al inicio principalmente. Y que posteriormente eso se iba extendiendo a toda la memoria de tal manera que en un momento yo tengo una gran cantidad de memoria libre pero es poco usable. Ok.
+
+Porque son bloques muy pequeños. ¿Qué ventajas tenía Mapavits? A ver.
+
+¿Qué ventajas tenía Mapavits? Bueno. Otra de las desventajas que tenía era el tiempo que requería para ubicar un hueco.
+
+Ok. Esa es otra de las ventajas que tenía. Ok.
+
+¿Cuál era la ventaja que tenía Mapavits? La ventaja que tenía Mapavits hay que compararla con memoria. Con particiones fijas del mismo tamaño o de varios tamaños.
+
+Recuerden que en memoria de particiones fijas del mismo tamaño o de varios tamaños los tamaños tenían que hacerse quemados. Es decir, al iniciar el proceso de ejecución ya se sabía cuáles eran los tamaños y cuáles eran las distribuciones que había. En Mapavits eso no es esta no es una preocupación.
+
+Ok. No se preocupa por el tamaño no se preocupa por el tamaño de la solicitud. Ok.
+
+Entonces la pregunta es ¿Considera usted la posibilidad de aplicar Mapavits para beneficiar algún proceso? Si su respuesta es afirmativa ¿Cuál sería? Igual caso contrario porque cree que no aplicaría a ninguno.
+
+Ok. Bueno. Evidentemente aquí el problema lo tenemos con los procesos que crecen los procesos que crecen en consumo de memoria.
+
+¿Cuáles son? El proceso C y el proceso F. Teniendo en consideración que hay dos procesos que se ejecutan y que se ejecutan constantemente el de hábitos alimenticios y el de análisis masivo de redes sociales están en constante ejecución.
+
+Si tengo procesos de esa naturaleza metidos en una política como Mapavits ¿Qué va a pasar? Bueno, va a pasar que constantemente tengo que estar mandando esa información a otro espacio nuevo ¿Por qué? Porque el que se le asignó probablemente ya no sea capaz de contener porque ese proceso va a crecer cada vez que entra en ejecución va a pedir más memoria y cada vez que pide más memoria entonces la que ya le había asignado ya no le es suficiente entonces tengo que emigrar todo con el agravante que son procesos que consumen muchísima memoria es sumamente complejo entonces Mapavits está completamente descartado ¿Ok? La pregunta 3 es la posibilidad de aplicar socios ¿Algún proceso? Si su respuesta es afirmativa ¿Cuál proceso?
+
+Y en caso contrario ¿Por qué no lo aplicaría? Y ya dijimos que en el caso de los socios tiene como ventaja la facilidad que tiene para una vez que el proceso finaliza o libera ese bloque poder juntarlo con su vecino si está libre entonces el proceso de mantener bloques utilizables en la memoria es bastante efectivo la ventaja que tenía era que las asignaciones eran en función de X a la 2 y eso implicaba entonces que el tamaño de su hueco siempre iba a provocar un desperdicio interno en cualquier escenario en donde tenemos procesos muy grandes pues no nos podemos dar el lujo imagínense por ejemplo en el caso de los procesos del F y el C imaginémonos de qué tamaño tendrían que ser sus socios entonces habría ahí una gran cantidad de desperdicio entonces el sistema de los socios está completamente descartado por el tema de el desperdicio interno principalmente por el desperdicio interno ok vamos a la pregunta 4 la pregunta 4 dice la pregunta 4 dice ¿cuál modelo de implantación de archivos cree que es el más conveniente? listas ligadas y un índice o INO2 listas ligadas y un índice y INO2 lo que estamos preguntando es si es esto o recordemos que el primer modelo de administración de archivos es de implementación es asignación adyacente asignación adyacente sería una maravilla siempre y cuando eso fueran siempre y cuando eso nunca se modificara es decir, si todo fuera de lectura pero como vemos casi la mayoría de los procesos son de escritura entonces vamos a analizar lo siguiente que sería listas ligadas listas ligadas es un sistema más o menos eficiente ¿cuál es el problema? que con listas ligadas si pierdo la tabla donde tengo el nombre del archivo y la dirección del primer bloque pues voy a perder y con listas ligadas y un índice si pierdo la tabla de indexación pierdo el total del archivo INO2 es una estructura que me permite mantener en la estructura de los archivos organizada de tal manera que en memoria voy a mantener lo que más frecuentemente se utiliza de esos archivos que en el fondo es justamente lo que andamos buscando pues lo que tratamos de privilegiar era que en memoria se mantuvieran las páginas más frecuentemente utilizadas pues esto nos empata perfectamente con la ideología de INO2 de tener una estructura de archivo que me permita cargar por sectores a memoria principal aquellos donde se encuentra la información más frecuentemente utilizada es decir listas ligadas y un índice está completamente descartado me interesa INO2 porque es más rápido y más eficiente porque es más rápido y más eficiente porque sólo carga aquellas partes de los archivos que más frecuentemente se utilizan perfectamente claro porque digamos sobre todo los que hacen procesos de escritura digamos lo que yo escribo yo no escribo no reescribo todo el contenido del archivo sino escribo sólo partes que siempre van a estar sujetas a modificación ok vamos a la pregunta 5 nos pregunta sobre acceso secuencial a archivos ok cuando hablamos de acceso secuencial estamos diciendo que es un archivo que está guardado bajo la implementación de asignación adyacente ok es decir el archivo una vez que empiezo a realizar la lectura todo va a estar junto y lo único que voy a buscar es el archivo es sumamente eficiente es muy rápido este ¿cuál es el problema que tiene? que para acceder a una porción del archivo tengo que recorrer absolutamente todo por lo tanto es demasiado lento el otro problema que tiene es que si ese archivo está sujeto a una operación de escritura entonces ya no me sirve y evidentemente de todo el contexto de ejecución el acceso secuencial está completamente descartado ¿alguna duda?
+
+[Orador 3] (34:48 - 34:58)
+¿alguien tiene alguna duda? yo una pregunta los procesos que no requieren mucho crecimiento ¿podrían entrar en MapAvid? ¿se podrían usar aún así?
+
+[Orador 1] (35:00 - 35:38)
+no vamos a ver los procesos que no tienen mucho crecimiento se podrían valorar pero lo ideal es para procesos que no crezcan en consumo de memoria sería genial utilizarlo ahí sería perfecto si los procesos no crecieran ok la pregunta es ¿sería válido para el proceso en sí? no, no, no ese es el escenario entonces se puede justificar que para el proceso tal se podría aplicar ok, es válido
+
+[Orador 5] (35:39 - 35:41)
+ok, ok
+
+[Orador 1] (35:41 - 36:21)
+por eso hicimos el mapeo de cómo se comportan para saber hasta qué punto podría beneficiar y siempre y cuando se tenga bien claro que puede beneficiar a ese proceso porque estamos claros de que ese proceso no crece en consumo de memoria es decir, que constantemente que ese proceso entre ejecución no va a estar solicitando nuevos espacios de memoria porque si no va a tener que hacer la migración va a tener que hacer reasignación ahí ¿sí?
+
+[Orador 5] (36:22 - 36:32)
+ok, ¿alguna otra duda? ¿no hay ninguna otra duda?
+
+[Orador 1] (36:37 - 37:28)
+ok bueno voy a pasarles los exámenes cuéntenme ¿cómo nos vamos a organizar para la presentación del proyecto? lo que vamos a hacer es que creo que en el chat en el chat de WhatsApp colocar el orden de defensa si les parece este cuéntenme ustedes si lo hacemos de esa manera ¿qué les parece?
+
+[Orador 2] (37:30 - 37:37)
+bastante bien cualquier cosa nos vamos a mandar de los primeros ok, entonces
+
+[Orador 1] (37:37 - 37:52)
+ya vamos a ponerlo ahí ok ok entonces me ponen por favor solo una persona por el grupo
+
+[Orador 5] (38:03 - 38:04)
+ok
+
+[Orador 1] (38:13 - 38:46)
+solo una persona me pone el nombre, bueno me ponen los integrantes del grupo solo el nombre nada más ok y lo vamos haciendo en orden el que se coloque de segundo presenta de segundo y así sucesivamente ok bueno cuando termine de pasarles los exámenes entonces le comunico al primer grupo para que se conecte ¿estamos de acuerdo?
+
+está bien
+
+[Orador 2] (38:47 - 38:48)
+profesor, una pregunta
+
+[Orador 1] (38:48 - 38:50)
+sí, claro
+
+[Orador 2] (38:51 - 38:58)
+supuestamente el último proyecto nos lo dio a asignar pero no hemos visto ni la materia y parece que no va a haber mucho tiempo para eso
+
+[Orador 1] (39:04 - 39:19)
+así que como que dejemos esta semana para que se relajen un poquito muy probablemente vaya a haber algunas correcciones del proyecto ese que vayan a presentar y la siguiente clase les desarrollo la temática y les entrego el enunciado al proyecto efectivamente
+
+[Orador 4] (39:20 - 39:28)
+ok, listo, gracias si, gracias supiera bueno, bueno
+
+[Orador 5] (39:28 - 39:30)
+ok, ok, pura vida

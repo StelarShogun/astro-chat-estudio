@@ -20,7 +20,7 @@ const title = await page.title();
 const heading = await page.locator('h1').first().innerText().catch(() => null);
 const bodyText = await page.locator('body').innerText().catch(() => null);
 const background = await page
-  .locator('.hero-copy')
+  .locator('.hero-panel')
   .evaluate((node) => getComputedStyle(node).backgroundColor)
   .catch(() => null);
 await page.screenshot({ path: 'page-check.png', fullPage: true });

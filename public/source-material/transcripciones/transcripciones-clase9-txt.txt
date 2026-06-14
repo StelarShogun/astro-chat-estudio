@@ -1,0 +1,1079 @@
+[Orador 2] (0:00 - 0:08)
+Bienvenidos a mi conferencia.
+
+[Orador 5] (3:04 - 3:06)
+¿A mí no me dicen que me extraña el barón?
+
+[Orador 3] (3:07 - 3:09)
+¿A mí no me dicen que me extraña el barón?
+
+[Orador 6] (3:09 - 3:16)
+Claro que sí Yo sé, yo siento como...
+
+[Orador 2] (3:20 - 5:54)
+Yo sé Bueno Yo sé, yo sé ¿Te ha gustado? Sí Bueno, gracias Buenos días Gracias Buenos días Gracias No, no, voy a estar feo, tal vez no haga ese entreviste No sé si voy a llorar, es que no he dormido nada No he dormido, ¿sabes cuánto he dormido?
+
+[Orador 3] (5:55 - 6:52)
+media hora No, te diría mal, pero no duermes No, ¿sabes? Es una cosa horrible Es serio, ¿cómo se va a poder lavar la lavadora a mano y con dedos? ¿Me voy a pedir una cerveza?
+
+Yo, yo ¿No? Yo siempre me entreno para jugar boli, después jugar boli y gimnasio, todo el día Ah, ¿en serio? ¿Pero si yo tengo que hacer un entrevista?
+
+Yo ocuparía eso, cambiar mi nombre Ah, ¿pero yo puedo ir a la casa? Sí ¿Vas a venir al boli? Sí Se van culitos ¿Estás bien?
+
+Calle, usted no hace nada ¿Está muy guapa? No, usted es más manco que yo ¿Ah? No lo niegue, usted es más manco que yo ¿Por qué?
+
+Porque sí ¿Ah?
+
+[Orador 2] (6:52 - 7:15)
+Nadie me va, nadie me va, la cualquiera me va Esos éramos cuatro procesos que nos corresponderían analizar por el caso del examen Y lo más importante es que las variables creen ustedes que sean importantes.
+
+[Orador 1] (7:17 - 7:21)
+Recuerden que necesitábamos analizar o conectar un determinado CPU.
+
+[Orador 2] (7:24 - 7:40)
+Necesitábamos un determinado CPU entonces que ahí arriba la condicional era importante. Ahora vamos a empezar con lo que vamos a analizar, el CPU.
+
+[Orador 3] (7:46 - 7:46)
+La tráfaga.
+
+[Orador 1] (7:49 - 7:58)
+Es indispensable de verdad entender el consumo del CPU, cuánto consume el CPU.
+
+[Orador 2] (8:02 - 8:02)
+Bien.
+
+[Orador 1] (8:14 - 8:54)
+¿Quién más? Para el tercer examen tenemos tres preguntas fijas. Tenemos dos preguntas ya fijas, ¿cuáles son?
+
+¿Cuál es el algoritmo del CPU? ¿Cuál es el algoritmo de la segunda memoria? ¿Verdad?
+
+Ya tenemos dos preguntas, ¿qué más? ¿Qué ocupamos para analizar su comportamiento en el CPU? El CPU.
+
+[Orador 6] (9:00 - 9:02)
+Yo diría que es indispensable.
+
+[Orador 4] (9:08 - 9:09)
+La cantidad de entrada y salida.
+
+[Orador 7] (9:13 - 9:16)
+Es una naturaleza si escribe.
+
+[Orador 3] (9:20 - 9:21)
+La naturaleza, profe.
+
+[Orador 2] (9:24 - 9:26)
+Superdicio por cambio de contexto.
+
+[Orador 1] (9:32 - 9:33)
+¿La naturaleza?
+
+[Orador 3] (9:33 - 9:35)
+La naturaleza si escribe o lee.
+
+[Orador 1] (9:36 - 9:37)
+¿La naturaleza si?
+
+[Orador 3] (9:38 - 9:40)
+La naturaleza si escribe o lee.
+
+[Orador 1] (9:41 - 9:47)
+Ok. Las declaraciones fijadas sobre los archivos. O sobre las variables.
+
+[Orador 7] (9:53 - 9:54)
+¿Sobre las variables?
+
+[Orador 1] (9:55 - 10:22)
+¿Qué deberíamos analizar? Si estamos pensando en variables, entonces estamos pensando en tratar de determinar secciones críticas. ¿Verdad?
+
+¿Sí? Porque si el proceso sólo lee variables, entonces ahí nunca van a haber secciones críticas. Pero si el proceso escribe bien variables, entonces ahí podríamos tener una sección crítica.
+
+¿Sí?
+
+[Orador 3] (10:23 - 10:23)
+Sí, señor.
+
+[Orador 1] (10:25 - 10:36)
+Entonces, ¿la naturaleza de las variables? ¿Y por supuesto qué?
+
+[Orador 2] (10:38 - 10:39)
+¿La naturaleza de los archivos?
+
+[Orador 1] (10:42 - 10:47)
+¿De los Cs de uso? ¿Sí? ¿Qué más debería para determinar CPU?
+
+[Orador 3] (10:54 - 10:57)
+Frecuencia de uso de memoria. ¿Ah? Frecuencia de uso.
+
+[Orador 1] (10:57 - 11:06)
+¿Para CPU? ¿Para determinar algo ahí no CPU? Ah.
+
+¿Sí? Ya no hay. Para empezar ahora sí que están tan ansiosos a hablar de memoria.
+
+Ya no hay.
+
+[Orador 5] (11:07 - 11:13)
+¿Para determinar CPU? ¿Sí? Disculpe, una pregunta.
+
+¿Cuál es la naturaleza de los archivos en Cs?
+
+[Orador 1] (11:14 - 11:30)
+Recuerden que, digamos, la pregunta era, bueno, si modificaba, si solo leía, si solo consultaba, o si está modificando. Entonces aquí tenemos ahora sí dos escenarios. Uno es si lo que está modificando son solamente las variables de los procesos, ¿verdad?
+
+[Orador 3] (11:31 - 11:35)
+O si está modificando también archivos de los procesos.
+
+[Orador 1] (11:38 - 11:50)
+Vamos entonces ahora sí a cuáles variables servirían para poder precisar la política de memoria. Ahora sí. ¿Quién habló?
+
+Fuente.
+
+[Orador 3] (11:51 - 11:55)
+Frecuencia de uso de memoria y el crecimiento de memoria.
+
+[Orador 1] (11:55 - 12:14)
+Ok, ok. Vamos a ver. Ahí empieza la variable.
+
+Frecuencia de uso de memoria. ¿Qué es la frecuencia de uso de memoria? ¿Qué es la frecuencia de uso de memoria?
+
+Mucha gente puso esa variable. Frecuencia de uso de memoria. ¿Qué es la frecuencia de uso de memoria?
+
+¿Qué tanto voy a usar la memoria? ¿Será?
+
+[Orador 3] (12:17 - 12:22)
+Profe, yo lo entendí. ¿Sí? Como qué tanto utilizaba la memoria ese proceso.
+
+[Orador 1] (12:25 - 13:24)
+Vamos a ver, es que el tema de la frecuencia no es tan importante. Es decir, digamos, lo que sí es muy muy importante es, primero, la cantidad de memoria solicitada. Eso es importante para saber si es poco, si es moderado o si es mucho.
+
+Eso sí. Y lo otro indispensable, la necesidad de memoria es si ese proceso en ese bloque crece. ¿Ok?
+
+Y todavía podría agregarle otro criterio. ¿Verdad? Si ese proceso, o sea, si el crecimiento es sostenido o si es irregular.
+
+Es decir, a ratos crece, a ratos crece mucho, pero a ratos no crece nada. ¿Verdad? ¿Sí?
+
+Ok. Entonces, primero, vamos con ustedes.
+
+[Orador 7] (13:25 - 13:35)
+Sí, sí, sí. Es que ya tengo miedo, no sé si la escribo bien. Para no avanzar.
+
+Vamos a ponerlo aquí, acá no tiene tamaño, memoria solicitada.
+
+[Orador 2] (13:38 - 13:40)
+¿Sí? Ok.
+
+[Orador 1] (13:48 - 13:58)
+Crecimiento. Sí crece. ¿Ok?
+
+Todavía no sé el criterio. Podemos ahí dejarlo en la naturaleza.
+
+[Orador 6] (13:58 - 13:58)
+¿Verdad?
+
+[Orador 1] (13:58 - 14:07)
+Si crece de manera sostenida siempre va a crecer, o si a veces crece o a veces no crece. A veces lo podríamos dejar ahí.
+
+[Orador 3] (14:07 - 14:11)
+Profe, ¿podemos ver esa variable tamaño y memoria solicitada como el consumo de memoria?
+
+[Orador 1] (14:12 - 14:13)
+Es que...
+
+[Orador 3] (14:13 - 14:14)
+¿O es diferente?
+
+[Orador 1] (14:14 - 14:31)
+Una cosa es, una cosa es, ¿cuánto ustedes van a ver? Usted me dice, voy a ir a... Bueno, vamos a hacer una fiesta la otra semana.
+
+¿Verdad? Vamos a dar una fiesta la otra semana.
+
+[Orador 3] (14:32 - 14:32)
+Es primero.
+
+[Orador 1] (14:33 - 14:35)
+¿Cuánto le necesitamos poner cada uno para esa fiesta?
+
+[Orador 3] (14:36 - 14:37)
+Cinco mil.
+
+[Orador 1] (14:37 - 14:54)
+Ok, cinco mil. Ese es el tamaño solicitado. ¿Verdad?
+
+Sí. Pero cuando empezamos, cuando empezamos ya a... Cuando empezamos ahora sí a hacer un vehículo, ¿verdad?
+
+Es decir, ya cuando estamos en ejecución, entonces... A ver, ¿qué nos gustaría tener en esa fiesta?
+
+[Orador 3] (14:55 - 14:58)
+Piñatas, no sé. ¿Verdad? Una piñata.
+
+[Orador 1] (14:58 - 14:58)
+¿Cómo?
+
+[Orador 3] (14:58 - 14:59)
+No sé.
+
+[Orador 6] (15:07 - 15:09)
+Entonces empezamos a sumar una serie de cosas, ¿verdad?
+
+[Orador 1] (15:10 - 15:16)
+No, no. Cinco mil quinientos. Con cinco mil quinientos no alcanzas.
+
+Seis mil. No. Para que sea la fiesta.
+
+[Orador 6] (15:17 - 15:18)
+Sí, mil virtuales. ¿Verdad?
+
+[Orador 1] (15:19 - 16:35)
+Incluyendo lugares virtuales, alquilados. Ya nos vamos por quince mil pesos. ¿Sí?
+
+Ok. Entonces a eso se refiere el tema de memoria solicitada. Es decir, todo proceso solicita un valor, ¿verdad?
+
+Pero ¿cuánto realmente llega? ¿Cuánto realmente llega a ir teniendo conforme va avanzando? Si con los cinco mil que estimó originalmente era suficiente.
+
+¿Verdad? ¿Cuántos días? Si con los cinco mil que originalmente tenía era suficiente.
+
+Entonces el crecimiento es cero. ¿Verdad? Pero a partir de ese punto hace cuánto realmente crecemos.
+
+¿Verdad? Incluso también la otra condición que podríamos valorar es... Desperdicio.
+
+Es decir, ¿están todos los procesos haciendo uso al cien por ciento de lo que solicitan? ¿O habrá alguien que de los cinco mil colores solamente vaya a consumir mil quinientos? ¿Verdad?
+
+¿Sí? Ok. ¿Qué más?
+
+Para tratar de estimar memoria.
+
+[Orador 2] (16:36 - 16:37)
+Ah.
+
+[Orador 1] (16:41 - 16:41)
+¿Qué más?
+
+[Orador 3] (16:44 - 16:49)
+Para estimar memoria. El crecimiento. Nada más.
+
+[Orador 1] (16:50 - 16:52)
+No ocupamos nada más para saber la política de memoria.
+
+[Orador 6] (16:55 - 16:55)
+¿No?
+
+[Orador 1] (17:00 - 17:12)
+Bueno. Vamos ahora a ver si en el camino sur hay alguna otra variable. Te ocupamos.
+
+¿Sí? ¿Qué más tenemos? Nos faltan...
+
+Ah, bueno.
+
+[Orador 6] (17:17 - 17:18)
+¿Será importante...
+
+[Orador 1] (17:21 - 17:46)
+...la implementación de un hopper? ¿Sería importante la implementación de un caché? ¿Tal vez?
+
+¡Se callan los dos! Exactamente. Estamos bien.
+
+No, no. Tal vez. Ok.
+
+Eso es para... Principalmente para estimar que la política se toque.
+
+[Orador 7] (17:47 - 17:52)
+Claro. ¿Verdad?
+
+[Orador 2] (18:00 - 18:08)
+¿Sí? ¿Sí?
+
+[Orador 1] (18:08 - 18:11)
+Ajá. También podríamos considerar... Vamos a ponerlo aquí.
+
+[Orador 2] (18:22 - 18:25)
+¿Sí? Ok.
+
+[Orador 1] (18:26 - 18:57)
+Vamos a empezar. Por eso hicimos de primero ese criterio de tiempo real. ¿Ok?
+
+¿Cuál es la estrategia? ¿Desde dónde implementamos tiempo real? ¿Qué es un proceso de tiempo real?
+
+¿Qué es un proceso de tiempo real? ¿Cuál es la estrategia para implementar tiempo real? ¿Cuál es la estrategia?
+
+[Orador 3] (18:58 - 19:09)
+Recuerdo que usted... ¿Perdón? El examen anterior que yo le había dicho del análisis de la vaca.
+
+Usted me había comentado que para hacer de tiempo real el proceso tiene que ser solo uno.
+
+[Orador 1] (19:09 - 19:09)
+Ajá.
+
+[Orador 3] (19:10 - 19:17)
+Y tener una importancia sobre los otros. O sea, que de todos los procesos se realice solo uno. Y en este caso yo diría...
+
+[Orador 1] (19:17 - 20:45)
+No es un proceso de tiempo real, pero es un proceso que en el momento... En el momento en que él aparezca en el contexto de fusión... ¿Verdad?
+
+Mediante apropiatividad le vamos a garantizar el derecho y uso exclusivo. Si es en un dispositivo de estrategia de interrumpir siempre y cuando sea de bloque. Si es de carácter tendrá que esperar a que atienda la petición que está imputando, ¿verdad?
+
+Y en las colas pues se va a colocar de primero. Entonces eso es lo que le garantiza. Salir de espera por estrategia y directamente entrar a fusión, ¿verdad?
+
+Entonces, la condición que utiliza es la apropiatividad. ¿Cuántos procesos pueden tener esa condición en ese contexto? Uno.
+
+Uno. Es decir... Puedo aplicar apropiatividad para...
+
+Bueno, primero, valoremos cuál de ellos sería. ¿El de análisis de las imágenes? No.
+
+¿El de análisis de audio? Más o menos. Podría ser.
+
+¿El de análisis de IA? Podría ser. ¿La de lectura de los sensores?
+
+Tal vez podría ser. Pero el asunto es que tengo... Tengo 450 lecturas.
+
+Tengo 450 camillas. 450 personas que tengo que salir a pasear en esas cosas. ¿Sí?
+
+Entonces, la pregunta es, ¿puedo aplicar apropiatividad?
+
+[Orador 4] (20:46 - 20:46)
+No.
+
+[Orador 1] (20:47 - 21:19)
+¿Por qué no? ¿Por qué no? Es la primera pregunta.
+
+Recuerden siempre el escenario. Si tengo un proceso apropiativo, ese proceso puede desplazar a quien sea, a donde quiera. ¿Sí?
+
+Pero, ¿qué pasa si tengo dos? ¿Qué pasa si tengo dos? Bueno.
+
+[Orador 2] (21:20 - 21:22)
+¿Qué pasa si tengo dos? ¿Qué pasa si tengo dos?
+
+[Orador 1] (21:25 - 22:08)
+Entonces, ¿qué está pasando si tengo dos? Si por alguna, si por alguna eventualidad pasó de que coincidieron dos procesos con etiquetas apropiativas, ¿qué va a pasar? ¿Qué va a pasar?
+
+Vamos a ver. María y yo tenemos apropiatividad en ese caso. ¿Sí?
+
+Ese es el recurso por el que estamos compitiendo. ¿Sí? Ok.
+
+Entonces, en ese momento, María me tomó la botella. Ahora yo le digo, no, yo tengo apropiatividad con permiso, ¿verdad? Con permiso.
+
+Pero María me le dijo, sí, yo tengo apropiatividad en la botella, ¿verdad? Y yo le digo, no, yo tengo apropiatividad en la botella, ¿verdad? Yo tengo apropiatidad en la botella.
+
+Entonces, ¿qué es lo que está pasando?
+
+[Orador 4] (22:10 - 22:13)
+Una competencia. ¿Ah? Una competencia mutua por los recursos.
+
+[Orador 1] (22:13 - 23:02)
+Que en realidad estamos compitiendo por un recurso al cual no tenemos acceso. Ni ese proceso, ni yo, por la condición de apropiatidad. Entonces, ahora sí que la fregamos.
+
+Porque entonces, ni siquiera vamos a poder avanzar. Es decir, vamos a caer en una condición en la que no vamos a salir de ella. Y, lo peor de todo, lo peor de todo, detuvimos el contexto de cohesión porque nadie más va a poder avanzar.
+
+¿Verdad? ¿Sí? Ahora sí les queda bien claro por qué es que yo tengo que tener plena seguridad de que solamente puede existir un proceso con esa condición.
+
+En el sí. ¿Sí? ¿Estamos claros?
+
+¿Sí? Les pasó en el primer examen. Y ahora otra vez les vuelve a pasar.
+
+¿Verdad?
+
+[Orador 4] (23:03 - 23:04)
+Sí.
+
+[Orador 1] (23:05 - 23:19)
+Otra vez les vuelve a pasar. Ahí el tercer examen. ¿Verdad?
+
+Y ahí yo esperaría que el tercer examen eso esté resuelto. ¿Sí? Es decir, el problema es ese.
+
+[Orador 5] (23:19 - 23:19)
+¿Verdad?
+
+[Orador 1] (23:19 - 23:37)
+El problema es que si yo percibo que existe la posibilidad de que surja otro proceso. Claro que sí en este contexto. Perfectamente.
+
+Se dispara una vez por una lectura de un dispositivo. Pero eventualmente perfectamente puede venir otro detrás. ¿Verdad?
+
+De otro paciente.
+
+[Orador 4] (23:38 - 23:45)
+Perfectamente puede pasar. Y entonces ¿qué es lo que va a pasar? Que los dos pacientes se van a estar convirtiendo.
+
+Se van a estar desplazando. Y ninguno va a pasar. Y lo cual es todo.
+
+[Orador 1] (23:47 - 25:55)
+En trabajo y en todo lo que tiene que ver con eso. A ver, clarísimos y cállese más con eso. ¿Sí?
+
+¿De verdad estamos completos? Porque en el primer examen dijimos que sí. Y vuelven a pasar.
+
+¿Sí? Eso les tiene que quedar bien claro. ¿Verdad?
+
+O sea, la mejor forma de entender cómo funciona la propiedad es ese caso. De esa competencia por un recurso. Ahí nos queda bien claro.
+
+Si yo percibo que puede existir la probabilidad de que otra instancia de ese proceso entre en discusión con esa condición. Entonces están descartados. ¿Ok?
+
+Bueno. Entonces. Vamos con la Ráfala.
+
+Este, ¿qué es lo que hace? Se los debo. Para que nos quede introducto.
+
+Un proceso que rechaza continuamente los signos vitales de pacientes enfermados mediante sensores biomédicos conectados a monitores detenientes, capturar un prejuicio cardíaco, saturación de oxígeno, presión arterial, depresión corporal. La hiponosida es almacenada y actualizada cada segundo para aproximadamente 450 pacientes simultáneamente. Respecto.
+
+¿Cómo le va la Ráfala? ¿Cómo le va la Ráfala? Es grande, es pequeña o es mediana.
+
+¿Cómo? La pregunta siempre es, ¿cuál es el cómputo en ese proceso? ¿Qué es lo que se computa en ese proceso?
+
+Repito. Un proceso que registra continuamente los signos vitales de pacientes enfermados mediante sensores biomédicos conectados a monitores detenientes, capturando en esas cuatro variables, cada dos segundos para aproximadamente 450 pacientes simultáneamente. Cada dos segundos.
+
+¿Qué es lo que se computa? ¿Qué es lo que se procesa? ¿Cuál es el cómputo?
+
+[Orador 3] (25:56 - 25:57)
+¿Qué es lo que se computa ahí?
+
+[Orador 1] (26:01 - 26:20)
+¿Qué es lo que estoy computando? La gran pregunta. Primero.
+
+¿Qué es lo que estoy computando? ¿Cuál es el cálculo? ¿Ah?
+
+¿Cuál? ¿Italiano?
+
+[Orador 3] (26:21 - 26:23)
+No, la verdad conmigo creo que no, que no hay ningún cálculo.
+
+[Orador 1] (26:24 - 26:45)
+No hay ningún cálculo. No existe ningún cálculo. No existe ningún cálculo.
+
+Solo leo y escribo. Leo y escribo. Nada más, leo y escribo.
+
+No hay ningún cálculo. Dice. Un proceso que registra con ustedes continuamente los signos vitales.
+
+¿Ok? Solamente leo de mis dispositivos. Y escribo.
+
+¿Ok?
+
+[Orador 7] (26:51 - 26:52)
+¿Cómo es la entrada y salida?
+
+[Orador 1] (26:56 - 27:18)
+Altísima. ¿Verdad? Cada dos segundos.
+
+450 pacientes. Cuatro sensores por paciente. Altísima.
+
+¿Ok? Es de naturaleza común. Y aquí hay otras cosas que aclaran.
+
+¿Ok? Un proceso que es de naturaleza común. ¿Qué es lo que representa?
+
+¿Por qué es un proceso de naturaleza común?
+
+[Orador 5] (27:23 - 27:25)
+¿Ah? ¿Por qué?
+
+[Orador 1] (27:29 - 27:45)
+Ajá, pero ¿por qué? Pero ¿por qué? ¿Por qué lo que requerimos es que cuando él entre a ejecución, él no pueda ser interrumpido?
+
+Sino que va a finalizar al menos esa instancia, esa instrucción. ¿Por qué?
+
+[Orador 6] (27:56 - 27:58)
+Vamos a ver, tenemos un punto muy claro, ¿verdad?
+
+[Orador 1] (27:58 - 28:37)
+Que lo que pasaba era algo como esto. Yo tenía un proceso con el Rafa Galaguísimo, ¿verdad? Entonces lo que hacía era que escuchaba primero una parte, luego otra, luego otra, luego otra.
+
+Ahora es decir, él está de ejecución a listo, de ejecución a listo, porque todavía tiene lo que requiere, hasta que finalmente en algún momento va a salir. Pero lo que decimos es que si el proceso es de naturaleza común, entonces esto no le funciona. ¿Sí?
+
+Porque él tendría que entrar y hasta que finalice esa instancia de ejecución, va a salir. Y va a ir a la espera por entrar y salir. ¿Sí?
+
+¿Por qué es que requiere esa condición? ¿Por qué el proceso requeriría esa condición?
+
+[Orador 4] (28:43 - 28:47)
+No es como que puede dejar datos inconsistentes. No es como que puede dejar datos inconsistentes. Ok.
+
+[Orador 1] (28:48 - 29:08)
+En realidad, la principal razón es por un tema de seguridad. ¿Ok? Es por un tema de seguridad.
+
+Y en el momento en el que mis datos están más vulnerables es cuando estamos en ejecución. ¿Ok? Por eso lo que necesito decir es, bueno, por un asunto de integridad de los datos y por un asunto de seguridad.
+
+[Orador 2] (29:09 - 29:13)
+¿Ok? ¿Ok?
+
+[Orador 1] (29:14 - 31:03)
+Por ejemplo, todo lo que tenga que ver, todo lo que tenga que ver, digamos, con gestiones bancarias. ¿Verdad? Un cambio de clave.
+
+¿Verdad? Un cambio de clave es una transacción de naturaleza común. Se tiene que hacer todo de él solo.
+
+¿Verdad? O sea, es hecho. ¿Verdad?
+
+Es decir, no se hace una cuartecita, no se realiza un carácter, luego otro va a la espera, se le dice, ya vamos a probar. No funciona así. ¿Ok?
+
+Esto tiene que ver con estos dos principios. Integridad de la información y seguridad de la información. ¿Ok?
+
+Y en este caso, pues en realidad no cumplimos con esas condiciones. ¿Verdad? ¿Sí?
+
+¿Cómo será la tasa por cambio de contexto? ¿Aquí? ¿Altísima?
+
+¿Verdad? Si hay mucha entrada y salida, hay mucho cambio de contexto. Si hay mucha entrada y salida, hay mucho cambio de contexto.
+
+¿Cierto? ¿Sí? ¿Ah?
+
+Ah... No, perdón. Gracias.
+
+¿Ok? Las variables se utilizan. Las modifican.
+
+En cada instancia de fusión. Los archivos lo modifican. Sí.
+
+Ah... La memoria solicitada. ¿Cómo es el comportamiento de esa memoria solicitada?
+
+¿Ah? No, primero. Lo que estamos determinando es si, digamos, si esa memoria solicitada es mucho o es poco.
+
+Si esa memoria solicitada es mucho o es poco.
+
+[Orador 6] (31:08 - 31:08)
+Sí.
+
+[Orador 1] (31:09 - 32:40)
+Si esa memoria solicitada es mucho o es poco. Vamos allá. La única manera es que podemos tratar de definir cuáles son los orígenes de datos.
+
+El do primero de los orígenes de los exámenes. Tenemos que definir cuáles son los orígenes de datos. Es decir, ¿qué creo yo que está emitiendo un dispositivo que evite la frecuencia cardiaca?
+
+¿Qué generaría? Enteros. Enteros.
+
+¿Enteros? Díganme ustedes. Es que ustedes es el que tienen que definir eso, en realidad.
+
+En su examen ustedes tienen que definir eso. ¿Ok? Mi dispositivo que mide frecuencia cardiaca emite un reporte con puntos blocantes.
+
+Con puntos decimales. O mi mi dispositivo, porque algún día lo he visto y resulta que es lo que hace. No sé si es un monitor, ¿verdad?
+
+Igual que cosas como esta. No creo que nadie lo haya visto. ¿Ah?
+
+Entonces, ¿alguien pudo haber inferido? Y dijo, no. Lo que ese dispositivo está enviando es esa gráfica.
+
+¿Ok? Pero usted tiene que definir eso también. Se está aquí, debajo del culo, ahí en el cartel.
+
+¿Vale? Por ejemplo, algún compañero. Sí.
+
+Sí, es que el... Buenos días. Se está ahí, en el...
+
+Ahí pega, pero... Yo creo que en ningún otro lado va a ser más viejo que aquí.
+
+[Orador 6] (32:42 - 32:43)
+Ok.
+
+[Orador 1] (32:44 - 33:37)
+Entonces, es indispensable... Perdón. Es indispensable que usted defina cuál es el origen de datos.
+
+A partir de ahí, inicia su análisis. Usted no puede... Usted no puede decir, el consumo de memoria es ¿qué paso?
+
+O es mediano o es alto. Usted tiene que determinar cuál es el origen de datos. ¿Sí?
+
+Y dependiendo de cuál sea su origen de datos, va a hacer su análisis. Pero usted tiene que determinar eso. Es lo primero que usted va a aceptar.
+
+Bueno, ¿qué es lo que ese dispositivo me genera? ¿Ah? Un...
+
+Un punto flotante, un string, donde vienen varios datos, y ahí viene el punto flotante. Dentro de ese string va a venir siempre la fecha, la hora, el ID del... del...
+
+del paciente, y la lectura.
+
+[Orador 2] (33:37 - 33:38)
+¿Sí?
+
+[Orador 1] (33:38 - 35:10)
+Pero es muy diferente a aquella que nos dice. Es decir, una vez yo di unas cosas, y lo que me dice es una gráfica. ¿Está bien?
+
+Vamos con la gráfica. Sí, pero la análisis tiene que partir de un origen de datos. ¿Sí?
+
+Entonces, vamos a asumir, ¿verdad? Para este caso, independientemente de cuál sea el modelo que usted indicó, ¿verdad? ¿Es muy real?
+
+¿La saturación de oxígeno? ¿También puede ser vista como... como real?
+
+¿La presión arterial? ¿En cuánto anda su presión arterial caridad? ¿Ah?
+
+¿Alguien aquí se recuerda la presión arterial o está pendiente? ¿Están haciendo mediciones? ¿Es pura casualidad?
+
+¿Cuándo? ¿O le toman la presión arterial en familia? ¿A partir de cuáles son los indicadores?
+
+Entonces, ¿cómo hace usted para definir si eso ocupa mucha memoria o poca? Dios mío, explíqueme. Yo necesito asumir, pero yo tengo que ponerlo ahí, yo tengo que decir, el había visto, ¿cómo será?
+
+Pero lo que lee, la lectura que hace son enteras y de eso voy a partir. ¿Verdad? ¿Sí?
+
+Creo que son dos valores. ¿Sí? Lo mismo y presionante, presión baja.
+
+¿Sí?
+
+[Orador 2] (35:17 - 35:19)
+Es un valor entero, creo.
+
+[Orador 1] (35:19 - 35:29)
+Creo que no tiene no tiene ese valor. ¿Sí? Ahora, ¿la temperatura?
+
+¿La temperatura? ¿Sí tienes más? ¿Sí?
+
+Perfecto.
+
+[Orador 7] (35:32 - 35:33)
+¿Qué es eso?
+
+[Orador 3] (35:34 - 35:38)
+¿La temperatura? ¿Y eso? ¿Eso?
+
+[Orador 1] (35:39 - 35:43)
+¿Y eso? Sí, no son valores enteros.
+
+[Orador 3] (35:43 - 35:48)
+No sé qué es. Crecía.
+
+[Orador 4] (35:51 - 35:52)
+Listo.
+
+[Orador 7] (35:53 - 35:57)
+¿Había un valor, o...? Pasa 6.
+
+[Orador 1] (35:57 - 37:30)
+Ah, es perfecto. 37 y 2 rayitas. ¿Sí?
+
+30 y este, 3 cuaritos si yo conozco ok bueno ya tenemos ahora si un origen de datos que es muy diferente es que yo vi esto y esto funciona por una gráfica y a partir de ahí haces un análisis completamente válido, según esto ¿cómo será el tamaño de la remola solicitada? ok ¿vale? si pero ahora si yo sé ahora si yo puedo precisar porque ¿verdad?
+
+el crecimiento el crecimiento esos procesos que hacen esas lecturas crecen poco voy a voy a levantarme voy a levantarme a la pregunta del compañero voy a levantarme a la pregunta vamos a este vamos a este proceso hace un análisis de patrones acústicos basado en audio ok ¿cuánto pesa un archivo de audio en comparación con una variable esa?
+
+[Orador 3] (37:31 - 37:33)
+demasiado ¿más?
+
+[Orador 1] (37:33 - 37:33)
+¿cuánto?
+
+[Orador 4] (37:36 - 37:44)
+50 veces 100 veces, 2 veces 100 veces 5 o 10 veces
+
+[Orador 3] (37:45 - 37:49)
+hasta 10 veces más un archivo de audio puede estar
+
+[Orador 1] (37:49 - 37:59)
+los 20 megas un montón de veces más un montón de veces más pesa un archivo tipo audio un montón
+
+[Orador 4] (37:59 - 38:04)
+de veces más si mira mira
+
+[Orador 1] (38:04 - 38:14)
+ahora si en comparación es ahora ya lo sabes si entonces estamos analizando
+
+[Orador 3] (38:15 - 38:16)
+crecimiento para esta
+
+[Orador 1] (38:16 - 38:23)
+para este proceso crecimiento y memoria esa es fácil me voy a marcar esa
+
+[Orador 3] (38:23 - 38:28)
+si pero poco si pero poco
+
+[Orador 1] (38:28 - 38:29)
+¿ah?
+
+[Orador 5] (38:29 - 38:39)
+poco siempre van a ser las mismas variables ajá pero usted está imaginando todos los registros de ese que van a seguir creciendo ¿amenazas a volver a los registros anteriores?
+
+[Orador 3] (38:41 - 39:04)
+yo tengo yo vale que si mento de la siguiente manera si el proceso genera ahora tengo bien es que me trae si el producto que genera un proceso genera otro producto ajá no ¿entonces puede crecer?
+
+[Orador 1] (39:05 - 40:17)
+yo diría que poco por lo menos es que no sé yo diría que no la verdad yo diría que no usted diría que casi no casi no la verdad es un criterio pero entonces a ver si está más adelantito que nos va a llevar a resolver eso porque el asunto está en que ¿qué hace un buffer aquí? ¿me quiere decir un buffer aquí? ¿para qué?
+
+¿para qué usaría un buffer? ¿para qué utilizaría un buffer? primero lo necesito ¿qué hace un buffer?
+
+¿qué hace un buffer? almacenamiento de memoria temporal almacena temporalmente algo ¿sí? pero sin ningún criterio de utilidad recuerden ¿verdad?
+
+almacena temporalmente sin criterio de utilidad ¿cuántas lecturas hace?
+
+[Orador 3] (40:18 - 40:21)
+450 ¿cada cuánto?
+
+[Orador 1] (40:21 - 49:59)
+12 segundos ¿ustedes creen que le dé tiempo que le dé tiempo de ir al día con la producción de los dispositivos? ¿sí? ok ahora debería mirar más hacia abajo ahora debería mirar más hacia abajo ¿sí?
+
+este proceso ¿con quién es compite? con otros procesos ¿verdad? que muy probablemente vayan a tener condiciones de ráfaga diferentes ¿sí?
+
+¿qué pasa? ¿qué pasa si estos procesos consumen mucha ráfaga? ¿cuál va a ser la oportunidad de él de entrar a producción?
+
+bueno no digamos que poca pero va a estar limitada porque va a competir ¿sí? él va a competir ¿y entonces qué va a pasar con las lecturas de esos dispositivos? ¿dónde las guarda?
+
+la pregunta es ¿la requiero o no? ¿requiero yo un bol? ¿porque qué pasa?
+
+¿qué pasa si los dispositivos si este proceso no entra al ritmo que yo necesito para hacer las lecturas ¿qué va a pasar? voy a perder los datos ¿estamos en condiciones de perder datos de lecturas? de dispositivos ¿dónde puedo guardar esos datos para que en algún momento puedan ser vaciados?
+
+¿ah? en un book y entonces ahora sí genaro se nos cumple el maravilloso sueño de que en algún momento puede llegar a crecer ¿por qué? por la acumulación de variables ¿sí?
+
+el análisis original está perfecto ¿por qué la variable va a cambiar si tiene un tamaño fijo? y siempre va a ser un real que va a estar entrando o un entero siempre va a entrar eso ahí no se procesa nada no se hace ningún cálculo para estimar otra cosa ¿sí? entonces ¿por qué iba a crecer eso?
+
+la única explicación del crecimiento está asociada a que este proceso va a competir con otros y probablemente no le va a dar chance de ir consumiendo conforme va produciendo ¿sí? y entonces eso se va ir acumulando ¿cuándo lo traigo? ¿dónde lo voy a escribir?
+
+pero ¿qué pasa si yo no tengo espacio para una variable? y traigo 7 variables producidas ¿verdad? ¿sí?
+
+¿empezamos? ¿me están oyendo? ¿me están escuchando?
+
+es importante, es importante ¿verdad? ¿sí? es decir los dispositivos de entrada y salida sólo producen ¿ok?
+
+sólo producen ¿él no le va a decir al proceso que lo consume? ¿ya está listo para añadir otro dato? no, él está produciendo si no se lo ha añadido, él sigue escribiendo sigue escribiendo, sigue escribiendo ¿sí?
+
+por eso es indispensable pero ¿cómo? si nosotros dedicamos casi media clase a hablar de buffer y de caché ¿verdad? ¿cómo creyeron que en el examen no tenía nada que ver?
+
+¿verdad? y se los dije los buffer es un dispositivo de alojamiento que está adscrito a dispositivos principalmente de entrada y salida ¿por qué? porque un buffer en CPU no tiene nada que hacer, muy probablemente un caché, ahí sí ¿verdad?
+
+en CPU, pero para ¿dónde está concentrado? para dispositivos de entrada y salida ¿sí? ¿estamos claros?
+
+¿sí? sí, es que la única manera que tengo de poder conservar esa data ¿verdad? que está produciendo constantemente, ¿cada cuánto?
+
+cada dos segundos un dispositivo produce ¿verdad? y vean, bueno ahora vamos a ver la complejidad de estos procesos ¿verdad? ¿me va a dar chance de ir consumiendo conforme ando produciendo?
+
+no, definitivamente no eso no va a pasar, ¿verdad? teníamos que esto está acondicionado al concepto del buffer ¿verdad? ¿ok?
+
+hay una superficie segura en este caso ¿no? ¿verdad? ¿y?
+
+¿requerimos ahí un caché? ¿requerimos ahí un caché? ¿por qué no en realidad?
+
+porque el dato que se produce siempre es nuevo el dato que se produce o sea, ¿con qué me interesa jugar siempre? con el dato que se produce siempre me interesa jugar con el dato fresco, con el dato acabado de producir, el dato de hace media hora ya ¿verdad? ok, vamos a ver otro proceso la humanidad en tiempo ideal, en tiempo real que es donde nos vimos hasta aquí ¿verdad?
+
+que analiza riesgo de un problema cardiovascular o cardiovascular ¿ok? ¿como se ve la ráfaga? es un algoritmo de guía, es un algoritmo ahora sí de análisis ¿verdad?
+
+exhaustivo, en ráfaga entra y salida ¿como se ve entra y salida ese proceso? hace bastante entra y salida porque tiene que estar leyendo los archivos de las estructuras de esos dispositivos desperdicio y cambio de contexto es bastante bajo ¿verdad? porque las ráfagas son bastante prolongadas ¿verdad?
+
+la naturaleza de las variables las modifica, modifica las variables no modifica las variables ok, pero no modifica ¿verdad? ¿si? ¿perdón?
+
+si, digamos porque este proceso hace menos entra y salida pero hace, vamos a ver trae menos cosas pero con lo que trae calculamos ese es el análisis trae pocas cosas y con eso analiza mucho no modifica los archivos el tamaño solicitado extremadamente alto el crecimiento, claro que si puede llegar a crecer ¿verdad? si puede llegar a crecer consume, no va a haber desperdicio de memoria requiere requerimos para este proceso no porque es procesamiento lo que él está haciendo cálculo, cálculo, cálculo, cálculo sí, cálculo de memoria principal cálculo de memoria principal y ya tiene memoria principal él no va a consumir nada otro proceso y entonces se consumió por él ¿podríamos requerir un caché? ¿sí?
+
+¿sí? ¿por qué? ¿qué pasa?
+
+¿qué pasa a calidad? analicemos esto si esto es cada cada 5 minutos si esto es cada 5 minutos el proceso que consume va a estar esperando a que el dispositivo produzca para él ya comienzo a cambiarlos completamente el móvil es donde yo necesito guardar algo de manera temporal ¿verdad? mientras alguien lo consume para evitar ¿verdad?
+
+que se esté sobre expiriendo o que se pierda sea solamente con eso ya lo cambiamos ¿ok? diríamos que esto no requiere un módulo ¿verdad? el caché en realidad podríamos decir que podría ser útil el caché en función de que va trabajando con datos disueltos para determinar un dispositivo de comportamiento que conduzca a un caso crítico ¿verdad?
+
+de la condición de salud podría ser ¿ok? vamos con el analizador de imágenes este analizador de imágenes por ejemplo dice voy a leerlo dice un proceso de análisis de imágenes de alta resolución obtenida de un cultivo de sangre, hielo y otras técnicas sembradas en una placa de un chacho que tiene lesiones ¿cómo lo han atendido?
+
+[Orador 2] (49:59 - 50:08)
+médicamente ¿a quién ha llegado un palomoyo? ¿hay tenido un palomoyo?
+
+[Orador 1] (50:10 - 50:11)
+¿cómo se curó?
+
+[Orador 3] (50:11 - 50:29)
+probablemente no lo va a creer la cosa es que en su momento las inyecciones no me llamaban mucho la atención más que ¿usted ha visto la aguja de presa? ¿es una dicha como así? ¿son 52?
+
+[Orador 1] (50:30 - 51:05)
+52 con la probabilidad de que lo extiendan y lo más complicado de eso es que si se lo extienden después de eso no le ponen sí o no es el juego completo hasta que finalice entonces cuando a mí me lo dijeron, me dijeron que eso se expandía por algo le llaman lepra de montaña entonces me dijeron que una era quemándolo entonces yo calenté una ¿calentó? ¿calentó un fierro ese puso? en el brazo
+
+[Orador 3] (51:09 - 51:14)
+es que usted tiene que ver esa aguja usted tiene que ver esa aguja
+
+[Orador 6] (51:21 - 51:22)
+eso es
+
+[Orador 1] (51:23 - 51:40)
+exactamente o sea es lo más común sobre todo cuando lo tramiten a veces los perros pero sobre todo los perezosos, las pericas lo tramiten
+
+[Orador 3] (51:40 - 51:43)
+a mí me dijeron que era un zancudo blanco
+
+[Orador 1] (51:43 - 52:24)
+o sea hasta una pulga lo que sea cualquier animal que picó un perezoso o un perro que lo tramita y se lo pica a usted pero eso es muy frecuente en las comunidades indígenas hay cualquier cantidad de eso porque se hacen muchos se hacen muchos polvazales entonces eso genera mucho cultivo de las pericas a mí me dijeron dos veces apareciste pero como ya había visto que era entonces rapidísimo pero el problema es
+
+[Orador 6] (52:24 - 52:24)
+que
+
+[Orador 1] (52:26 - 52:37)
+cuando no existe el lucatín que se llama el medicamento está súper super avanzado o sea la leishmania no es otra cosa más que una bacteria inhumana literalmente
+
+[Orador 3] (52:39 - 52:42)
+perro perro también vamos con
+
+[Orador 1] (52:42 - 53:08)
+entonces el análisis de imágenes entonces dice que la gráfica para análisis de imágenes altísima la hidráulica sería altísima porque lo que está consumiendo son imágenes está consumiendo archivos de imágenes eh el cambio de contexto es bajísimo
+
+[Orador 2] (53:08 - 53:09)
+no modifica
+
+[Orador 1] (53:09 - 53:22)
+las variables no modifica archivos produce un resultado nada más el tamaño de la memoria es exagerado hay crecimiento
+
+[Orador 2] (53:22 - 53:22)
+de memoria
+
+[Orador 1] (53:31 - 53:49)
+correcto lo que él está consumiendo evidentemente lo que él produce es algo nuevo él va a generar la ilusión pero lo que consume lo está modificando no hay desperdicio requiere un buffer
+
+[Orador 3] (53:51 - 53:55)
+claro que sí
+
+[Orador 1] (53:56 - 54:40)
+porque el traslado de esas imágenes consumen muchísimo pero una vez podemos decir que en el caso del análisis de audio por supuesto que también requerimos los buffers en el caso de los cachés pues no necesariamente porque aquí casi siempre lo que pasa es que cuando yo quito la imagen y traigo otra lo que estaba anteriormente parte de un análisis completamente nuevo el que sigue esos análisis de audio que creen ustedes que sean más pesados análisis de imagen o análisis de audio audio perfecto
+
+[Orador 3] (54:42 - 54:43)
+buenos días
+
+[Orador 1] (54:43 - 56:06)
+buenos días no, me quedo me mandó un mensaje que iba a llegar tarde porque el agua se iba y no había llegado ya no podía llevar el agua entonces tenemos acá la entrada y salida los archivos no hay desperdicio casi no hay desperdicio en cambio de contexto no se modifican esas variables no se modifican los archivos y el crecimiento de memoria es muy volado no hay desperdicio primera pregunta para algoritmo CPO a estas alturas es completamente inaceptable que digamos que la política de administración de CPO es roll roll Sergio, que condición debo tener para decir roll roll
+
+[Orador 3] (56:07 - 56:07)
+cuánto
+
+[Orador 1] (56:10 - 56:40)
+el cuánto yo no puedo decir que roll rolling es el algoritmo o sea lo que no es concebible es que llegue a que roll rolling es el algoritmo ya sin que defina el tamaño del cuánto es decir, no existe o sea, eso como algoritmo no existe, no existe roll rolling sin el cuánto ok, porque a partir del cuánto no queda definida si realmente está correcto o no si yo diera roll rolling
+
+[Orador 4] (56:40 - 56:42)
+¿qué me interesaría a mí?
+
+[Orador 1] (56:43 - 59:07)
+si yo diera roll rolling valoremos primero bueno, no lo haré yo me puse a evaluar si, pero yo lo evalué con el costo de entra y salida que varían mucho en mis varas ¿qué pasa si escobo roll rolling? ¿qué pasa si escobo un cuantum grande? si escobo un cuantum grande dingo, maravilla pero calavera ¿qué me interesa más?
+
+¿procesar los datos? ¿o tener los datos ya o más recientemente de lo que está pasando? yo no puedo decir nada el asunto es si yo defino roll rolling evidentemente yo estoy asumiendo que si escobo roll rolling es porque queremos beneficiar a 3 en vez de 1 es un análisis pero ¿qué pasa si yo pongo roll rolling con un cuantum grande?
+
+entonces bueno voy a denunciar esto el problema que voy a tener definitivamente es que estoy perjudicando quizás el proceso más importante ese va a ser el problema ¿qué pasa si escobo un roll con un cuantum pequeño? se me va a disparar todo en contra la tasa, el desperdicio por cambio el desperdicio de contexto si el cuantum es muy grande seguramente va a monopolizar si el cuantum es muy pequeño van a tardar demasiado de salir de una instancia de ejecución ¿verdad? ¿qué pasa si utilizo first call preserver?
+
+[Orador 5] (59:07 - 59:16)
+¿qué pasa si utilizo first call preserver?
+
+[Orador 1] (59:16 - 1:00:19)
+¿qué es lo que va a monopolizar este roll? es decir, first call preserver es genial para esos 3 o porque no sería genial para el solo ¿Ves? Ok.
+
+Primero el clavo más corto. Primero el clavo más corto. Por consumo de memoria, cajadero, por las ideas que tengo, por entrada y salida, cajadero, por las emociones que tengo, por tamaño de pila de toyos, peor todavía.
+
+¿Ok? Pero el primer algoritmo no puede ser cola múltiples. Yo lo puedo decir.
+
+¿Cuál es el algoritmo? ¿No? Cola múltiples.
+
+Es como, ¿verdad? Como cuando ustedes decían, cuando ustedes escuchaban a mi padre, mi padre también decía eso, ¿verdad? Que se llaman los padres, no son los huevos.
+
+Entonces, ¿qué diciendo? ¿Decir yo? ¿Verdad?
+
+Obvio. El ejemplo. No, no, no, no.
+
+A ver. Terminamos ya el juego.
+
+[Orador 6] (1:00:20 - 1:00:20)
+¡Ey, pa!
+
+[Orador 1] (1:00:21 - 1:00:23)
+Musicalidad. ¿Está bien? ¿Está bien?
+
+[Orador 5] (1:00:23 - 1:00:25)
+No, también puedo, ¿verdad? A ver.
+
+[Orador 1] (1:00:25 - 1:00:28)
+¿Qué pasa si yo defino cola múltiples?
+
+[Orador 2] (1:00:29 - 1:00:42)
+¿Qué tengo que hacer? ¿Ah? ¿Definir qué?
+
+Ajá. Ajá. Ok.
+
+[Orador 1] (1:00:43 - 1:00:55)
+Y además, y al siguiente paso, primero, definir cuáles son los algoritmos que me sirven. Y al segundo paso, ¿cuáles procesos van en cada cola?
+
+[Orador 4] (1:00:56 - 1:00:57)
+Si no, ¿cuáles son los procesos?
+
+[Orador 1] (1:00:58 - 1:01:09)
+Que estamos, pero... ¿Cuáles me sirven? Por ejemplo, entonces, ya yo sé los otros.
+
+Tengo bien, bien, bien maquillados. ¿Estos tres van en un paquete?
+
+[Orador 6] (1:01:10 - 1:01:10)
+¿Sí?
+
+[Orador 1] (1:01:14 - 1:01:24)
+¿Estos tres van en un paquete? ¿Cuál será el algoritmo más eficaz para ellos? ¿Será este?
+
+¿Por qué no?
+
+[Orador 4] (1:01:28 - 1:01:28)
+¿Por qué no?
+
+[Orador 1] (1:01:30 - 1:03:16)
+Porque condenamos al proceso que nos interesa a un cuadro de 0. ¿Ok? Entonces, para ellos, yo se puede utilizar una especie de roll roll, ¿verdad?
+
+Con un cuantum pequeño, porque si con un cuantum pequeño, disparo todos los indicadores de desparticio, cambios de contexto y todo lo demás. ¿Ok? Con un cuantum relativamente grande, ¿verdad?
+
+¿Y cómo beneficio? ¿Quiénes van aquí? B, C y D.
+
+¿Cuál será el algoritmo que más beneficia a este proceso? Lo que hace un poco, que cuando entre, haga todo. Lo que hace un poco, cuando entre, que haga todo.
+
+Entonces, si ahí tengo las colas múltiples, ¿cuáles son los procesos que van ahí? Y lo último que me interesa, es la frecuencia. La frecuencia, la alternancia, las colas.
+
+Es decir, yo quiero que esto se discute. Dos de estos, por uno de estos. Si yo digo, tres a uno, entonces prácticamente me quedará uno, uno, uno.
+
+¿Sí? Ajá. Pero con esto, por lo menos, yo estoy garantizando que está en igualdad de condiciones.
+
+¿Ok? Lo más lógico no sería esto, ¿verdad? Lo más lógico sería un dos a uno.
+
+Es decir, se ajustan dos de ellos y uno de ese siempre. Y garantizo que siempre, que no lo van a estar rellevando. Cuando entre, va a ser por lo que, lo que le quieran.
+
+¿Ok? Cualquier variante, a partir de ahí. Vaya su malotalidad.
+
+Dice que son...
+
+[Orador 4] (1:03:16 - 1:03:17)
+Menos 20.
+
+[Orador 1] (1:03:19 - 1:03:26)
+Vamos con la política de administración de negocios. ¿Voy sumando o voy prestando?
+
+[Orador 7] (1:03:30 - 1:03:31)
+Ok.
+
+[Orador 1] (1:03:35 - 1:05:44)
+Vamos con la política de administración de negocios. Lo primero. ¿Cuáles son las variables de bloque control?
+
+Variables de bloque control y variables de la tabla de procesos. Todavía seguimos con un problema, voy a decir, con un problema bien preocupante, es definir y es estar mezclando variables, variables del modelo dado, variables de condiciones de desarrollo con variables de ejecución o de administración de sí. Es decir, la temperatura no es una variable de bloque control.
+
+Es una variable es una variable del entorno de desarrollo de la administración. La presión anterior es una variable del entorno de desarrollo, no es una variable del ciclo de ejecución. ¿Cuáles sí son variables del contexto de ejecución?
+
+No es la id del proceso, por favor. Eso no me dice nada. La id del proceso no me dice absolutamente nada.
+
+¿Qué sí me sirve? Por ejemplo, ¿qué sí me sirve? Tiempo de ese proceso en la cola de listos, de la última instancia, tiempo que ese proceso estuvo en ejecución la última instancia que pasó por ejecución, tiempo promedio de ese proceso de instancia en CPU, tiempo que duró la última vez que fue a espera por entrada y salida, promedio de ese proceso de atención en espera por entrada y salida.
+
+Son variables muy puntuales, son variables puntuales. Una variable no es el tiempo, el tiempo en la cola de listos. ¿Cuál tiempo?
+
+El tiempo de ayer, el tiempo de hace un año, el tiempo de esta última corrida.
+
+[Orador 3] (1:05:46 - 1:05:51)
+Yo para tomar el promedio que yo decía las 100 últimas veces.
+
+[Orador 1] (1:05:55 - 1:07:30)
+Las variables son fundamentales. Si yo pongo una variable en el ID del proceso, tengámoslo por seguro, o sea que yo ya de ahí abajo espero cualquier cosa. Porque es que la variable no dice nada.
+
+La variable no dice nada. Desperdicio de memoria, crecimiento de memoria, la frecuencia, la frecuencia de uso de la memoria. Esa no es una variable importante, relevante.
+
+Es decir, ¿para qué me sirve mi saber? ¿Por qué tan periodicamente voy a la memoria? ¿Verdad?
+
+Me interesa saber cuál es la cantidad de voluntad, cuál es el comportamiento del crecimiento en la memoria y otros indicadores más puntuales. ¿Qué requiero para analizar algoritmos de reemplazo de página? Bit error, bit error, puntero de la última página reemplazada.
+
+Esos son variables de bloqueo y control asociadas a memoria. Bit error, bit error, la hora en la que se cargó la página, la hora en la que la página fue modificada. Ahí están las variables que sí son útiles para saber cuál es la política que yo voy a escoger.
+
+Vamos a ver.
+
+[Orador 4] (1:07:41 - 1:07:42)
+¿Tamaños vivos?
+
+[Orador 2] (1:07:46 - 1:07:53)
+¿Tenemos tamaño? ¿Tamaños diferentes?
+
+[Orador 1] (1:07:59 - 1:09:04)
+¿Tamaños vivos tenemos tamaño? ¿Por qué he descartado? ¿Por qué he descartado el 1?
+
+¿Tamaños vivos todos tenemos tamaño? ¿Por qué he descartado? Bueno, porque en ese modelo no se puede juntar nadie que no sepa yo cuál es el tamaño real.
+
+Y aquí es una tontería. ¿Verdad? Descartado.
+
+El siguiente. Vamos a verlo. Bueno, de varios tamaños.
+
+¿Puedes ver lo que sigue? Mapavís. Listas ligadas.
+
+Y listas ligadas. No existe lista ligada sin un ajuste. No existe.
+
+No existe lista ligada sin un ajuste.
+
+[Orador 6] (1:09:07 - 1:09:10)
+Y no existe lista ligada con NRU.
+
+[Orador 1] (1:09:11 - 1:09:17)
+Ni existe lista ligada con NRU ni con RELU.
+
+[Orador 4] (1:09:21 - 1:09:22)
+Ok.
+
+[Orador 1] (1:09:25 - 1:10:03)
+Mapavís. Mapavís. Mapavís.
+
+¿Puede ser una estrategia? ¿Verdad? ¿Puede ser una estrategia?
+
+Primero. La primera consideración. Como tenemos como tenemos que la mayoría de procesos crecen casi en variedad disproporcional.
+
+¿Verdad? Esto está completamente descartado. ¿Ok?
+
+Por la naturaleza el crecimiento es un prácticamente que está descartado. ¿Ok? Para confirmarlo.
+
+Mapavís. ¿Cuál es el pecado capital de Mapavís?
+
+[Orador 3] (1:10:04 - 1:10:07)
+El crecimiento. El crecimiento.
+
+[Orador 1] (1:10:08 - 1:12:30)
+¿Cuál es el pecado capital de Mapavís? ¿Y cómo resuelvo eso? Ok.
+
+Este es el pecado capital. ¿Qué tengo que hacer para aplicar la implementación? Ok.
+
+Puedo decirle a todos a todos los pacientes ¿Verdad? Pongase pongase en pausa ¿Verdad? Mapavís descartado.
+
+¿Listas? ¿Listas ligadas? ¿Listas ligadas?
+
+Resuelve el problema de de la de la implementación ¿Verdad? El problema que tenemos aunque tengamos ajustes ¿Verdad? Es que si el proceso crece que si el proceso crece eso se nos convierte demasiado lento a la recuperación ¿Verdad?
+
+Aunque tuviéramos la capacidad para eso que no la tenemos si creciera eso va a ser un problema Socios demasiado desperdicio interno ¿Verdad? ¿Sí? Por el tamaño de los bloques definidos ya por sí ¿Sí?
+
+¿Qué nos queda? ¿Qué nos queda? Memoria virtual Intercambio de memoria virtual ¿Sí?
+
+¿Sí? ¿Por qué? Porque es el crecimiento lo único que podemos hacer para poder ejecutar procesos que analizan que analizan estas imágenes es teniendo un repositorio de intercambio es la única manera ¿Sí?
+
+Pero resulta que memoria virtual no es una política ¿Sí? ¿Cierto? ¿Verdad?
+
+¿Cómo es que eso cómo es que hago para que eso se convierta en una política de memoria virtual? Con el algoritmo de reemplazo final es decir no existe un algoritmo de memoria virtual sin su política de reemplazo final ¿Ok?
+
+[Orador 2] (1:12:33 - 1:12:35)
+Ahora sí ¿El reemplazo final qué tenemos?
+
+[Orador 6] (1:12:37 - 1:12:38)
+¿Qué tenemos?
+
+[Orador 3] (1:12:38 - 1:13:00)
+Reloj ¿Ah? Reloj Bueno Fifo ¿Fifo? Segunda oportunidad Reloj NRU ¿NRU?
+
+Ah, ¿ese era el primero?
+
+[Orador 1] (1:13:00 - 1:13:09)
+No, no, pues digamos el orden está bien nada más NRU ¿Ah?
+
+[Orador 3] (1:13:11 - 1:13:12)
+¿Sí?
+
+[Orador 1] (1:13:13 - 1:13:15)
+Ese está prácticamente descartado ¿verdad?
+
+[Orador 6] (1:13:16 - 1:13:16)
+¿Sí?
+
+[Orador 1] (1:13:17 - 1:16:21)
+¿Ok? NRU ¿Sí? NRU ¿Sí?
+
+Fifo ¿Fifo? ¿Fifo? Calavera Ordenos por el tiempo de llegada se va la mafia ¿Sí?
+
+Segunda oportunidad evaluo subir de modificado y le doy otro chance lo pongo en cero y continúo limpio el bit segunda oportunidad no tiene sentido que yo aplique segunda oportunidad si nada más lo evalúo ¿verdad? y le perdono la vida no, le limpio el bit función indispensable si no el algoritmo es otra ¿Vamos? ¿Sí?
+
+limpiamos el bit porque ahí anduvo muy cerca excepto que no limpio el bit y calavera ¿verdad? ¿Sí? si no limpiamos el bit esto no es segunda oportunidad y ruego que mantiene el puntero y organiza en su memoria similar NRU con respecto a la última hora en la que puede acceder a esa falla y listo ¿Cuántos conviene para este contexto de decisión?
+
+¿Eso? ¿Sí? La pregunta es muy sencilla ¿Me conviene algo muy muy elaborado y muy caro o me conviene algo espejo y rápido?
+
+Y entonces la pregunta es la pregunta es ¿Qué pasa con los audios? Yo necesito mantener un histórico de cosas ahí de los audios ¿Qué pasa con las imágenes? Yo necesito mantener un histórico ahí ¿Qué pasa con las con los archivos de tránsito?
+
+Yo necesito mantener un histórico ¿O todo cada vez que ejecuto eso es nuevo? ¿Verdad? Todo es completamente nuevo cada vez que ese proceso que uno de estos tres entra a ejecución cada vez que uno de ellos entra a ejecución carga algo completamente nuevo para procesar ¿Ok?
+
+Entonces ¿Cuál es el algoritmo que me interesa? Lo más barato lo más barato porque no me interesa no me interesa invertir en escoger algo que frecuentemente se use porque siempre cada vez se va a cambiar todo todo en cada cambio va a ser completamente nuevo ¿30 puntos? Ya llevamos 50 ¿Cuál proceso cree que podría salir para los adolescentes si aplicamos administración de memoria con funciones de varios tamaños?
+
+[Orador 6] (1:16:25 - 1:16:26)
+¿Ok?
+
+[Orador 1] (1:16:28 - 1:19:49)
+Particulares frías de varios tamaños ¿Cómo resolver el problema del crecimiento que es el potencial problema que tenemos aquí? ¿Hay algún problema del crecimiento? En particulares frías de varios tamaños ¿Cómo resolvemos el crecimiento?
+
+¿Cómo se llama la estrategia? Pre-asignación y protección ¿verdad? Entonces, pre-asignación y protección ¿así me sirve?
+
+¿Sí? Entonces, ¿a quién me beneficiaría? ¿A todos ellos?
+
+¿Cierto? ¿Sí? ¿Qué pasa si estos procesos crecen?
+
+¿A quién le van a pedir memoria? ¿Y qué pasará con el proceso A? ¿Por qué hayamos implementado un buffer?
+
+Porque no le iba a dar tiempo de ir consumiendo al mismo que producía los dispositivos Entonces, ¿qué pasa cuando él vaya a ocupar su bloque de memoria? ¿Sí? Entonces, ¿a quién beneficia particiones fijas de varios tamaños?
+
+¿Correcto? ¿A nadie? ¿Sí?
+
+No es posible implementarlo porque en el proceso estrella va a ser el proceso superjudicado ¿Está hecho para que usted diga ¡Claro! O sea, ¿claro que sí los beneficia? Todos ellos crecen ¿Quién dice que no crecen?
+
+Este ¿Sí? ¿No crecen? Excepto cuando esto pasa cuando lo puedo consumir al mismo que se produce pero cuando eso pasa y vengo con lo que creció ¿Dónde lo voy a colocar?
+
+Analice el proceso de el último ¿En qué caso pero en el caso del que le corresponde aplicar intercambio ¿Cuál es la política de reemplazo que lo va a hacer? Siempre es un archivo de dos niños ¿Dónde lo colocó para procesarlo? Sin memoria ¿Qué va a pasar con lo que tenía ahí?
+
+Lo quiero estar ¿Sí? No puedo mantener No puedo mantener nada No me interesa ¿Sí? ¿Cuánto consume un archivo audio?
+
+Un montón de memoria Cada vez que llega ahí Todas las páginas que estaban se fueron y vienen páginas nuevas Entonces ¿Para qué? ¿Para qué NMU? ¿Para qué segunda oportunidad?
+
+¿Para qué reloj? Nada ninguna validez tiene Necesito lo más rápido que me limpien todas las páginas el algoritmo más barato ¡Au!
+
+[Orador 2] (1:19:51 - 1:19:55)
+Bueno, vamos a empezar y a la vuelta nos vemos bien Vamos a empezar

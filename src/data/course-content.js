@@ -506,3 +506,141 @@ export const caseDecisionFields = [
   { key: 'es', label: 'Para entrada/salida', hint: 'Buffer, caché y justificación.' },
   { key: 'conclusion', label: 'Conclusión como examen', hint: 'Respuesta breve defendible.' },
 ];
+
+// Caso MediCore resuelto con la lógica de Calidad (de la sesión de repaso).
+// Es material de práctica para el tercer examen: caracterización por columnas +
+// preguntas trabajadas de CPU, memoria, archivos, E/S, bloqueos y distribuidos.
+export const medicoreCase = {
+  intro:
+    'Data Center Hospitalario MediCore: sensores biomédicos en 450 pacientes, IA clínica de riesgo, análisis de imágenes de cultivos por microscopio y análisis de audio de dolor en UCI. Primero se caracteriza cada proceso columna por columna; recién después se decide CPU, memoria, archivos o E/S.',
+  processes: [
+    { id: 'A', name: 'Sensores biomédicos', detail: 'Frecuencia cardíaca, saturación O₂, presión y temperatura, cada 2 s en 450 pacientes.' },
+    { id: 'B', name: 'IA de análisis clínico', detail: 'Riesgo cardiovascular y cerebrovascular; dispara alarmas en casi tiempo real.' },
+    { id: 'C', name: 'Imágenes de cultivos', detail: 'Lotes de imágenes de microscopio para detectar virus, bacterias y hongos.' },
+    { id: 'D', name: 'Audio de dolor', detail: 'Fragmentos de audio de UCI a espectrogramas y vectores para clasificar dolor.' },
+  ],
+  columns: [
+    'Tiempo real',
+    'Ráfaga',
+    'E/S',
+    'Cambio de contexto',
+    'Desperdicio por cambio',
+    'Nat. variables',
+    'Nat. archivos',
+    'Memoria solicitada',
+    'Crecimiento',
+    'Desperdicio memoria',
+    'Buffer',
+    'Caché',
+  ],
+  table: {
+    A: ['No', 'Mínima', '+++', 'No conviene', 'Alto', 'Sí', 'Sí', 'Relevante', 'Estable', 'Moderado', 'Sí', 'No'],
+    B: ['No', '+++', '+++', 'No conviene', 'Bajo', 'No', 'No', 'Creciente', 'Creciente', 'No', 'No', 'Sí'],
+    C: ['No', 'Alta', '+++', 'No conviene', 'Bajo', 'No', 'No', 'Creciente', 'Creciente', 'No', 'Sí', 'No'],
+    D: ['No', '+++', '+++', 'No conviene', 'Bajo', 'No', 'No', 'Muy alta', 'Creciente', 'No', 'Sí', 'No'],
+  },
+  tableNote:
+    'Calidad descarta tiempo real en los cuatro: con cientos de instancias coexistiendo, ningún proceso tiene exclusividad de CPU. A es el único con buffer obligatorio (el sensor produce más rápido de lo que el proceso consume); B es el único con caché (el modelo de IA se reutiliza entre pacientes).',
+  questions: [
+    {
+      area: 'CPU',
+      title: 'Pregunta 1 — Algoritmo de planificación de CPU',
+      ask: 'Justifique el algoritmo de planificación correcto con variables del BCP y de la tabla de procesos.',
+      answer: [
+        'Decir solo "Round Robin" mete a todos en la misma bolsa, y A es muy distinto a B, C y D. La respuesta completa es colas múltiples con dos colas, porque permite aplicar algoritmos distintos a comportamientos distintos.',
+        'Cola 1 — Proceso A (ráfaga mínima, E/S altísima): RR con quantum bajo (cede el CPU rápido y se va a E/S) o SJF por pila de código (A tiene poquísimas instrucciones: leer el sensor y registrar). Cualquiera se defiende según el criterio que enfatices.',
+        'Cola 2 — Procesos B, C y D (ráfaga +++ , CPU-bound): RR con quantum alto, para que avancen su análisis sin que el cambio de contexto se multiplique ni se les corte a la mitad.',
+        'Se descarta apropiatividad porque ninguno es tiempo real estricto; se descarta FCFS porque dejaría que las ráfagas enormes de B, C y D monopolicen el CPU.',
+      ],
+      defense:
+        'La variable que separa las dos colas no es el nombre ni la importancia: es la ráfaga. A tiene ráfaga mínima; B, C y D tienen ráfaga máxima. Eso justifica usar algoritmos distintos.',
+    },
+    {
+      area: 'Memoria',
+      title: 'Pregunta 2 — Política de administración de memoria',
+      ask: 'Recomiende la política del planificador de mediano plazo con al menos diez variables de peso.',
+      answer: [
+        'Se descartan uno a uno los modelos sin intercambio: particiones fijas (mismo y varios tamaños) por crecimiento; mapa de bits por huecos inútiles al inicio y crecimiento desproporcionado; listas ligadas porque el crecimiento vuelve lentas las búsquedas; socios por desperdicio interno al redondear a potencias de 2.',
+        'La única política viable es memoria virtual con intercambio: el problema no es el tamaño físico, sino que B, C y D crecen de forma que ningún bloque fijo los contiene.',
+        'La política de reemplazo NO es única: la pregunta del millón es si las páginas se reutilizan entre iteraciones. Para B el modelo de IA se reutiliza → Segunda Oportunidad o Reloj. Para C y D cada lote/fragmento es nuevo → FIFO basta y es más barato.',
+        'Variables de peso: crecimiento del proceso, tamaño de memoria solicitado, frecuencia de acceso a páginas, bit R, bit M, hora de carga de página, puntero a la última página reemplazada, frecuencia de fallos de página, tamaño del área de intercambio y frecuencia de reutilización de páginas entre iteraciones.',
+      ],
+      defense:
+        'La variable que manda toda la decisión es la tasa de crecimiento y la frecuencia de reutilización de páginas. Sin esas dos no puedo decidir ni el intercambio ni el algoritmo de reemplazo.',
+    },
+    {
+      area: 'Memoria',
+      title: 'Pregunta 3 — ¿Quién se favorece con particiones fijas de varios tamaños?',
+      ask: 'Determine qué proceso se favorece y por qué los demás quedan descartados.',
+      answer: [
+        'B, C y D quedan descartados por crecimiento: la reasignación y protección es una operación atómica cara y, si crecen demasiado, no pueden migrar a un bloque mayor.',
+        'A parece el favorecido por consumo estable y bloque pequeño. Pero hay un giro: cuando B, C o D crecen y aplican reasignación, pellizcan espacio de otros bloques, y el bloque pequeño de A —que tiene un buffer activo de 450 sensores— es el candidato a perder espacio.',
+        'Conclusión honesta: este modelo no favorece limpiamente a nadie. Si hay que elegir uno, es A, pero solo si se garantiza que su bloque no será objetivo de las reasignaciones de los otros tres.',
+      ],
+      defense:
+        'A pasa de ser el más favorecido al más perjudicado en cuanto B, C o D crecen, porque su buffer no puede perder ni un bloque. La respuesta correcta es que el modelo no favorece limpiamente a nadie.',
+    },
+    {
+      area: 'Memoria',
+      title: 'Pregunta 4 — Proceso D con intercambio: reemplazo que favorece y que perjudica',
+      ask: 'Indique la política de reemplazo que más favorece y la que más perjudica al proceso D.',
+      answer: [
+        'Cada vez que D entra a ejecución carga páginas completamente nuevas (nuevo fragmento de audio, nuevo espectrograma, nuevos vectores). No hay reutilización de páginas entre iteraciones.',
+        'Favorece: FIFO. Es el algoritmo más barato; limpia todo rápido. No tiene sentido invertir en evaluar bits R y M si en la próxima iteración todo cambia igual.',
+        'Perjudica: Reloj (y Segunda Oportunidad). Están diseñadas para proteger páginas frecuentes; para D ese análisis es trabajo costoso sin beneficio, porque las páginas "protegidas" salen igual. Reloj es el peor porque recorre circularmente todas las páginas.',
+      ],
+      defense:
+        'La variable que manda no es el nombre del algoritmo: es si el proceso reutiliza páginas entre iteraciones. Para D la respuesta es claramente no, así que FIFO.',
+    },
+    {
+      area: 'Archivos',
+      title: 'Tercer examen — Archivos',
+      ask: 'Caracterice los archivos del proceso A (sensores) y del proceso C (microscopios) de forma independiente.',
+      answer: [
+        'Primero el dispositivo, luego el dato en crudo, luego el archivo. No se generaliza el proceso completo como un solo archivo.',
+        'Proceso A: cada sensor (FC, SatO₂, presión, temperatura) genera su propio archivo de registros (timestamp + ID paciente + valor). Tipo regular, acceso directo (al llegar una alarma voy directo al paciente, no recorro 449), implementación iNodo porque crece cada 2 s y necesito las porciones recientes. Asignación adyacente descartada por crecimiento.',
+        'Proceso C: la imagen del microscopio es binario estructurado (matriz de píxeles). Tipo regular binario, acceso directo por regiones (el proceso analiza zonas, no lee la imagen entera), implementación iNodo porque las imágenes son grandes y se accede a regiones frecuentes.',
+      ],
+      defense:
+        'No digo "el proceso A genera un archivo". A tiene cuatro dispositivos y cada uno construye su propio archivo; lo que cambia es el dato en crudo: bpm, porcentaje, mmHg, grados.',
+    },
+    {
+      area: 'Entrada/salida',
+      title: 'Tercer examen — Espera por entrada y salida',
+      ask: 'Explique el recorrido del dato y justifique buffer/caché para los procesos A y C.',
+      answer: [
+        'Recorrido: la controladora (parte física) mide y digitaliza; el manejador (lógica del SO) ordena y valida las peticiones; el dato cae al buffer del dispositivo, que acumula mientras el proceso consume; al solicitarlo, se traslada al bloque de memoria del proceso verificando integridad (CRC). Recién ahí el proceso pasa de espera por E/S a listo.',
+        'A: buffer sí (el sensor produce 450 lecturas cada 2 s y el proceso no las consume al instante); caché no (la saturación de hace 4 s no sirve para la actual: el dato siempre es nuevo).',
+        'C: buffer sí (las imágenes llegan por lotes y se analizan una a una); caché no (cada imagen de cultivo es distinta, no se reutiliza).',
+        'Sin buffer, A no tendría dónde depositar las lecturas mientras procesa: perdería datos. En un sistema crítico, perder una lectura puede ser no detectar una anomalía. El buffer es condición de integridad, no un lujo.',
+      ],
+      defense:
+        'Buffer responde a transferencia y ritmos; caché responde a reutilización. No asigno caché por defecto: primero pregunto si el dato se repite.',
+    },
+    {
+      area: 'Bloqueos',
+      title: 'Tercer examen — Bloqueos',
+      ask: 'B tiene R1 (signos del paciente #112) y pide R2 (modelo). D tiene R2 y pide R1. Ninguno libera. ¿Hay interbloqueo?',
+      answer: [
+        'Coffman una a una: exclusión mutua (R1 y R2 son de uso exclusivo, presente); posesión y espera (B tiene R1 y espera R2, D tiene R2 y espera R1, presente); no apropiación (no puedo quitar el recurso a mitad de análisis sin corromper, presente); espera circular (B → R2 → D → R1 → B, presente). Las cuatro se cumplen: hay interbloqueo.',
+        'Estrategia: avestruz descartada (es un sistema hospitalario, un proceso detenido puede no disparar una alarma). Prevención difícil (rompería exclusión mutua o no apropiación). La opción defendible es detección y recuperación: detectar la espera circular, terminar el proceso con menor avance, liberar sus recursos y reiniciarlo.',
+        'Round Robin agrava: al agotarse el quantum, B suelta el CPU pero NO suelta R1. El recurso queda retenido aunque el proceso esté en listos, y D que pide R1 se queda esperando. Con FCFS, B avanzaría hasta E/S y podría liberar R1 de forma natural.',
+      ],
+      defense:
+        'No basta decir "hay" o "no hay": muestro el recorrido de las cuatro condiciones y explico por qué Round Robin hace el bloqueo más probable.',
+    },
+    {
+      area: 'Distribuidos',
+      title: 'Tercer examen — Sistemas distribuidos',
+      ask: 'Expansión a 3 hospitales y 10 clínicas, y 50 000 imágenes diarias del proceso C. ¿Qué arquitectura y qué se distribuye?',
+      answer: [
+        'Cluster (fuertemente acoplado): rapidísimo por memoria compartida, pero exige hardware idéntico (inviable para tantos nodos), es caro y no tolera fallos (si cae un componente, cae todo). Defendible solo para el componente de alarmas de B, donde la velocidad es crítica.',
+        'Débilmente acoplado (por red): permite hardware heterogéneo, solo necesita master (lanza rutinas) y slave (atiende peticiones), y es tolerante a fallos (si un nodo cae, su carga se reasigna). Mayor latencia, aceptable para casi todo el caso. Es la opción recomendada para la expansión.',
+        'Para las 50 000 imágenes conviene distribuir la data, no el código: el análisis de cada imagen es independiente. El master reparte el lote, los slaves procesan su porción con la misma rutina y devuelven resultados; el master consolida.',
+        'Taxonomía de Flynn: MIMD. Múltiples procesadores ejecutan instrucciones distintas sobre datos distintos (A lee sensores, C analiza imágenes, B infiere IA). No es SIMD (no todos ejecutan la misma instrucción) ni SISD (hay múltiples procesadores).',
+      ],
+      defense:
+        'La pregunta no es si distribuir, sino qué: con 50 000 imágenes independientes, distribuyo la data. Si la rutina de IA fuera muy pesada por sí sola, podría además distribuir el código.',
+    },
+  ],
+};

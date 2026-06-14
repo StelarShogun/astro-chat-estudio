@@ -24,7 +24,7 @@ estado: activo
 prioridad: alta
 color: "#2563eb"
 sticker: book
-banner: assets/tanenbaum_fig_6_6_matrices_interbloqueo.png
+banner: assets/tanenbaum_fig_6_6_matrices_interbloqueo.webp
 ---
 
 # Materia de Sistemas Operativos — explicación estilo Calidad
@@ -98,7 +98,7 @@ No se empieza escogiendo algoritmo. Se empieza leyendo el comportamiento del pro
 
 # 1. Capítulo 1 — Qué es un sistema operativo
 
-![](assets/pizarra_09_vision_general_so_io_dma_mmap.jpg)
+![](assets/pizarra_09_vision_general_so_io_dma_mmap.webp)
 
 ## 1.1 El sistema operativo como intermediario
 
@@ -544,9 +544,9 @@ Si un proceso produce datos que otro necesita, hay comunicación. Si además com
 
 # 3. Capítulo 3 — Administración de memoria
 
-![](assets/pizarra_10_algoritmos_asignacion_memoria.jpg)
+![](assets/pizarra_10_algoritmos_asignacion_memoria.webp)
 
-![](assets/pizarra_11_buddies_memoria.jpg)
+![](assets/pizarra_11_buddies_memoria.webp)
 
 ## 3.1 La memoria como locker
 
@@ -1474,7 +1474,7 @@ Por eso se puede usar crecimiento como heurística.
 
 # 5. Capítulo 5 — Entrada y salida
 
-![](assets/pizarra_09_vision_general_so_io_dma_mmap.jpg)
+![](assets/pizarra_09_vision_general_so_io_dma_mmap.webp)
 
 ## 5.1 Por qué E/S es crítica
 

@@ -22,7 +22,7 @@ estado: activo
 prioridad: alta
 color: "#0f766e"
 sticker: book
-banner: assets/diagrama_cpu_ciclo_calidad.png
+banner: assets/diagrama_cpu_ciclo_calidad.webp
 ---
 
 # Repaso final de Sistemas Operativos — estilo Calidad
@@ -31,7 +31,7 @@ banner: assets/diagrama_cpu_ciclo_calidad.png
 > En este curso no basta con decir la definición. Hay que **caracterizar el proceso**, reconocer **qué recurso presiona**, decidir **qué política conviene** y justificar el costo.  
 > La respuesta buena casi siempre sigue esta ruta: **dato de origen → recurso afectado → cola que se satura → política recomendada → consecuencia si me equivoco**.
 
-![](assets/diagrama_cpu_ciclo_calidad.png)
+![](assets/diagrama_cpu_ciclo_calidad.webp)
 
 ## Índice operativo
 
@@ -97,7 +97,7 @@ Según lo que se ve en las pizarras y lo que se ha venido trabajando, el examen 
 
 # Zona 1 — Tabla de procesos de la pizarra grande
 
-![](assets/pizarra_01_tabla_procesos_cpu_mem_archivos_io.jpg)
+![](assets/pizarra_01_tabla_procesos_cpu_mem_archivos_io.webp)
 
 La primera pizarra es una matriz de caracterización. No es una tabla para memorizar marcas de “sí/no”. Es una tabla para entrenar el razonamiento: **dado un proceso, se decide qué tan fuerte golpea CPU, memoria, archivos, E/S, buffer, cache y riesgo de desperdicio**.
 
@@ -204,7 +204,7 @@ La imagen no se analiza “como texto”. Es un volumen de datos. Si la imagen n
 
 # Zona 2 — CPU y ciclo de ejecución
 
-![](assets/diagrama_cpu_ciclo_calidad.png)
+![](assets/diagrama_cpu_ciclo_calidad.webp)
 
 ## 2.1 Proceso no es programa guardado
 
@@ -304,11 +304,11 @@ No pregunta solo “cuánto tarda”. Pregunta si el resultado sirve si llega ta
 
 # Zona 3 — Memoria
 
-![](assets/diagrama_memoria_particiones_swap.png)
+![](assets/diagrama_memoria_particiones_swap.webp)
 
-![](assets/pizarra_10_algoritmos_asignacion_memoria.jpg)
+![](assets/pizarra_10_algoritmos_asignacion_memoria.webp)
 
-![](assets/pizarra_11_buddies_memoria.jpg)
+![](assets/pizarra_11_buddies_memoria.webp)
 
 ## 3.1 La analogía de Calidad: memoria como locker/pupitre/pizarra
 
@@ -362,7 +362,7 @@ Se asigna memoria según lo que el proceso pide. Suena más justo, pero abre dos
 
 ## 3.4 Mapa de bits
 
-![](assets/tanenbaum_fig_3_6_mapa_bits_lista_ligada.png)
+![](assets/tanenbaum_fig_3_6_mapa_bits_lista_ligada.webp)
 
 Un mapa de bits representa la memoria como unidades. Cada unidad tiene un bit:
 
@@ -529,7 +529,7 @@ Thrashing ocurre cuando el proceso parece estar ejecutando, pero realmente consu
 
 # Zona 4 — Archivos
 
-![](assets/tanenbaum_fig_4_13_nodo_i.png)
+![](assets/tanenbaum_fig_4_13_nodo_i.webp)
 
 ## 4.1 Las tres finalidades de un sistema de archivos
 
@@ -639,11 +639,11 @@ Ejemplo:
 
 # Zona 5 — Entrada/Salida
 
-![](assets/pizarra_09_vision_general_so_io_dma_mmap.jpg)
+![](assets/pizarra_09_vision_general_so_io_dma_mmap.webp)
 
-![](assets/pizarra_02_io_disco_analogico_digital_buffer.jpg)
+![](assets/pizarra_02_io_disco_analogico_digital_buffer.webp)
 
-![](assets/diagrama_io_buffer_dma_disco.png)
+![](assets/diagrama_io_buffer_dma_disco.webp)
 
 ## 5.1 Entrada/Salida no es solo “leer y escribir”
 
@@ -659,7 +659,7 @@ Entrada/Salida es el conjunto de mecanismos que permiten que un proceso se comun
 | Software independiente del dispositivo | Abstracciones comunes: bloques, archivos, permisos, nombres | VFS, cola de impresión |
 | Proceso usuario | Pide leer, escribir, imprimir, enviar, recibir | Aplicación |
 
-![](assets/tanenbaum_fig_5_14_controladores_estandar.png)
+![](assets/tanenbaum_fig_5_14_controladores_estandar.webp)
 
 ## 5.3 Parte mecánica vs parte lógica
 
@@ -796,9 +796,9 @@ No basta decir “use un mejor sensor”. Hay que separar:
 
 # Zona 6 — Bloqueos e interbloqueos
 
-![](assets/pizarra_03_bloqueos_vector_recorrido_politicas.jpg)
+![](assets/pizarra_03_bloqueos_vector_recorrido_politicas.webp)
 
-![](assets/diagrama_bloqueos_vector_banquero.png)
+![](assets/diagrama_bloqueos_vector_banquero.webp)
 
 ## 6.1 Definición operativa
 
@@ -830,7 +830,7 @@ Si rompo una condición, prevengo el interbloqueo.
 
 ## 6.4 Grafo de asignación de recursos
 
-![](assets/tanenbaum_fig_6_3_grafo_recursos.png)
+![](assets/tanenbaum_fig_6_3_grafo_recursos.webp)
 
 Reglas:
 
@@ -862,7 +862,7 @@ Interpretación: cuando en el recorrido aparece de nuevo un nodo ya visitado, ha
 
 ## 6.6 Detección con varios recursos de cada tipo
 
-![](assets/tanenbaum_fig_6_6_matrices_interbloqueo.png)
+![](assets/tanenbaum_fig_6_6_matrices_interbloqueo.webp)
 
 Estructuras:
 
@@ -881,7 +881,7 @@ A = E - suma_columnas(C)
 
 ## 6.7 Ejemplo de la pizarra del banquero/detección
 
-![](assets/pizarra_05_banquero_matrices_recursos.jpg)
+![](assets/pizarra_05_banquero_matrices_recursos.webp)
 
 Recursos existentes:
 
@@ -995,9 +995,9 @@ Conclusión: en ese estado no hay interbloqueo, porque existe una secuencia en l
 
 # Zona 7 — Sistemas distribuidos
 
-![](assets/pizarra_04_distribuidos_flynn_acoplamiento.jpg)
+![](assets/pizarra_04_distribuidos_flynn_acoplamiento.webp)
 
-![](assets/diagrama_distribuidos_flynn_calidad.png)
+![](assets/diagrama_distribuidos_flynn_calidad.webp)
 
 ## 7.1 Idea central
 
@@ -1071,7 +1071,7 @@ No hay un único true/false. Se evalúan criterios, probabilidades, rangos y cer
 | MISD | Muchas | Uno | Raro; tolerancia/filtros múltiples. |
 | MIMD | Muchas | Muchos | Sistemas multiprocesador/distribuidos comunes. |
 
-![](assets/tanenbaum_fig_8_29_multiprocesador_multicomputadora_distribuido.png)
+![](assets/tanenbaum_fig_8_29_multiprocesador_multicomputadora_distribuido.webp)
 
 ## 7.8 Comparación clave
 
@@ -1263,11 +1263,11 @@ Como existe secuencia P3→P2→P1, no hay interbloqueo.
 
 | Tema | Pregunta de Calidad | Respuesta corta defendible | Imagen guía |
 |---|---|---|---|
-| Ajustes | ¿Dónde cabe y qué residuo deja? | First/Next/Best/Worst/Quick cambian recorrido, costo y desperdicio. | ![[assets/pizarra_10_algoritmos_asignacion_memoria.jpg]] |
-| Buddies | ¿Qué potencia de 2 lo contiene? | Asigno bloque mínimo suficiente y fusiono socios libres. | ![[assets/pizarra_11_buddies_memoria.jpg]] |
-| E/S | ¿Dónde se verifica y arma el dato? | En buffer del dispositivo/subsistema antes de entregar a memoria del proceso. | ![[assets/pizarra_09_vision_general_so_io_dma_mmap.jpg]] |
-| DMA | ¿Quién mueve el bloque? | Controlador/DMA, con CPU configurando y recibiendo interrupción final. | ![[assets/pizarra_09_vision_general_so_io_dma_mmap.jpg]] |
-| mmap | ¿Cargo todo o trabajo por regiones? | Archivo mapeado si conviene tratar porciones como memoria. | ![[assets/pizarra_09_vision_general_so_io_dma_mmap.jpg]] |
+| Ajustes | ¿Dónde cabe y qué residuo deja? | First/Next/Best/Worst/Quick cambian recorrido, costo y desperdicio. | ![[assets/pizarra_10_algoritmos_asignacion_memoria.webp]] |
+| Buddies | ¿Qué potencia de 2 lo contiene? | Asigno bloque mínimo suficiente y fusiono socios libres. | ![[assets/pizarra_11_buddies_memoria.webp]] |
+| E/S | ¿Dónde se verifica y arma el dato? | En buffer del dispositivo/subsistema antes de entregar a memoria del proceso. | ![[assets/pizarra_09_vision_general_so_io_dma_mmap.webp]] |
+| DMA | ¿Quién mueve el bloque? | Controlador/DMA, con CPU configurando y recibiendo interrupción final. | ![[assets/pizarra_09_vision_general_so_io_dma_mmap.webp]] |
+| mmap | ¿Cargo todo o trabajo por regiones? | Archivo mapeado si conviene tratar porciones como memoria. | ![[assets/pizarra_09_vision_general_so_io_dma_mmap.webp]] |
 
 ---
 
@@ -1275,44 +1275,44 @@ Como existe secuencia P3→P2→P1, no hay interbloqueo.
 
 ## Pizarra 1 — Tabla de caracterización
 
-![](assets/pizarra_01_tabla_procesos_cpu_mem_archivos_io.jpg)
+![](assets/pizarra_01_tabla_procesos_cpu_mem_archivos_io.webp)
 
 ## Pizarra 2 — E/S, disco, señales y buffer
 
-![](assets/pizarra_02_io_disco_analogico_digital_buffer.jpg)
+![](assets/pizarra_02_io_disco_analogico_digital_buffer.webp)
 
 ## Pizarra 3 — Bloqueos, grafo y políticas
 
-![](assets/pizarra_03_bloqueos_vector_recorrido_politicas.jpg)
+![](assets/pizarra_03_bloqueos_vector_recorrido_politicas.webp)
 
 ## Pizarra 4 — Sistemas distribuidos
 
-![](assets/pizarra_04_distribuidos_flynn_acoplamiento.jpg)
+![](assets/pizarra_04_distribuidos_flynn_acoplamiento.webp)
 
 ## Pizarra 5 — Banquero y matrices
 
-![](assets/pizarra_05_banquero_matrices_recursos.jpg)
+![](assets/pizarra_05_banquero_matrices_recursos.webp)
 
 ## Pizarra 6 — Flynn
 
-![](assets/pizarra_06_distribuidos_flynn_tabla.jpg)
+![](assets/pizarra_06_distribuidos_flynn_tabla.webp)
 
 ## Pizarra 7 — Banquero y tiempo global
 
-![](assets/pizarra_07_banquero_tiempo_global.jpg)
+![](assets/pizarra_07_banquero_tiempo_global.webp)
 
 ## Pizarra 8 — Distribuidos, vista borrosa
 
-![](assets/pizarra_08_distribuidos_borroso.jpg)
+![](assets/pizarra_08_distribuidos_borroso.webp)
 
 ## Pizarra 9 — Visión general SO, E/S, DMA y mmap
 
-![](assets/pizarra_09_vision_general_so_io_dma_mmap.jpg)
+![](assets/pizarra_09_vision_general_so_io_dma_mmap.webp)
 
 ## Pizarra 10 — Algoritmos de asignación de memoria
 
-![](assets/pizarra_10_algoritmos_asignacion_memoria.jpg)
+![](assets/pizarra_10_algoritmos_asignacion_memoria.webp)
 
 ## Pizarra 11 — Buddies / socios de memoria
 
-![](assets/pizarra_11_buddies_memoria.jpg)
+![](assets/pizarra_11_buddies_memoria.webp)

@@ -1,0 +1,1225 @@
+# Clase8 1
+
+### Orador 1 · `0:02 - 2:02`
+
+Entonces, ¿qué es lo que van a hacer? Van a entrar rápidamente a internet y van a dictar un dispositivo que define este. ¿Qué es lo que les va a definir al primero?
+
+El origen del dispositivo. Es decir, ese dispositivo, ¿qué es lo que me está...? Digamos, ¿cuál es la entrada en mi proceso? Ese dispositivo general.
+
+Una vez que entregan, pues el primero, entonces ustedes dicen, ok, sensor de brillo solar, funciona con este, o sea, el origen de datos es este, y ahora sí ya yo lo puedo categorizar. ¿Sí? ¿Estamos?
+
+Yo lo puedo decir, bueno, el proceso 1, el proceso 1 tiene el archivo de esta estructura, de este tipo, ¿Por qué? ¿Cuántos archivos hay ahí? Lo primero, el primer ejercicio.
+
+El proceso 1. ¿Cuántos? Cada dispositivo genera un data.
+
+Lo primero, el primer ejercicio es, identifico cuáles son los dispositivos. Me aseguro de estar claro en cuál es la data que genera ese dispositivo. Y ahora sí, sabiendo cuál es la data que genera, ya yo sé cuál es el archivo que construyo, y entonces ahora sí lo categorizo.
+
+¿Sí? ¿Estamos? No se pongan, no se pongan finos.
+
+O sea, con el primer dispositivo, usted cuente, ¿qué hace esa función? Ese, con ese. Nada más es para tener una referencia.
+
+¿Cuál es la data de origen? Y ya con eso ya yo puedo, ahora sí, definir cuál es la estructura, el tipo y el acceso. De esta manera, ¿qué voy a caracterizar?
+
+Cada uno de los archivos en cada uno de los procesos. ¿Sí?
+
+### Orador 2 · `2:04 - 2:05`
+
+No, no, no.
+
+### Orador 1 · `2:05 - 2:26`
+
+No puedo generalizar, yo no puedo decir el proceso 1 tiene esta estructura, este tipo y este acceso. No, porque en realidad son archivos independientes. Lo que tengo que caracterizar es cada uno de los archivos en el fondo.
+
+¿Estamos? ¿Sí? Lo vamos a hacer en cuaderno 2.
+
+Y ahorita pongo un punto de entrega.
+
+### Orador 2 · `2:28 - 2:30`
+
+Profe, en data de origen.
+
+### Orador 1 · `2:30 - 2:36`
+
+Todas las preguntas. Todas las preguntas que no salen en el examen, domingo, sábado, domingo. Dígame.
+
+### Orador 2 · `2:37 - 2:45`
+
+No, no. Data de origen, profe. Data de origen te refieres a lo que...
+
+Él devuelve, no.
+
+### Orador 1 · `2:45 - 3:08`
+
+Usted me dice. Un dispositivo archivo controlado remoto. ¿Ok?
+
+¿Qué es lo que esto genera? ¿Qué es lo que esto generaría? En una entrada.
+
+¿Sí? ¿Qué es lo que esto generaría? Pues eso es el data de origen.
+
+Y por eso yo tengo que construir un archivo, evidentemente. ¿Verdad? Que es el que va registrando cada uno de los archivos.
+
+### Orador 2 · `3:08 - 3:16`
+
+Dígamos, profe, no sé si se puede decir así, pero es como lo que él tira o lo que... Sí, póngalo así, porque si no no le va a cuidar el archivo.
+
+### Orador 1 · `3:17 - 4:18`
+
+¿Qué es lo que es el dispositivo controlado? Pongámonos de acuerdo. Pongámonos de acuerdo.
+
+Imaginemos que lo primero que yo tengo es... Lo que yo tengo es... Un scan...
+
+Dígamos... Los talentos de transparencia ahora tienen un código en la red. Entonces, hay un dispositivo que es un scan.
+
+Lo primero que debería hacer es que si escaneas con una barrita, cuando la barrita pase, ya queda el ID de la barrita. ¿Qué quieren ustedes? Que emite ese scan.
+
+¿Qué manda ese scan a la O? En resumidas palabras. ¿Qué manda?
+
+¿Qué quieren ustedes que manda? ¿Lo que manda es el registro? Ese es el asunto.
+
+Si lo que manda es un registro o lo que manda es un stream. Y esto yo lo convierto en un registro.
+
+### Orador 2 · `4:18 - 4:19`
+
+Lo que manda es un stream.
+
+### Orador 1 · `4:21 - 5:39`
+
+Dígamos, ¿qué es lo que el dispositivo me da? ¿Cómo yo después lo manipulo? Pero primero, ¿qué es lo que él me da?
+
+¿Entendemos? ¿Qué es lo que él me da? El asunto es que independientemente de si yo lo puedo procesar de una vez para convertirlo en un registro o no, yo tengo que irlo registrando a su lado.
+
+Y después lo puedo consumir. Porque no sé si me da tiempo de ir procesándolo. Porque van entrando.
+
+¿Sí? ¿Sí me entienden? Vamos a ver.
+
+El asunto es que ustedes siempre piensan... O sea, que... Dígamos, que yo le puse las vacas.
+
+Ya, ya... Ya empezó ese registro. Ya está insertado ese registro demasiado.
+
+Sí, pásenlo a esa vaca. ¿Verdad? No, siempre tenemos que pensar que el dispositivo como tal manda.
+
+Pero eso que está mandando yo simplemente lo estoy escribiendo en algún lugar. Que después lo consuma y ahora sí para procesarlo. ¿Verdad?
+
+Para análisis es otra cosa. Pero siempre en esta etapa es el análisis en crudo de lo que recibo. ¿Sí?
+
+No del procesamiento que ya hago de... ¿Estamos? ¿Sí?
+
+Es lo primero, lo primero. Entonces en la cabeza, en esta etapa estamos viendo archivos. ¿Sí?
+
+Es lo que yo construyo con lo que me llega crudo de ese dispositivo. ¿Sí? Esa es la sentida.
+
+### Orador 2 · `5:40 - 5:57`
+
+Roger. Entonces, un... Un caso como en el que vamos a investigar el compañero y yo que es el sensor de temperatura que emite varios tipos de archivos.
+
+Escojo uno.
+
+### Orador 1 · `5:57 - 6:18`
+
+Vamos a ver que emite esto. Dispositivo tal emite este archivo. ¿Ok?
+
+Y ahora sí, esta es la caracterización. Pero para ver si me quedó claro. Digamos de...
+
+¿Verdad? ¿No? Usted tiene que ir buscando en los dispositivos cuál es el origen.
+
+¿Qué es lo que genera? Y ahora sí lo categoriza.
+
+### Orador 4 · `6:18 - 6:20`
+
+Es decir, digamos, el sensor tiene ya...
+
+### Orador 1 · `6:22 - 6:29`
+
+Correcto. ¿Cuál es el archivo que crea? ¿Cuál es el archivo que construyo?
+
+Crudo. Crudo.
+
+### Orador 2 · `6:43 - 6:44`
+
+Correcto.
+
+### Orador 1 · `6:50 - 7:12`
+
+Primero... Primero listamos archivos. Ahora ponemos un encabezado.
+
+Es estructura. Tipo y acceso. Y ya usted va diciendo, este archivo, ok, la estructura es tal, el acceso es tal, el tipo es tal.
+
+¿Sí? Lo que tengo que hacer es caracterizar cada archivo. Caracterizarlo de acuerdo a sus tres valores.
+
+### Orador 2 · `8:13 - 8:49`
+
+Tanto este como este, el C, U, bueno, C, S, U, V, es el formato que lo exporta para hojas de cálculos. Valores separados por coma. Pero también imita TXT, que es el que vamos a utilizar.
+
+Está devolviendo la respuesta con esto. Yo le puse lo siguiente. Sensor, ¿está?
+
+¿Qué tipo de archivo emite? Porque es lo que da de regreso. Y con eso es lo que suelta.
+
+Lo que tira.
+
+### Orador 3 · `9:09 - 9:13`
+
+¿Eso es nuevo? ¿Eh? Sí.
+
+### Orador 5 · `9:24 - 9:26`
+
+¿Puedo ver? Ya.
+
+### Orador 1 · `9:30 - 9:35`
+
+Ah, ¿nos vio una imagen?
+
+### Orador 2 · `9:36 - 9:36`
+
+¿Una imagen?
+
+### Orador 1 · `9:37 - 9:40`
+
+Yo pondría la imagen para más o menos ya estar citado.
+
+### Orador 2 · `9:40 - 9:46`
+
+Pero es que aquí, bueno, informaciones dice que los sensores emiten archivos como tal. No, no, no. O sea, vamos a ver, vamos a ver.
+
+### Orador 1 · `9:46 - 10:12`
+
+¿Cómo lo digo? Primero busco un dispositivo, después voy a la especificación y ya él me va a decir qué es lo que genera. No busquen internet porque, o sea, nosotros siempre trabajamos con un dispositivo de dispositivos, el lector de barro de marca tal y tal, genera tal y tal cosa y funciona así, con ese ejemplo.
+
+Es más sencillo.
+
+### Orador 5 · `10:13 - 10:15`
+
+No siempre necesitamos internet, ¿sí?
+
+### Orador 1 · `10:16 - 10:24`
+
+Necesitamos un dispositivo que dé la temperatura. ¿Sí? Ya entendí.
+
+### Orador 2 · `10:27 - 10:35`
+
+Sí, ya. ¿Qué pasa? Busca el sentimiento para ver qué es lo que genera.
+
+### Orador 4 · `10:36 - 10:38`
+
+Ahí lo va a decir él qué es lo que genera.
+
+### Orador 5 · `11:05 - 11:07`
+
+Claro, claro, claro. Ideal.
+
+### Orador 2 · `11:27 - 11:39`
+
+Bueno, aquí ya busqué un dispositivo en específico que es el de... y me dice que digital. ¿Ese es lo que ando buscando?
+
+### Orador 1 · `11:39 - 11:42`
+
+No, porque es el tipo dato. ¿Qué es lo que genera?
+
+### Orador 5 · `11:46 - 11:47`
+
+Dice que...
+
+### Orador 1 · `11:47 - 11:52`
+
+Lo que yo necesito saber es qué es lo que me genera. Si es un string, si es una...
+
+### Orador 2 · `11:52 - 11:55`
+
+¿Puedo ponerlo como qué archivo genera?
+
+### Orador 1 · `11:55 - 12:20`
+
+No. ¿Qué dato? Precisamente ese es el asunto.
+
+Ese es el trabajo. Sí. Sí.
+
+¿Qué es lo que genera?
+
+### Orador 2 · `12:20 - 13:43`
+
+Generalmente... Los números. Un string de los números.
+
+Ah, bueno, en este caso pues genera los strings de la media. El string no tiene una estructura. Dice que es de tipo vida.
+
+¿Cierto?
+
+### Orador 7 · `13:49 - 13:53`
+
+Sí, pero no devuelve números, devuelve un string.
+
+### Orador 5 · `14:18 - 14:28`
+
+Sí. Voy a buscar...
+
+### Orador 1 · `14:54 - 14:55`
+
+El portal reporta varias cosas.
+
+### Orador 4 · `15:04 - 15:06`
+
+Perdón. ¿Puedo probar una mano? Es que me llené de batido.
+
+### Orador 2 · `15:40 - 16:09`
+
+El DHT11 es... Dime. ¿Lo utilizamos en los dos?
+
+Ya tengo otro para la temperatura. Porque es que va a generar el mismo, entonces el mismo análisis es el mismo. Cambiemos.
+
+### Orador 5 · `16:43 - 16:44`
+
+Ya, ya, ya.
+
+### Orador 1 · `17:04 - 17:16`
+
+Imagínense ustedes que el director del proyecto le puso esta palabra y el instituto, miren aquí está. Lo primero que usted va a ver es ¿qué me genera esto? ¿Cuál es la lectura?
+
+### Orador 5 · `17:16 - 17:22`
+
+¿Por qué está...? Sí, pero...
+
+### Orador 2 · `17:22 - 17:23`
+
+Yo iba a decir... Sí.
+
+### Orador 1 · `17:25 - 17:33`
+
+O sea, hay un dispositivo de arraigo y tengo que medir la grasa. Otro que mide el azúcar. Otro que mide la sal.
+
+Otro que mide la sartén.
+
+### Orador 5 · `17:34 - 17:35`
+
+Ah, claro, claro.
+
+### Orador 1 · `17:38 - 17:39`
+
+Ajá, correcto.
+
+### Orador 3 · `17:46 - 18:14`
+
+aquí habla el Marzo... ...
+
+### Orador 1 · `18:18 - 18:28`
+
+específico, ¿verdad? Y probablemente... ¿Son los partes?
+
+¿Son los partes? Sí. ...
+
+¿está aquí?
+
+### Orador 2 · `18:29 - 18:31`
+
+Lo que pasa es que ahí está con C.
+
+### Orador 1 · `18:34 - 18:36`
+
+No, no. O sea...
+
+### Orador 4 · `18:37 - 18:38`
+
+O sea...
+
+### Orador 1 · `18:59 - 19:09`
+
+Siempre esto es lo que a ustedes les va a tocar, verdad. Alguien les va a dar el juicio, tomen que están, verdad. O sea, más allá de la aplicación, lo primero que tienen que saber es qué es lo que dice el idioma.
+
+### Orador 7 · `20:44 - 20:45`
+
+¿Cuál?
+
+### Orador 2 · `20:47 - 20:59`
+
+El aeronáutico. Está bien, pero no es... ¿Un aeronáutico o un heliógrafo?
+
+No. Vámonos por el aeronáutico.
+
+### Orador 3 · `21:37 - 21:59`
+
+No, pero mire eso, mire eso, la estructura es de este tipo, presente, presente.
+
+### Orador 2 · `22:12 - 22:18`
+
+Sí, porque todas son del tipo B. El tipo es de, es el centro del discurso, ¿no?
+
+### Orador 3 · `22:20 - 22:21`
+
+No, es el carácter, ¿no?
+
+### Orador 5 · `22:23 - 22:24`
+
+No.
+
+### Orador 3 · `22:31 - 22:56`
+
+El carácter. El carácter.
+
+### Orador 4 · `23:11 - 23:11`
+
+Sí.
+
+### Orador 1 · `23:14 - 23:20`
+
+Pero primero, quiero poner el dispositivo, luego el piso alto, la volata, ¿qué es eso? Y ahora si la...
+
+### Orador 3 · `23:38 - 25:50`
+
+Sí. ¿Qué?
+
+### Orador 7 · `25:56 - 25:58`
+
+Ah, no, pero si le da tiempo a escribir eso.
+
+### Orador 4 · `26:03 - 26:03`
+
+Pero, ok.
+
+### Orador 5 · `26:04 - 26:04`
+
+Hola.
+
+### Orador 7 · `26:05 - 26:06`
+
+Hay que explicar los tres.
+
+### Orador 4 · `26:07 - 26:08`
+
+Uno, uno, uno.
+
+### Orador 1 · `26:08 - 26:34`
+
+El dispositivo. Por ejemplo, el... Es que tenemos que analizar los tres porque, vamos a ver, a lo que tenemos que al final llegar es, al final lo que lo vamos a llegar, si no, es que para todo el proceso, para todo el proceso, resulta que las estructuras tipo y acceso son idénticos, ¿verdad?
+
+Pero no podemos generalizar, si hay un dispositivo que genera algo diferente, entonces ya tenemos que tener el carácter por aparte.
+
+### Orador 5 · `27:02 - 27:03`
+
+¿Sí?
+
+### Orador 2 · `27:05 - 27:11`
+
+Puedes buscar el sensor de fluorescencia. ¿Para qué? Para la grasa.
+
+### Orador 4 · `27:43 - 28:38`
+
+¿Quieren otro huevo? ¿Entero? Bueno, mejor un float.
+
+Porque tienen alas eléctricas. Ese de ahí es nuestro. Ese de ahí es nuestro.
+
+### Orador 5 · `28:39 - 28:41`
+
+¿Seguro?
+
+### Orador 3 · `28:41 - 28:43`
+
+Sí, sí.
+
+### Orador 5 · `28:44 - 28:52`
+
+Vamos a ver. ¿Lo ven?
+
+### Orador 4 · `29:06 - 29:12`
+
+Bueno, es que parece que no hay... ¿Estás confundido? No, no.
+
+Gracias.
+
+### Orador 2 · `29:17 - 29:41`
+
+El sensor se llama sensor de fluorescencia. ¿Está listo? Sí.
+
+¿Fluorescencia o referencia? Fluorescencia. Fluo, fluo.
+
+Ahí está.
+
+### Orador 4 · `30:07 - 30:11`
+
+Profe, si no estoy mal, usted había dicho que cuando es un registro...
+
+### Orador 1 · `30:11 - 30:16`
+
+¿Quieren cinco minutos para subir lo que tienen ahí? ¿Vamos a seguir? Cuando es un registro...
+
+### Orador 4 · `30:16 - 30:19`
+
+¿Lo que tienen ahí? Cuando es un registro de acceso al auditorio.
+
+### Orador 5 · `30:20 - 30:29`
+
+Si quieren, le pueden sacar una foto a lo que tienen ahí. Usted había mencionado que iba muy de la mano la estructura con el acceso.
+
+### Orador 2 · `30:29 - 30:33`
+
+Cuando se hizo un registro, pues es muy probable que sea del auditorio público.
+
+### Orador 4 · `30:34 - 30:38`
+
+Pero no es... Sí es...
+
+### Orador 1 · `30:38 - 30:39`
+
+Ese.
+
+### Orador 4 · `30:40 - 30:42`
+
+Escrito en piedra. Para ese caso...
+
+### Orador 5 · `30:48 - 30:54`
+
+¿Está listo? ¿Sí o no? Sí.
+
+Las dos personas, ¿verdad?
+
+### Orador 2 · `30:56 - 30:58`
+
+Sí. ¿Se lo manda usted? Sí, me lo manda.
+
+Pregúntale, por favor.
+
+### Orador 3 · `31:07 - 31:14`
+
+No. ¿Sí? No, no.
+
+### Orador 1 · `31:20 - 31:28`
+
+Recuerden, el archivo que estamos construyendo es con lo que el dispositivo me manda. ¿Ahora? No, pero le mando los temperaturos.
+
+### Orador 5 · `31:32 - 31:32`
+
+¿Perdón?
+
+### Orador 6 · `31:47 - 31:50`
+
+Claro. Me lo manda.
+
+### Orador 5 · `32:37 - 32:38`
+
+Gracias. Gracias.
+
+### Orador 3 · `33:48 - 35:28`
+
+Ya estamos. Gracias.
+
+### Orador 4 · `35:34 - 35:40`
+
+Muchas gracias. Muchas gracias.
+
+### Orador 1 · `35:41 - 38:24`
+
+Ya estamos. Ok, ahora lo que nos corresponde es... Ya podemos caracterizar los archivos.
+
+Ahora lo que nos corresponde es decir, bueno... ¿Cuáles son los diferentes sistemas de administración de archivos? Es decir, ¿cómo es?
+
+¿Cómo es que se organizan los archivos en un ambiente? Es decir, dependiendo de la versión del sistema operativo, es que se implementa una de esas políticas. ¿Ok?
+
+La primera es asignación adyacente. En asignación adyacente lo que podemos entender es que es el mecanismo más rápido que existe, ¿verdad? Porque las operaciones de lectura o escritura se reducen únicamente a ubicar una posición.
+
+Vamos a ver. Imagínense que todos los de camisa negra conforman un archivo. Pero, ¿qué modelo tienen los de camisa negra?
+
+Están dispersos, ¿cierto? Entonces, implicaría que yo recorra cada estructura de almacenamiento secundario para decir, ¿aquí hay un bloque negro? No.
+
+¿Aquí hay un bloque negro? Sí. Lo recupero.
+
+¿Dónde lo paso? ¿Ah? Al buffer.
+
+Recupero el segundo bloque. ¿Cuántos bloques negros hay? Uno.
+
+Ok, lo paso al buffer y ahí voy. Esto es muy lento. Pero, ¿qué pasaría si yo tuviera todos los negros juntos aquí?
+
+Nada más. Lo que ocupa la edición. ¿Dónde está el primer bloque?
+
+Y un end of file donde está el último bloque. ¿Ok? Entonces, ¿por qué es muy rápido?
+
+Porque el tiempo de búsqueda se limita únicamente a editar la edición donde empieza el primer bloque. Y ahí me voy a encontrar, en un estado menos, un punto siguiente, una siguiente, siguiente, siguiente, hasta encontrar un end of file. ¿Ok?
+
+Por eso es que es sumamente rápido. La pregunta es, ¿en qué condiciones yo puedo aplicar asignación adyacente? Cuando aplico asignación adyacente, funciona el mismo principio de memoria o particiones fijas de tamaños variables.
+
+¿Qué quiere decir eso? ¿Cuál era el problema que tenían las particiones fijas de varios tamaños? El principal problema es el crecimiento.
+
+### Orador 4 · `38:25 - 38:28`
+
+¿Por qué el crecimiento?
+
+### Orador 1 · `38:29 - 41:59`
+
+¿Qué implica el crecimiento? Ahí, en memoria o particiones fijas de varios tamaños, yo pegue y cada uno queda en otro lado, ¿verdad? Pero aquí, en asignación adyacente, como todo el archivo tiene que estar junto, ¿qué vamos a hacer?
+
+¿Ah? Ok. Hay que ir a buscar otro bloque donde quepa todo.
+
+¿Ok? Entonces, esa tarea es sumamente cara. Es decir, asignación adyacente es una excelentísima opción, siempre y cuando...
+
+Los archivos sean sólo de lectura. Si el archivo solamente es de lectura, genial, bingo. ¿Sí?
+
+Nunca va a crecer. ¿Sí? No tiene por qué crecer el archivo si es sólo de lectura.
+
+Entonces, ese es el modelo ideal si yo estoy manipulando archivos que son sólo de lectura. Si el archivo ya es modificable, estoy con el cuchillo en el pescuezo porque en cualquier momento crece. ¿Ok?
+
+Y va a haber que emigrar a otro lugar para que lo puedan obtener. Entonces, y eso ya es un problema capital. ¿Y por qué es un problema capital?
+
+¿Por qué asignación adyacente para un proceso que crece, para un archivo que crece en un archivo, es un pecado capital? ¿Por qué? ¿Por qué?
+
+Porque el archivo se puede corromper en ese tránsito de la escritura hacia otro bloque. ¿Sí? Es cierto que nos jodemos con el invento.
+
+Porque todavía en memoria, en memoria si eso pasaba, no lo dijimos, pero si en memoria eso pasa, si llega a suceder un problema en trasladar bloques, por ejemplo, un mapa a veces, ¿verdad? Que había que irse con todo. Si eso pasaba en un mapa a veces y yo pierdo algún dato en memoria, ¿qué es lo que hago?
+
+¿Qué es lo que podría hacer? Lo más eficiente, lo más chancho y lo más vulgar. Mandar el proceso, empiece de nuevo.
+
+¿Por qué? Porque el dato ya no está en alfabeto secundario, vuelve a empezar el proceso. Nada más.
+
+Pero aquí yo estoy jugando con el archivo, con el archivo fuente, ¿verdad? Si algo pasa, entonces ahí esto sí puede ser una complicación bien incidente. Asignación adyacente.
+
+¿Ok? Sumamente barato porque administrativamente, ¿qué es lo que yo tomo de esto? Imagínense siempre esto.
+
+Ok, ahí está el almacenamiento secundario, siempre está ahí en los bloquecitos, independientemente de cuál sea la estructura de administración. Pero, el resultado siguiente. ¿Querían ir acá?
+
+Vengan acá.
+
+### Orador 2 · `42:00 - 42:00`
+
+Vengan.
+
+### Orador 1 · `42:02 - 42:35`
+
+Vengan. ¿A quién quiere buscar usted? Yo tengo una petición, ¿verdad?
+
+Yo tengo una petición aquí. Entonces, cuando esa petición llegue aquí, entonces yo voy a hacer la búsqueda. Él viene a buscar a los de camisas de botones.
+
+Entonces, tendría que empezar a ir a preguntar a quién tiene botones en sus camisas. ¿Sí? Eso quiere decir que ese mecanismo no es eficiente.
+
+¿Qué es lo que yo debería tener aquí? Una listita aquí.
+
+### Orador 2 · `42:36 - 42:37`
+
+Una listita aquí donde diga.
+
+### Orador 1 · `42:38 - 47:39`
+
+Camisas con botones. Sectores. 15, 18, 22, 24, 27 y 37.
+
+Entonces, ¿cómo se llama esto? Una tabla de administración de archivos. Entonces, para el primer caso.
+
+Para el primer caso de asignación adyacente, esta tabla es muy pequeña. Porque nada más me dice. Nombre al archivo, ¿verdad?
+
+Nombre al archivo, dirección donde empieza. Vean que es sencillo la tabla. Nombre al archivo, dirección donde empieza.
+
+Entonces, esta tabla es sumamente pequeña. Entonces, por eso decimos que administrativamente es muy económica. ¿Sí?
+
+Es muy fácil mantener esta tablita. ¿Sí? ¿Cuál es el problema que tiene?
+
+Entonces, ya hablamos. El problema que tiene es. Si los archivos.
+
+Si los archivos. Tienen. O sea, si son de escritura.
+
+Porque en cualquier momento va a suceder que va a crecer y va a dar con todo. ¿Sí? Entonces, ese es el problema que tiene.
+
+Pero administrativamente es rapidísimo. El proceso de recuperación es súper, súper eficiente. ¿Ok?
+
+¿Sí? ¿Está bien? ¿Sí?
+
+Para archivos. Que se lo hagan modificar. Existen esas tres.
+
+Esas tres metodologías. ¿Ok? La primera.
+
+La primera lista de gas. ¿Ok? En una lista de gas.
+
+¿Ok? Vamos a ver. En el primer yacente.
+
+Yo, Ripple. El primer bloque está ahí. Dice que todos los que están a la par.
+
+Son los que conforman ese archivo. Hasta el end of file. ¿Sí?
+
+En lista de gas. En lista de gas. ¿Qué es lo que estoy resolviendo?
+
+El problema del crecimiento. ¿Sí? Entonces.
+
+Ahora en lista de gas. Yo digo. 0 es 3.
+
+Los de. También se ha colocado. ¿Ok?
+
+Aquí empecé a escribir. Hasta ahí llegué ese día. Después miro otro archivo.
+
+Después miro otro. Miro otro. ¿Ok?
+
+Después lo retomo. Crece. Allá metí el siguiente bloque.
+
+Porque ya aquí no cabía. Allá está el otro bloque. Claro.
+
+¿Ok? Es decir. ¿Qué es lo que hago?
+
+Mate un puntero a siguiente. ¿Ok? La dirección del primero.
+
+Y de aquí me meto un puntero hasta el siguiente. ¿Ok? Pero eso implica que puede ser un ping pong.
+
+Puede ser que el siguiente bloque sea aquel. ¿Qué será el primer bloque? El segundo será ese.
+
+El tercer será aquel. El cuarto será ese. El quinto será aquel.
+
+¿Sí? Es decir. Ya no me preocupa.
+
+Ya no me preocupa que esto crezca. Ni ni do. Ahí hay un líder.
+
+¿Listo? ¿Qué se va? Póntelo ahí.
+
+En el siguiente. Y pone el último puntero hasta el siguiente. Y listo.
+
+¿Sí? Ok. Ventana.
+
+Evidente. Ya esto me permite la modificación. ¿Verdad?
+
+Me permite que los archivos ya puedan crecer. No va a tener ningún inconveniente. La otra ventana es que la lista esta.
+
+La lista de administración sigue siendo pequeña. Porque quiero tener nada más la dirección del primer bloque. Después de ahí me lo voy a ir un puntero a siguiente, a siguiente, a siguiente.
+
+Hasta end of file. ¿Verdad? La única diferencia es que ya no van a estar contiguos los bloques.
+
+Como en la asignación adyacente. ¿Sí? Esa es una pequeña ventana.
+
+Los bloques no están contiguos. ¿Ok? ¿Sí?
+
+Y la otra ventana que tengo es la siguiente. Digamos que... No tenemos ningún ejemplo de allá en los claves.
+
+Vamos a ver. Digamos que... Digamos que estos tres bloques...
+
+Ok. Solo de color forman un archivo. ¿Ok?
+
+¿Qué quiere decir? Que aquí tengo tres de color. Aquí tengo uno.
+
+Aquí tengo otro. ¿Ok? Pero lo que puedo hacer es lo siguiente.
+
+Vengo aquí y de aquí este es el primero. Su puntero siguiente ¿dónde está? ¿No?
+
+Su puntero siguiente resulta que está allá. Aquí en el sector de entonces. Aunque yo después...
+
+Aunque tenga dos bloques contiguos que después voy a recuperar... Por el orden del puntero siguiente... Entonces pasa este triunfo.
+
+¿Ok? Y esto es tiempo. Esto es tiempo que se pierde en el desplazamiento de la cabeza de la escritura.
+
+Entonces, esto es lo que es ineficiente. ¿Ok? Que no puedo recuperar todos los sectores de un mismo bloque.
+
+De una sola vez. Porque lo que yo mismo tengo es el puntero siguiente. Entonces, ese puntero siguiente me puede llevar a algún tipo...
+
+¿Verdad? Que hace que el algoritmo pierda en eficiencia. ¿Ok?
+
+¿Sabes? ¿Puedo hablar? Sí.
+
+### Orador 4 · `47:41 - 47:45`
+
+¿En cuanto al... Costo administrativo?
+
+### Orador 1 · `47:46 - 50:10`
+
+Es igual a la asignación de acerte. Porque nada más ocupo el nombre del archivo y la dirección del primer bloque. Y después de ahí él me va a decir...
+
+¿Cuál es el siguiente bloque? ¿Sí? Es exactamente igual.
+
+Administrativamente los dos son sumamente económicos. ¿Ok? Solamente que así me permite crecer.
+
+¿Verdad? Sin tener que mover todo. Solamente agrego.
+
+Agrego sector más y cambio el puntero. ¿Y cuál era la ventaja? ¿Cuál era la ventaja?
+
+El costo administrativo. El costo administrativo de estar tralándome en ir y venir. Probablemente al mismo sector donde había otros sectores.
+
+Al mismo bloque donde había otros sectores que pudieran lucrarse una vez. ¿Sí? Entonces, precisamente.
+
+Eso es lo que resuelve listas ligadas y un índice. ¿Ok? ¿Qué es lo que hace listas ligadas e índice?
+
+Ahora tengo en la tabla de localización de archivos. Tengo el nombre del archivo. La dirección donde inicia.
+
+¿Sí? Y la dirección donde están todos los bloques de ese archivo. ¿Sí?
+
+Entonces. Si el archivo lo compone, lo decamisa en color. Que no sea negro.
+
+Entonces tengo 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14. 14 bloques. Entonces, antes solo tenía una entrada.
+
+Nombre de archivo y la dirección donde empezaba. Ahora va a tener nombre de archivo donde empieza y la dirección de los 14 índices. ¿Qué me permite?
+
+La dirección de los 14 índices. Que yo sé que, por ejemplo, si en este bloque hay 10 índices. Lo voy a traer de una vez.
+
+¿Sí? Entonces reduce un poco menos el tiempo de recuperación. ¿Qué es lo que sacrifica?
+
+¿Qué es lo que sale un poco más caro? El costo administrativo en la tabla de administración de archivos. Porque entre más bloques tenga un archivo, más grande va a ser la entrada de esa tabla.
+
+### Orador 4 · `50:16 - 50:17`
+
+La tabla.
+
+### Orador 1 · `50:18 - 50:52`
+
+La tabla le tiene la dirección. Recuerde que en esta tirada tengo el nombre del archivo y solo tengo la dirección del primer bloque. ¿Por qué?
+
+Porque de ahí él nada más va llegando a punteros siguientes, punteros siguientes, punteros siguientes, punteros siguientes. Entonces la tabla, nombre y dirección del primer bloque. Nada más.
+
+Ahora tengo nombre y la dirección de todos los bloques que conforman este archivo. Por eso es que la tabla va a crecer un poco. ¿Verdad?
+
+Y va a crecer más para archivos grandes.
+
+### Orador 4 · `50:53 - 51:06`
+
+Lo que antes era como aumento en costo. No sé si llamar costo administrativo también, pero para recuperar o buscar. Reduce.
+
+Ahora se reduce pero se aumenta en base.
+
+### Orador 1 · `51:07 - 51:17`
+
+Lo que se está aumentando es el tamaño de esta tabla. ¿Sí? ¿Se tiene claro por qué está aumentando el tamaño de esta tabla?
+
+### Orador 4 · `51:17 - 51:20`
+
+Porque ahora manejo una extra con los índices.
+
+### Orador 1 · `51:20 - 51:42`
+
+Ahora mantengo la dirección de todos los bloques. ¿Sí? Es decir, esos son los índices de todos los bloques.
+
+Por eso crece esta tabla. ¿Qué es lo que reduce? Reduce el tiempo.
+
+Reduce el tiempo principalmente en la búsqueda. Porque ahora se trae todos los sectores que hayan de un mismo bloque. Cuando pasó por aquí se trajo todos.
+
+### Orador 4 · `51:42 - 51:44`
+
+Entonces cuando recupero uno, ¿realmente?
+
+### Orador 1 · `51:45 - 52:14`
+
+No, recuerde. Los elementos secundarios están organizados por sectores. Entonces, si yo paso por ese sector y hay tres bloques, ¿verdad?
+
+Entonces me lo llevo de una vez. ¿Sí? Mientras que en mi estrategia nada más yo iba en un flipón.
+
+¿Verdad? De aquí en un flipón junto al siguiente. Probablemente de aquel me mandaba a este.
+
+Y de este me manda allá y de allá me manda aquí. ¿Sí?
+
+### Orador 2 · `52:16 - 52:18`
+
+Entonces no son todos sino todos los de un solo bloque.
+
+### Orador 1 · `52:19 - 52:34`
+
+Exactamente. Crecemos en que los elementos secundarios están divididos en bloques. Pero que la realidad básica es un sector.
+
+Lo que él trae en cada lectura es un sector. Si yo pudiera traer lecturas que pasen por todo este bloque, me darían todos los que corresponden a ese archivo.
+
+### Orador 4 · `52:35 - 52:36`
+
+¿Verdad?
+
+### Orador 1 · `52:38 - 53:13`
+
+Todavía más. Todavía más, más, más, más. Una mayor ganancia.
+
+¿De qué tipo es a los elementos secundarios? Sincrónico o asintrónico. De bloque o de caractere.
+
+De bloque. Eso quiere decir que él puede estar atendiendo a varios peticionarios al mismo tiempo. Eso quiere decir que si el vino a este bloque y dijo, bueno, aquí tengo dos sectores de un archivo, pero tengo siete sectores de otro archivo.
+
+¿Cómo me lo llevarás? ¿Sí?
+
+### Orador 4 · `53:15 - 53:23`
+
+Entonces, en el bloque, a gran escala realmente sí estaría como... ¿Sabes? ¿Sabes cuál es la diferencia ahí?
+
+### Orador 1 · `53:25 - 53:48`
+
+Es que en el anterior era conformado a las puntadas. No, en el anterior yo nada más pregunto. De todos los de negro, ¿quién fue el que llegó primero?
+
+¿De todos los de negro, quién fue el que llegó primero? ¿Ah? ¿Qué?
+
+¿Todo el mundo aquí? Nombre de archivo, negro. Dirección del primer sector, Denilson.
+
+### Orador 6 · `53:48 - 53:49`
+
+Nada más.
+
+### Orador 1 · `53:50 - 54:31`
+
+Denilson me va a decir, ¿quién fue el que llegó después? ¿Quién llegó después de él? ¿De negro?
+
+Ok. Y entonces, ahí va el puntero siguiente. ¿Quién llegó después de ella?
+
+Y ahí va el puntero. Ahí va el puntero. Puntero siguiente, puntero siguiente, puntero siguiente.
+
+¿Qué tenía la tabla? Nombre y dirección del primer bloque. Nada más.
+
+Pero ahora tengo el nombre, la dirección del primer bloque, y la dirección de todos los, donde están todos los bloques de negro. ¿Sí? ¿Estamos?
+
+Ok.
+
+### Orador 5 · `54:31 - 54:34`
+
+Nombre, dirección del primer bloque.
+
+### Orador 1 · `54:35 - 1:02:52`
+
+Nombre, dirección del primer bloque. Y dirección de todos los bloques. Y lo ponen así.
+
+¿Sí? Por eso es que es importante, ahora sí, que yo pueda tener un lugar donde almacenar temporalmente. Es decir, un...
+
+¿Un? ¿Un qué? Todo depende de la función para lo que yo quiero.
+
+Estoy pensando que originalmente, originalmente, lo que ocupo es un pomper. Primero, para asegurarme de que... Eran 17 negros.
+
+Tengo y lo busco, ¿sí? 15, 16, 17. Está completo.
+
+Ahora sí. Ahora el archivo está íntegro. Por eso es que necesito algo temporal.
+
+Si estoy pensando en cuáles son los tres bloques de negro que más se utilizan, todos los pasarían así, a un caché. Pero el resultado es que no. En este archivo, los negros siempre van a pedir dos.
+
+No hacen nada. Así como se lo llevan a más igual, digo. Entonces, ¿para qué un caché?
+
+¿Verdad? ¿Sí? OK.
+
+Vamos ahora, así, dinamicalmente. Entonces, esto es la primera versión de Linux. Espera, esta es la primera versión.
+
+Ah, sí. Esta es la primera versión de Linux. Esta es la versión súper mejorada.
+
+Service Pack. N es este. ¿Verdad?
+
+Y Linux y Mac utilizan InnoVox. ¿En qué funcionan los InnoVox? Los InnoVox dicen, OK.
+
+¿Dónde están ubicados los sectores que conforman un archivo? Me vale dos hectáreas. No me interesa.
+
+No me interesa dónde estén. No me interesa dónde estén. ¿Qué es lo que me interesa?
+
+Lo que me interesa es la recuperación rápida. Es lo que me interesa. Entonces, utiliza un esquema que se llama.
+
+No se vayan. Bloque simplemente indirecto. Bloque doblemente indirecto.
+
+Bloque simplemente indirecto. Bloque cuatruplemente indirecto. En el nivel de profundidad que queremos.
+
+¿Qué representa esto? ¿Qué es esto? ¿Qué es esto?
+
+Esto es estructura. Esto es tabla de localización de archivos. Es decir, esto no son los sectores físicos donde están contenidas las informaciones.
+
+Esto es un mecanismo sumamente eficiente de ordenar el archivo de acuerdo a cuánto se está usando cada uno de los sectores. Es decir, imaginémonos qué eso es. Simplemente indirecto, doblemente, triplemente, cuatruplemente.
+
+Quiere decir que estos sectores que están aquí casi nunca se usan. Pero que estos que están aquí son los que más se utilizan. Entonces, en esta estructura que es lo que me interesa poder decir rápido dónde están los sectores.
+
+¿Dónde están los sectores que conforman el archivo? Pero todavía más allá. ¿Dónde están los sectores que más frecuentemente se utilizan?
+
+Entendiendo que no todo el archivo siempre se utiliza igual. Evidentemente, aquí estoy privilegiando aquellos archivos que yo sé que puedo estructurar de manera tan que puedo traer, obtener muy rápidamente, referenciar dónde están los que más frecuentemente se utilizan. En una segunda capa, los que medianamente se utilizan.
+
+Y en el cuarto, allá enterrados, los que casi nunca se usan. Porque casi nunca me lo van a pedir. Entonces, ¿cuál es el chiste?
+
+Que en esta tabla simplemente indirecto estarían los poquísimos sectores de cada archivo que más frecuentemente se usan. En el siguiente nivel, la referencia de los otros sectores que medianamente se usan. Y muy en el cuarto, finalmente la referencia de aquellos que nunca nadie se acuerda.
+
+¿Verdad? ¿Para qué lo voy a tener aquí? No me interesa.
+
+¿Estamos? ¿Ya? Porque si no...
+
+Puedo subir a la emergencia. Sí estamos. No es...
+
+Esto no es la ubicación del sector como par. Esto no es... Aquí está el sector, o cada uno de nosotros compone un sector que compone el archivo de un NNV.
+
+¿No? Esto es nada más la tabla de las direcciones, de dónde están esos bloques. ¿Qué es lo que me interesa?
+
+Cuando alguien viene a buscar ese archivo. Cuando alguien viene a buscar ese archivo, me quiere decir rápidamente dónde están. Los dos bloques que más se utilizan rápidamente.
+
+Dónde están los tres que medianamente se utilizan. ¿Sí? ¿Y qué es lo que va a estar pasando?
+
+Que probablemente, si de pronto empiezo a utilizar este sector, después de este sector, este sector rápido va a estar aquí, en el bloque mediamente indirecto. Si lo sigo usando, ese sector va a pasar aquí, en el bloque simplemente indirecto. Entonces, esto le va a dar el dinamismo.
+
+La indexación también. ¿Sí? Sí, pero lo más importante es tener de manera muy rápida la respuesta de la dirección de los bloques más rápidamente usados.
+
+No sé si es obvio.
+
+### Orador 4 · `1:02:53 - 1:03:00`
+
+Tal vez sí. Pero entonces los de al frente, conforme yo voy subiendo, van bajando. Sí, claro.
+
+### Orador 1 · `1:03:01 - 1:03:34`
+
+¿Por qué? Porque no quiere sentir todavía, de pronto, ¿qué voy a tener? Tendría muchos altos.
+
+Y entonces, ¿qué es lo que pasaría? ¿De qué tamaño tendría esta tabla? Grandísima.
+
+Grandísima. Entonces, ¿qué es lo que me interesa? Rápidamente decir, ok, ya el buscado está aquí.
+
+¿Sí? Por eso es que esta tabla no puede ser muy grande. Por eso es que lo doy subiendo en bloques, simplemente, doblemente, triplemente, indirectamente, comunitariamente, si quiero.
+
+Clarísimo. ¿Como arroz? No, bueno.
+
+### Orador 6 · `1:03:38 - 1:03:39`
+
+¿Ah?
+
+### Orador 4 · `1:03:43 - 1:03:55`
+
+¿Ah? ¿Y la del ventaja es? ¿Ah?
+
+¿La del ventaja es? No tiene.
+
+### Orador 5 · `1:03:55 - 1:03:56`
+
+Este marido, no tiene.
+
+### Orador 4 · `1:03:57 - 1:03:58`
+
+Ay, ay.
+
+### Orador 2 · `1:03:59 - 1:04:10`
+
+Claro, claro. ¿Por qué? ¿Qué?
+
+¿Qué? ¿Qué? ¿Y lo grande?
+
+Esta, eh.
+
+### Orador 5 · `1:04:10 - 1:04:10`
+
+¿Ah?
+
+### Orador 1 · `1:04:11 - 1:04:18`
+
+Sí, exacto. ¿Utilizabas este y comenzaste a hacer el dispatch y llegó aquí? ¿Verdad?
+
+### Orador 4 · `1:04:19 - 1:04:31`
+
+Sí. Entonces la desventaja es usar Windows. Jajajaja.
+
+¿Es que cómo? A ver, dice aquí, vean. ¿Tú has ninguna duda?
+
+### Orador 5 · `1:04:31 - 1:04:31`
+
+Ya.
+
+### Orador 4 · `1:04:34 - 1:04:34`
+
+¿No?
+
+### Orador 1 · `1:04:38 - 1:04:54`
+
+Ok, recuerden. Siempre, siempre el principio es ¿cuál es el fin? ¿Verdad?
+
+Es decir, esto va a depender, esto va a depender de la estructura, el tipo y la versión.
+
+### Orador 6 · `1:04:56 - 1:04:57`
+
+¿Sí?
+
+### Orador 2 · `1:05:00 - 1:05:21`
+
+Ya no se terminó nada de eso. El archivo que se le ha tomado. O sea, todo está terminado, ¿verdad?
+
+Sí. ¿Entendían? ¿Qué archivo?
+
+¿Ah? ¿Qué archivo? ¿El que usted está haciendo acá?
+
+Sí, sí, sí. Está terminado. Es el sábado.
+
+Yo quisiera que el profe lo viera y diéramos. Sí, ¿verdad?
+
+### Orador 6 · `1:05:21 - 1:05:28`
+
+Es que todo está terminado, Flavio. Esa es la vara. Cuando se mete al tray para ver, todo está terminado.
+
+### Orador 2 · `1:05:28 - 1:05:30`
+
+¿Es que sí? ¿Todo tiene que estar terminado?
+
+### Orador 6 · `1:05:30 - 1:05:32`
+
+Todo, todo. Para ese equipo, todo, todo.
+
+### Orador 2 · `1:05:32 - 1:05:32`
+
+¿Sí?
+
+### Orador 6 · `1:05:32 - 1:05:35`
+
+¿Todo? Todo está acabado.
+
+### Orador 4 · `1:08:09 - 1:08:15`
+
+No, mire, esto es para la magia, se lo hice por mi mamá. No lo va a ver. Se lo parece.
+
+### Orador 6 · `1:09:53 - 1:10:13`
+
+Sí, vamos a empezar aquí, empezamos. Entonces, primero vamos a experimentar con la armonía, para experimentar el funcionamiento de la armonía, vamos a estructurar los elementos principales que van a tener espacio para el proceso del ciclo, mientras se encuentre la institución.
+
+### Orador 1 · `1:10:13 - 1:12:05`
+
+Así cuando se finalice, se tiene que liberar ese bloque de memoria y ahora se resigna el proceso nuevo. Para liberar la memoria, vamos a tener un archivo .txt, cualquiera, que se va a manipular, es un archivo de texto, y lo que se encarga en estas estructuras, que son palabras, de manera que cada secundo del proceso tendrá una o las palabras que correspondan, según el valor del proceso que le corresponda. Así que vamos a abrirlo ahí.
+
+Primero lo que tenemos es un archivo de texto que contenga varias páginas, y lo que necesitamos es cargar palabras de ese texto en memoria principal de acuerdo a la cantidad de páginas que tengamos, y las demás serán marcadas como marcos para páginas. Entonces lo que hacemos es sacar la lista de las palabras para hacer la indexación. Una van a estar en memoria principal, en las páginas, el resto van a estar direccionados en los marcos para páginas que apuntan a un área que tenemos que emular que se llama intercambio.
+
+Aquí está, digamos, cómo se hace ahí el tema del crecimiento. Esto es solamente para los algoritmos de memoria sin intercambio. Necesito saber cuántos son los grupos del proyecto.
+
+¿Son los mismos? ¿Los grupos se van a quedar iguales y males?
+
+### Orador 2 · `1:12:05 - 1:12:06`
+
+Sí.
+
+### Orador 6 · `1:12:08 - 1:12:11`
+
+Entonces creo que ya hay algunos cambios.
+
+### Orador 2 · `1:12:13 - 1:12:14`
+
+Están vacíos.
+
+### Orador 6 · `1:12:15 - 1:12:17`
+
+Hay rezagados.
+
+### Orador 2 · `1:12:17 - 1:12:30`
+
+Ah, sí, creo que ya van a haber unos cambios. Soldados, cargos. ¿Ya se la pisaron para salir?
+
+### Orador 1 · `1:12:31 - 1:13:07`
+
+Bueno, la tarea es, ahora primero ustedes, de nuevo ahí, si está completo lo confirman, si tienen varios, ustedes se estructuran ahí, porque no van a programar solo los algoritmos, es decir, van a programar un algoritmo de memoria sin intercambio, es decir, a alguien le tocará solamente mapa B, a alguien le tocará listas ligadas con primer ajuste, otro con siguiente ajuste, otro con otro ajuste, y a otro le tocará solo.
+
+### Orador 2 · `1:13:07 - 1:13:15`
+
+¿Usted lo asigna o nosotros? Listo. El profe mapa bits y tiene que crecer.
+
+### Orador 1 · `1:13:17 - 1:13:42`
+
+La primera parte es memoria sin intercambio. La segunda parte, ahora, y aquí tenemos que sacar esas estadísticas, ¿verdad? Desverificémonos, desverificémonos, aquí hay que tener un correo, y nosotros lo vamos a hacer ahí.
+
+La otra parte también, para el intercambio de memoria virtual.
+
+### Orador 5 · `1:13:42 - 1:13:43`
+
+¿Y cuál?
+
+### Orador 1 · `1:13:46 - 1:14:12`
+
+Vamos a asignar de acuerdo a los dos, y ahí lo que hacemos es que leemos una frase, ahí leemos una frase, ¿verdad? Y entonces, esa frase, tenemos que componerla con las palabras que están en las páginas. Si una palabra no está en las páginas, tenemos que traerla, entonces ahí nos puso de guayo página y traemos ella.
+
+Lo más bonito está aquí.
+
+### Orador 6 · `1:14:20 - 1:14:23`
+
+Esto nada más dice cómo hacer mapas, aquí está. Ok.
+
+### Orador 1 · `1:14:26 - 1:16:57`
+
+Lo más bonito está en el hecho de que recuerden ustedes que hay un principio de realidad, es decir, en un momento puede decir, en un caso de, ok, cada proceso tiene derecho a tener 20 páginas, pero en un instante después puede decir, cada proceso va a tener solamente 10 páginas. Entonces tiene que pasar muchas páginas a marcos para poder referenciar lo que se tiene que leer. Entonces esta es la redimensión de la memoria.
+
+Ok. Cuando decimos, vamos a reducir, lo que hacemos es que la mitad de los procesos se reducen a, digamos, dos casos de 20 páginas. Lo que va a pasar es lo siguiente, decimos, ok, estos se van a reducir, entonces estos de aquí se van a reducir, la mitad se va a reducir, y va a quedar a la mitad, es decir, en 10 páginas.
+
+Y estos van a subir 10 páginas más para nivelar la cantidad de marcos. ¿Sí? Ok.
+
+El resto de todas esas, un poco de arroz ahí. Ok. Bien.
+
+Este componente distribuido, vamos a utilizar una librería del sistema distribuido, se llama PDM, para el virtual machine. Y vamos a lanzar dos tareas, a dos procesos slaves. Quiere decir que vamos a ocupar mínimo tres compus.
+
+Ok. Mínimo tres compus. Nada, nada.
+
+Si ustedes van a correr, si ustedes van a correr aquí en la máquina, igual, pero ni para. Ni para arrancar, ni para arrancar. ¿Verdad?
+
+Las máquinas, corriendo en ellos, un master, uno corre el proceso master, dos corren el proceso slaves. Y nada más eso es mandarle información a Descartes, y él genera las estadísticas. Uno genera las estadísticas del proceso, el otro genera datos de crecimiento y desperdicio.
+
+Nada más. Y reportan a los slaves, y el slave los entende. ¿Verdad?
+
+Ahí utilizamos, la librería tiene un PDM set, y un PDM oversight. Un spawn para hacer la...
+
+### Orador 2 · `1:16:58 - 1:17:16`
+
+Ok, pero, es que yo, cuando a mí me mencionaron en el curso, me dijeron que tenía que buscar una distribución que fuera óptima para aguantar eso. ¿Es posible? ¿Qué es la que yo tenga?
+
+Sí, que puede que sí, puede que no. Me dijeron que con Cali uno está seguro 100%.
+
+### Orador 1 · `1:17:18 - 1:17:19`
+
+Yo sí estoy seguro de la negociación.
+
+### Orador 2 · `1:17:20 - 1:17:22`
+
+Sí. Yo tengo Garuda.
+
+### Orador 1 · `1:17:22 - 1:17:27`
+
+Lo que no sé es cuánta ya tengo usted de configurada.
+
+### Orador 2 · `1:17:29 - 1:17:44`
+
+A mí me dijeron que Garuda ya lo traía instalado, por eso lo busqué y por eso quise ese. Pero yo no sabía que era una librería. Es una librería.
+
+Es que, PDM significa, como, para la virtual machine.
+
+### Orador 3 · `1:17:44 - 1:17:45`
+
+O sea, sí es lo mismo.
+
+### Orador 2 · `1:17:47 - 1:17:49`
+
+Bueno, ya leí.
+
+### Orador 1 · `1:17:49 - 1:17:55`
+
+Si a alguien se le ocurre, si a alguien se le ocurre programar eso para Windows, ¿Calas Kenji?
+
+### Orador 2 · `1:18:04 - 1:18:05`
+
+Kenji venga, prueba.
+
+### Orador 1 · `1:18:06 - 1:18:06`
+
+¿Estamos?
+
+### Orador 2 · `1:18:07 - 1:18:07`
+
+Sí, señor.
+
+### Orador 1 · `1:18:08 - 1:18:40`
+
+Ok. Ahí está el proyecto ya, ya están subidos para que no vayan, primero vayan programándolo de memoria, ¿verdad? Más accesible, ¿verdad?
+
+Y va programando la memoria y se va configurando eso. No pueden esperar. O sea, si están esperando, dos semanas antes del proyecto van a empezar a configurar esto.
+
+Pero, todos están. Como ternero chiquitito. Exactamente.
+
+Como chibona.
+
+### Orador 4 · `1:18:48 - 1:18:49`
+
+Bien.
+
+### Orador 1 · `1:18:52 - 1:19:12`
+
+Ahora tenemos el quinto. No sé en qué momento. No sé en qué momento.
+
+Nos perdimos que esto era. La indicación. De planear un plazo.
+
+Me quedé, pero, al mirado yo. En el examen.
+
+### Orador 5 · `1:19:14 - 1:19:18`
+
+¿Dónde están esos? ¿Qué cosa?
+
+### Orador 2 · `1:19:18 - 1:19:19`
+
+¿Ynodos?
+
+### Orador 5 · `1:19:19 - 1:19:21`
+
+Pues si no lo habíamos visto.
+
+### Orador 2 · `1:19:24 - 1:19:25`
+
+¿Alguien utilizó ynodos?
+
+### Orador 5 · `1:19:25 - 1:19:27`
+
+¿Cómo? ¿Alguien utilizó ynodos?
+
+### Orador 2 · `1:19:29 - 1:19:31`
+
+¿Se mencionaron? Sí.
+
+### Orador 4 · `1:19:33 - 1:19:35`
+
+¿Está la presente?
+
+### Orador 3 · `1:19:39 - 1:19:46`
+
+Sí. Está preparada. ¿La hemos visto?
+
+### Orador 5 · `1:19:46 - 1:19:48`
+
+Sí, la hemos utilizado. Sí.
+
+### Orador 3 · `1:19:53 - 1:19:53`
+
+¡Chop!

@@ -30,50 +30,51 @@ export const uxPrinciples = [
 export const examPhotoSets = [
   {
     title: 'Primer examen',
-    subtitle: 'Caso MediCore y preguntas 2, 3 y 4',
+    subtitle: 'Caso ordeño y potrero — procesos A a H',
     context:
-      'Usar exactamente estas fotografías como enunciado. El caso inicia con Data Center Hospitalario, MediCore, sensores biomédicos, IA clínica, imágenes de muestras y audio de UCI.',
+      'Fotografías oficiales del primer examen. El caso modela una finca lechera automatizada: peso de leche por pezón, siete dispositivos de análisis de leche, IA de tratamiento por anomalías, agujas de cepo, ubicación de pezoneras por infrarrojo, sensor de flujo, suministro de concentrado y control de acceso al potrero con sensores de humedad, temperatura y brillo solar.',
     images: [
       {
-        src: '/exam-images/primer-examen-caso.png',
-        label: 'Imagen #1: enunciado completo del caso MediCore',
+        src: '/exam-images/primer-examen-caso.webp',
+        label: 'Enunciado completo del caso (procesos A a H)',
       },
       {
-        src: '/exam-images/primer-examen-preguntas.png',
-        label: 'Imagen #2: preguntas sobre ciclo de ejecución, sección crítica y Round Robin',
+        src: '/exam-images/primer-examen-preguntas.webp',
+        label: 'Preguntas: planificación de CPU, sección crítica y archivos por dispositivo',
       },
     ],
     prompts: [
-      'Escoger un proceso y describir paso a paso el ciclo de ejecución con estados y variables del BCP.',
-      'Explicar si puede existir sección crítica y por qué.',
-      'Explicar cuándo Round Robin sería la peor elección para este contexto.',
+      'Caracterizar cada proceso por ráfaga, E/S, importancia y tiempo real antes de elegir el algoritmo de CPU.',
+      'Justificar el algoritmo de planificación con el BCP y la tabla de procesos.',
+      'Identificar qué procesos tienen riesgo de sección crítica por escritura compartida.',
+      'Caracterizar el archivo que construye cada dispositivo, no el proceso completo.',
     ],
     defense:
-      'Primero caracterizo A, B, C y D. No digo que todo es tiempo real solo porque el enunciado lo dice. Miro ráfaga, E/S, escritura, importancia, recursos compartidos y efecto del quantum.',
+      'No digo que todo es tiempo real solo porque el caso suena automático. La lectura de sensores consume E/S, no CPU; la IA de tratamiento sí consume CPU y gana importancia por la alerta. Con cientos de vacas compitiendo, casi nada se defiende como tiempo real estricto.',
   },
   {
     title: 'Segundo examen',
-    subtitle: 'Mismo caso MediCore con CPU y memoria',
+    subtitle: 'Caso salud y datos masivos — ADN, bebés y perfiles',
     context:
-      'Usar exactamente estas fotografías como segundo bloque de examen. Incluye preguntas de planificación de CPU, administración de memoria, particiones fijas y reemplazo para el proceso D.',
+      'Fotografías oficiales del segundo examen. El caso combina decodificación de ADN, monitoreo de signos vitales de bebés, perfiles de redes sociales, web services clínicos, integración con Hacienda y análisis de hábitos alimenticios. El foco está en planificación de CPU, administración de memoria y memoria virtual.',
     images: [
       {
-        src: '/exam-images/segundo-examen-caso.png',
-        label: 'Imagen #3: enunciado base del caso MediCore',
+        src: '/exam-images/segundo-examen-caso.webp',
+        label: 'Enunciado base del caso de salud y datos masivos',
       },
       {
-        src: '/exam-images/segundo-examen-preguntas.png',
-        label: 'Imagen #4: preguntas de CPU, memoria y reemplazo',
+        src: '/exam-images/segundo-examen-preguntas.webp',
+        label: 'Preguntas: CPU, administración de memoria y política de reemplazo',
       },
     ],
     prompts: [
-      'Definir el algoritmo de planificación de CPU correcto usando variables del BCP y tabla de procesos.',
-      'Recomendar una política de administración de memoria con al menos diez variables de peso.',
-      'Determinar qué proceso se favorece con particiones fijas de varios tamaños.',
-      'Analizar el proceso D si aplica intercambio y decidir política de reemplazo favorable y perjudicial.',
+      'Definir el algoritmo de planificación de CPU usando variables del BCP y la tabla de procesos.',
+      'Decidir si aplica memoria virtual y por qué no bastan particiones fijas, mapa de bits, listas ligadas ni buddies.',
+      'Recomendar una política de reemplazo defendible según si interesa mantener páginas frecuentes.',
+      'Determinar qué procesos presionan más memoria por volumen y crecimiento.',
     ],
     defense:
-      'La defensa debe mostrar criterios. Para CPU no basta nombrar un algoritmo; se justifica por ráfaga, pila de código, E/S, importancia y cambio de contexto. Para memoria se decide por tamaño, crecimiento, localidad, intercambio y política de reemplazo.',
+      'La memoria virtual se defiende porque hay datos masivos y crecimiento alto (ADN, pandemias, hábitos). La política de reemplazo no se elige por nombre: si me interesa conservar páginas frecuentes, segunda oportunidad o reloj se defienden mejor que FIFO.',
   },
 ];
 
@@ -156,7 +157,7 @@ export const questionBank = [
 export const fileTheory = {
   overview:
     'La teoría de archivos se estudia por finalidad, dato de origen, estructura, tipo, acceso, implementación y riesgo de escritura compartida. Para examen, el error grave es clasificar el proceso completo como si todos los dispositivos produjeran el mismo archivo.',
-  assets: ['/so-assets/nodo-i.png'],
+  assets: ['/so-assets/nodo-i.webp'],
   cards: [
     {
       title: 'Finalidades',
@@ -247,7 +248,7 @@ export const examCases = [
   {
     title: 'Primer examen resuelto: ordeño y potrero',
     source: 'Primer examen resuelto.txt',
-    image: '/so-assets/tabla-procesos.jpg',
+    image: '/so-assets/tabla-procesos.webp',
     summary:
       'Caso con ocho procesos: peso de leche, análisis de leche, IA de tratamiento, agujas de cepo, rayos infrarrojos, flujo de leche, concentrado y acceso a potrero.',
     processes: [
@@ -279,7 +280,7 @@ export const examCases = [
   {
     title: 'Segundo examen resuelto: salud, perfiles y datos masivos',
     source: 'Segundo examen resuelto.txt',
-    image: '/so-assets/memoria-mapa-lista.png',
+    image: '/so-assets/memoria-mapa-lista.webp',
     summary:
       'Caso con ADN, monitoreo de bebés, perfiles de redes sociales, web services clínicos, Hacienda y hábitos alimenticios.',
     processes: [
@@ -311,7 +312,7 @@ export const examCases = [
   {
     title: 'Caso MediCore: sensores, IA, imágenes y audio',
     source: 'Chat y Repaso Final',
-    image: '/so-assets/io-buffer-dma.png',
+    image: '/so-assets/io-buffer-dma.webp',
     summary:
       'Caso médico usado para practicar CPU, memoria, archivos, E/S, bloqueos y sistemas distribuidos con la lógica de Calidad.',
     processes: [
@@ -347,7 +348,7 @@ export const examCases = [
 export const theoryModules = [
   {
     title: 'CPU y planificación',
-    asset: '/so-assets/tabla-procesos.jpg',
+    asset: '/so-assets/tabla-procesos.webp',
     points: [
       'Ráfaga: tramo donde el proceso usa CPU antes de bloquearse, terminar o ser desalojado.',
       'Round Robin: si se acaba el quantum y aún tiene instrucciones, vuelve a listo.',
@@ -358,7 +359,7 @@ export const theoryModules = [
   },
   {
     title: 'Memoria',
-    asset: '/so-assets/memoria-mapa-lista.png',
+    asset: '/so-assets/memoria-mapa-lista.webp',
     points: [
       'El proceso necesita en memoria lo necesario para ejecutar al menos la siguiente instrucción.',
       'Mapa de bits busca bloques contiguos, no bloques sueltos.',
@@ -369,7 +370,7 @@ export const theoryModules = [
   },
   {
     title: 'Entrada/salida',
-    asset: '/so-assets/io-buffer-dma.png',
+    asset: '/so-assets/io-buffer-dma.webp',
     points: [
       'La E/S es el puente entre proceso y mundo externo.',
       'Controladora: parte cercana al hardware; manejador/driver: lógica del SO.',
@@ -380,7 +381,7 @@ export const theoryModules = [
   },
   {
     title: 'Bloqueos',
-    asset: '/so-assets/bloqueos-vector.png',
+    asset: '/so-assets/bloqueos-vector.webp',
     points: [
       'No todo bloqueo es malo; el problema fuerte es interbloqueo.',
       'Coffman: exclusión mutua, retención y espera, no apropiación y espera circular.',
@@ -390,7 +391,7 @@ export const theoryModules = [
   },
   {
     title: 'Distribuidos',
-    asset: '/so-assets/distribuidos-flynn.png',
+    asset: '/so-assets/distribuidos-flynn.webp',
     points: [
       'La pregunta no es si distribuir, sino qué distribuir: código, datos o ambos.',
       'Código: cuando pesa la ejecución. Datos: cuando pesa el volumen. Ambos: cuando pesan los dos.',

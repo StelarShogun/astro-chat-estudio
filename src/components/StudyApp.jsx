@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   examPhotoSets,
   fileTheory,
@@ -425,6 +425,24 @@ function DocumentReader({ section, query }) {
   const [activeDocId, setActiveDocId] = useState(getInitialDocId(section));
   const [documentText, setDocumentText] = useState('');
   const [status, setStatus] = useState('idle');
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const viewerRef = useRef(null);
+
+  useEffect(() => {
+    const onChange = () => setIsFullscreen(document.fullscreenElement === viewerRef.current);
+    document.addEventListener('fullscreenchange', onChange);
+    return () => document.removeEventListener('fullscreenchange', onChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    const node = viewerRef.current;
+    if (!node) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else if (node.requestFullscreen) {
+      node.requestFullscreen();
+    }
+  };
 
   useEffect(() => {
     const nextDoc = getSourceDocs(section)[0];
@@ -497,7 +515,7 @@ function DocumentReader({ section, query }) {
         </div>
       </aside>
 
-      <article className="doc-viewer">
+      <article className={`doc-viewer${isFullscreen ? ' is-fullscreen' : ''}`} ref={viewerRef}>
         {activeDoc && (
           <>
             <header className="doc-toolbar">
@@ -505,9 +523,14 @@ function DocumentReader({ section, query }) {
                 <p className="eyebrow">{activeDoc.format === 'excalidraw' ? 'Mapa' : activeDoc.kind === 'Obsidian' ? 'Nota' : 'Transcripción'}</p>
                 <h2>{activeDoc.title}</h2>
               </div>
-              <a href={activeDoc.path} target="_blank" rel="noreferrer">
-                Abrir original
-              </a>
+              <div className="doc-actions">
+                <button type="button" className="doc-action" onClick={toggleFullscreen}>
+                  {isFullscreen ? 'Salir de pantalla completa' : 'Pantalla completa'}
+                </button>
+                <a className="doc-action" href={activeDoc.path} target="_blank" rel="noreferrer">
+                  Abrir original
+                </a>
+              </div>
             </header>
 
             {outline.length > 0 && (
@@ -601,13 +624,11 @@ function Questions({ query }) {
 }
 
 function Exams() {
-  const [selectedImage, setSelectedImage] = useState(examPhotoSets[0].images[0]);
-
   return (
     <section className="stack">
       <div className="section-heading">
-        <p className="eyebrow">Exámenes fotografiados</p>
-        <h2>Casos oficiales usados como fuente visual exacta.</h2>
+        <p className="eyebrow">Exámenes oficiales</p>
+        <h2>Casos reales usados como fuente visual exacta.</h2>
       </div>
 
       <div className="exam-photo-grid">
@@ -620,10 +641,16 @@ function Exams() {
             </div>
             <div className="exam-image-row">
               {exam.images.map((image) => (
-                <button key={image.src} type="button" onClick={() => setSelectedImage(image)}>
-                  <img src={image.src} alt={image.label} />
+                <a
+                  key={image.src}
+                  href={image.src}
+                  target="_blank"
+                  rel="noreferrer"
+                  title="Abrir imagen en tamaño completo"
+                >
+                  <img src={image.src} alt={image.label} loading="lazy" />
                   <span>{image.label}</span>
-                </button>
+                </a>
               ))}
             </div>
             <div className="exam-bottom">
@@ -640,14 +667,6 @@ function Exams() {
           </article>
         ))}
       </div>
-
-      <article className="image-preview">
-        <header>
-          <p className="eyebrow">Vista ampliada</p>
-          <h3>{selectedImage.label}</h3>
-        </header>
-        <img src={selectedImage.src} alt={selectedImage.label} />
-      </article>
     </section>
   );
 }

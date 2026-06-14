@@ -50,6 +50,27 @@ button {
   cursor: pointer;
 }
 
+:where(a, button, input):focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+::selection {
+  background: rgba(53, 224, 189, 0.3);
+  color: #fff;
+}
+
+img {
+  image-rendering: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
+
 h1,
 h2,
 h3,
@@ -186,8 +207,7 @@ p {
 
 .section-nav button:hover,
 .doc-buttons button:hover,
-.exam-image-row button:hover,
-.doc-toolbar a:hover {
+.exam-image-row a:hover {
   transform: translateY(-1px);
   border-color: var(--line-strong);
 }
@@ -260,8 +280,7 @@ p {
 .split-hero,
 .doc-list,
 .doc-viewer,
-.exam-photo-card,
-.image-preview {
+.exam-photo-card {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: linear-gradient(180deg, rgba(17, 22, 28, 0.98), rgba(9, 12, 16, 0.98));
@@ -317,8 +336,7 @@ p {
 .question-card,
 .theory-card,
 .device-table article,
-.exam-photo-card,
-.image-preview {
+.exam-photo-card {
   padding: clamp(18px, 3vw, 28px);
 }
 
@@ -501,7 +519,13 @@ blockquote {
   margin: 7px 0 0;
 }
 
-.doc-toolbar a {
+.doc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.doc-action {
   min-height: 44px;
   display: inline-flex;
   align-items: center;
@@ -513,9 +537,43 @@ blockquote {
   color: var(--teal);
   font-weight: 850;
   text-decoration: none;
+  white-space: nowrap;
   transition:
     transform 140ms ease,
-    border-color 140ms ease;
+    border-color 140ms ease,
+    background 140ms ease;
+}
+
+.doc-action:hover {
+  transform: translateY(-1px);
+  border-color: var(--teal);
+  background: #0d1918;
+}
+
+.doc-viewer.is-fullscreen {
+  width: 100vw;
+  height: 100vh;
+  border-radius: 0;
+  overflow: auto;
+  padding: clamp(20px, 4vw, 48px);
+  background: var(--bg);
+}
+
+.doc-viewer.is-fullscreen .markdown-body,
+.doc-viewer.is-fullscreen .document-text {
+  max-height: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.doc-viewer.is-fullscreen .markdown-body {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.doc-viewer.is-fullscreen .excalidraw-stage {
+  height: calc(100vh - 160px);
 }
 
 .doc-meta-grid {
@@ -850,7 +908,7 @@ blockquote {
   margin-bottom: 16px;
 }
 
-.exam-image-row button {
+.exam-image-row a {
   display: grid;
   gap: 10px;
   min-height: 220px;
@@ -859,6 +917,8 @@ blockquote {
   padding: 10px;
   background: #050607;
   text-align: left;
+  text-decoration: none;
+  color: inherit;
   transition:
     transform 140ms ease,
     border-color 140ms ease;
@@ -882,24 +942,6 @@ blockquote {
   grid-template-columns: minmax(0, 1fr) minmax(270px, 430px);
   gap: 14px;
   align-items: start;
-}
-
-.image-preview {
-  display: grid;
-  gap: 14px;
-}
-
-.image-preview h3 {
-  font-size: clamp(1.25rem, 2vw, 1.8rem);
-}
-
-.image-preview img {
-  width: 100%;
-  max-height: 86vh;
-  object-fit: contain;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: #000;
 }
 
 @media (max-width: 1100px) {
@@ -955,8 +997,7 @@ blockquote {
   .question-card,
   .theory-card,
   .device-table article,
-  .exam-photo-card,
-  .image-preview {
+  .exam-photo-card {
     padding: 16px;
   }
 

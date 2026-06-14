@@ -13,7 +13,7 @@ estado: activo
 prioridad: alta
 color: "#0f766e"
 sticker: book
-banner: assets/diagrama_cpu_ciclo_calidad.png
+banner: assets/diagrama_cpu_ciclo_calidad.webp
 fuente_principal: transcripciones Calidad
 ---
 
@@ -29,21 +29,21 @@ fuente_principal: transcripciones Calidad
 | Mapa Excalidraw | Vista visual del examen | [[Mapa_Final_SO_Calidad.excalidraw]] |
 | Repaso operativo | Responder casos tipo examen | [[Repaso_Final_SO_Calidad]] |
 | Materia completa | Teoría explicada estilo Calidad | [[Materia_SO_Tanenbaum_Calidad]] |
-| Pizarra matriz | Procesos vs recursos | ![[assets/pizarra_01_tabla_procesos_cpu_mem_archivos_io.jpg]] |
-| Visión general | CPU, E/S, DMA, disco y mmap | ![[assets/pizarra_09_vision_general_so_io_dma_mmap.jpg]] |
-| Ajustes memoria | First/Next/Best/Worst/Quick fit | ![[assets/pizarra_10_algoritmos_asignacion_memoria.jpg]] |
-| Buddies | División y fusión por potencias de 2 | ![[assets/pizarra_11_buddies_memoria.jpg]] |
-| Banquero | Matrices y secuencia segura | ![[assets/pizarra_05_banquero_matrices_recursos.jpg]] |
-| Flynn | Distribuidos y acoplamiento | ![[assets/pizarra_06_distribuidos_flynn_tabla.jpg]] |
+| Pizarra matriz | Procesos vs recursos | ![[assets/pizarra_01_tabla_procesos_cpu_mem_archivos_io.webp]] |
+| Visión general | CPU, E/S, DMA, disco y mmap | ![[assets/pizarra_09_vision_general_so_io_dma_mmap.webp]] |
+| Ajustes memoria | First/Next/Best/Worst/Quick fit | ![[assets/pizarra_10_algoritmos_asignacion_memoria.webp]] |
+| Buddies | División y fusión por potencias de 2 | ![[assets/pizarra_11_buddies_memoria.webp]] |
+| Banquero | Matrices y secuencia segura | ![[assets/pizarra_05_banquero_matrices_recursos.webp]] |
+| Flynn | Distribuidos y acoplamiento | ![[assets/pizarra_06_distribuidos_flynn_tabla.webp]] |
 
 ## Ruta de repaso por evidencia
 
 | Evidencia | Leer junto con | Pregunta que debe poder contestar |
 |---|---|---|
-| ![[assets/pizarra_09_vision_general_so_io_dma_mmap.jpg]] | [[Materia_SO_Tanenbaum_Calidad#5. Capítulo 5 — Entrada y salida]] | ¿Dónde termina lo físico y empieza lo lógico: controlador, driver, buffer, DMA, archivo mapeado? |
-| ![[assets/pizarra_10_algoritmos_asignacion_memoria.jpg]] | [[Repaso_Final_SO_Calidad#3.6 Algoritmos de ajuste]] | Si llega un proceso de 120 KB, ¿qué hueco toma cada algoritmo y qué desperdicio deja? |
-| ![[assets/pizarra_11_buddies_memoria.jpg]] | [[Repaso_Final_SO_Calidad#3.7 Sistema de buddies socios]] | ¿Por qué se redondea a potencia de 2 y cuándo se fusionan socios? |
-| ![[assets/pizarra_05_banquero_matrices_recursos.jpg]] | [[Repaso_Final_SO_Calidad#6.7 Ejemplo de la pizarra del banquero/detección]] | ¿Existe secuencia segura o todos quedan esperando? |
+| ![[assets/pizarra_09_vision_general_so_io_dma_mmap.webp]] | [[Materia_SO_Tanenbaum_Calidad#5. Capítulo 5 — Entrada y salida]] | ¿Dónde termina lo físico y empieza lo lógico: controlador, driver, buffer, DMA, archivo mapeado? |
+| ![[assets/pizarra_10_algoritmos_asignacion_memoria.webp]] | [[Repaso_Final_SO_Calidad#3.6 Algoritmos de ajuste]] | Si llega un proceso de 120 KB, ¿qué hueco toma cada algoritmo y qué desperdicio deja? |
+| ![[assets/pizarra_11_buddies_memoria.webp]] | [[Repaso_Final_SO_Calidad#3.7 Sistema de buddies socios]] | ¿Por qué se redondea a potencia de 2 y cuándo se fusionan socios? |
+| ![[assets/pizarra_05_banquero_matrices_recursos.webp]] | [[Repaso_Final_SO_Calidad#6.7 Ejemplo de la pizarra del banquero/detección]] | ¿Existe secuencia segura o todos quedan esperando? |
 
 ## Matriz de decisión rápida
 

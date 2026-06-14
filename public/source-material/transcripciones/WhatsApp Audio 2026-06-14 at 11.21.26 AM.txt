@@ -1,0 +1,5 @@
+¿Calidad todo bien? No pasa nada, tranquilo, como es chugo esto. Vamos a ver, efectivamente, la prestación es correcta. Asignación al yacente, la verdad es solo para, digamos, cuando son archivos que son solo de lectura, nada más.
+
+Si ya se requieren modificarles algo, ya no nos sirve. ¿Lista el ligado? Sí, efectivamente. Permiten crecimiento, este, para archivos que van a estar siendo modificados.
+
+Y no es particularmente especial en el caso de archivos cuyas partes son, digamos, para aquellos archivos de los cuales usted puede identificar algunas partes que son constantemente las consultadas o las modificadas. Entonces, ¿qué requieren? Una ubicación muy rápida de esas partes del archivo para poderlo manipular.

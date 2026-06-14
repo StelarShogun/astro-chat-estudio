@@ -598,56 +598,6 @@ export const medicoreCase = {
       defense:
         'La variable que manda no es el nombre del algoritmo: es si el proceso reutiliza páginas entre iteraciones. Para D la respuesta es claramente no, así que FIFO.',
     },
-    {
-      area: 'Archivos',
-      title: 'Tercer examen — Archivos',
-      ask: 'Caracterice los archivos del proceso A (sensores) y del proceso C (microscopios) de forma independiente.',
-      answer: [
-        'Primero el dispositivo, luego el dato en crudo, luego el archivo. No se generaliza el proceso completo como un solo archivo.',
-        'Proceso A: cada sensor (FC, SatO₂, presión, temperatura) genera su propio archivo de registros (timestamp + ID paciente + valor). Tipo regular, acceso directo (al llegar una alarma voy directo al paciente, no recorro 449), implementación iNodo porque crece cada 2 s y necesito las porciones recientes. Asignación adyacente descartada por crecimiento.',
-        'Proceso C: la imagen del microscopio es binario estructurado (matriz de píxeles). Tipo regular binario, acceso directo por regiones (el proceso analiza zonas, no lee la imagen entera), implementación iNodo porque las imágenes son grandes y se accede a regiones frecuentes.',
-      ],
-      defense:
-        'No digo "el proceso A genera un archivo". A tiene cuatro dispositivos y cada uno construye su propio archivo; lo que cambia es el dato en crudo: bpm, porcentaje, mmHg, grados.',
-    },
-    {
-      area: 'Entrada/salida',
-      title: 'Tercer examen — Espera por entrada y salida',
-      ask: 'Explique el recorrido del dato y justifique buffer/caché para los procesos A y C.',
-      answer: [
-        'Recorrido: la controladora (parte física) mide y digitaliza; el manejador (lógica del SO) ordena y valida las peticiones; el dato cae al buffer del dispositivo, que acumula mientras el proceso consume; al solicitarlo, se traslada al bloque de memoria del proceso verificando integridad (CRC). Recién ahí el proceso pasa de espera por E/S a listo.',
-        'A: buffer sí (el sensor produce 450 lecturas cada 2 s y el proceso no las consume al instante); caché no (la saturación de hace 4 s no sirve para la actual: el dato siempre es nuevo).',
-        'C: buffer sí (las imágenes llegan por lotes y se analizan una a una); caché no (cada imagen de cultivo es distinta, no se reutiliza).',
-        'Sin buffer, A no tendría dónde depositar las lecturas mientras procesa: perdería datos. En un sistema crítico, perder una lectura puede ser no detectar una anomalía. El buffer es condición de integridad, no un lujo.',
-      ],
-      defense:
-        'Buffer responde a transferencia y ritmos; caché responde a reutilización. No asigno caché por defecto: primero pregunto si el dato se repite.',
-    },
-    {
-      area: 'Bloqueos',
-      title: 'Tercer examen — Bloqueos',
-      ask: 'B tiene R1 (signos del paciente #112) y pide R2 (modelo). D tiene R2 y pide R1. Ninguno libera. ¿Hay interbloqueo?',
-      answer: [
-        'Coffman una a una: exclusión mutua (R1 y R2 son de uso exclusivo, presente); posesión y espera (B tiene R1 y espera R2, D tiene R2 y espera R1, presente); no apropiación (no puedo quitar el recurso a mitad de análisis sin corromper, presente); espera circular (B → R2 → D → R1 → B, presente). Las cuatro se cumplen: hay interbloqueo.',
-        'Estrategia: avestruz descartada (es un sistema hospitalario, un proceso detenido puede no disparar una alarma). Prevención difícil (rompería exclusión mutua o no apropiación). La opción defendible es detección y recuperación: detectar la espera circular, terminar el proceso con menor avance, liberar sus recursos y reiniciarlo.',
-        'Round Robin agrava: al agotarse el quantum, B suelta el CPU pero NO suelta R1. El recurso queda retenido aunque el proceso esté en listos, y D que pide R1 se queda esperando. Con FCFS, B avanzaría hasta E/S y podría liberar R1 de forma natural.',
-      ],
-      defense:
-        'No basta decir "hay" o "no hay": muestro el recorrido de las cuatro condiciones y explico por qué Round Robin hace el bloqueo más probable.',
-    },
-    {
-      area: 'Distribuidos',
-      title: 'Tercer examen — Sistemas distribuidos',
-      ask: 'Expansión a 3 hospitales y 10 clínicas, y 50 000 imágenes diarias del proceso C. ¿Qué arquitectura y qué se distribuye?',
-      answer: [
-        'Cluster (fuertemente acoplado): rapidísimo por memoria compartida, pero exige hardware idéntico (inviable para tantos nodos), es caro y no tolera fallos (si cae un componente, cae todo). Defendible solo para el componente de alarmas de B, donde la velocidad es crítica.',
-        'Débilmente acoplado (por red): permite hardware heterogéneo, solo necesita master (lanza rutinas) y slave (atiende peticiones), y es tolerante a fallos (si un nodo cae, su carga se reasigna). Mayor latencia, aceptable para casi todo el caso. Es la opción recomendada para la expansión.',
-        'Para las 50 000 imágenes conviene distribuir la data, no el código: el análisis de cada imagen es independiente. El master reparte el lote, los slaves procesan su porción con la misma rutina y devuelven resultados; el master consolida.',
-        'Taxonomía de Flynn: MIMD. Múltiples procesadores ejecutan instrucciones distintas sobre datos distintos (A lee sensores, C analiza imágenes, B infiere IA). No es SIMD (no todos ejecutan la misma instrucción) ni SISD (hay múltiples procesadores).',
-      ],
-      defense:
-        'La pregunta no es si distribuir, sino qué: con 50 000 imágenes independientes, distribuyo la data. Si la rutina de IA fuera muy pesada por sí sola, podría además distribuir el código.',
-    },
   ],
 };
 

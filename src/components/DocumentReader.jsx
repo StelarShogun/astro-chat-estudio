@@ -581,7 +581,10 @@ export default function DocumentReader({ section }) {
     <section className="source-workbench">
       <aside className="doc-list" aria-label="Documentos fuente">
         <div className="mini-heading">
-          <span>{section === 'transcripciones' ? 'Transcripciones' : 'Notas'}</span>
+          <span>
+            <Icon name={section === 'transcripciones' ? 'transcripcion' : 'notas'} size={14} />{' '}
+            {section === 'transcripciones' ? 'Transcripciones' : 'Notas'}
+          </span>
           <strong>{docs.length}</strong>
         </div>
         <div className="doc-buttons">

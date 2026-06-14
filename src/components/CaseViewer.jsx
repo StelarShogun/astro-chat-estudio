@@ -249,11 +249,11 @@ function CaseContent({ activeCase }) {
 
       <div className="case-text-grid">
         <article className="wide-card">
-          <p className="eyebrow">Contexto</p>
+          <p className="eyebrow"><Icon name="notas" size={15} /> Contexto</p>
           <p className="lead">{activeCase.context}</p>
         </article>
         <article className="wide-card case-problem">
-          <p className="eyebrow">Problema</p>
+          <p className="eyebrow"><Icon name="alerta" size={15} /> Problema</p>
           <p>{activeCase.problem}</p>
         </article>
       </div>
@@ -261,7 +261,7 @@ function CaseContent({ activeCase }) {
       {activeCase.processes?.length > 0 && (
         <>
           <div className="mini-heading">
-            <span>Procesos del caso</span>
+            <span><Icon name="examen" size={14} /> Procesos del caso</span>
             <strong>{activeCase.processes.length} procesos (A–{String.fromCharCode(64 + activeCase.processes.length)})</strong>
           </div>
           <div className="rule-grid">
@@ -290,7 +290,7 @@ function CaseContent({ activeCase }) {
       )}
 
       <div className="mini-heading">
-        <span>Tabla de análisis de procesos</span>
+        <span><Icon name="notas" size={14} /> Tabla de análisis de procesos</span>
         <strong>Editable · se guarda sola</strong>
       </div>
       {activeCase.tablesIntro && <p className="case-tables-intro">{activeCase.tablesIntro}</p>}
@@ -312,7 +312,7 @@ function CaseContent({ activeCase }) {
       )}
 
       <div className="mini-heading">
-        <span>Preguntas abiertas</span>
+        <span><Icon name="preguntas" size={14} /> Preguntas abiertas</span>
         <strong>{total} con feedback automático</strong>
       </div>
       <div className="case-questions">
@@ -346,7 +346,7 @@ export default function CaseViewer() {
   return (
     <section className="stack">
       <div className="section-heading">
-        <p className="eyebrow">{active.module.name}</p>
+        <p className="eyebrow"><Icon name="examen" size={15} /> {active.module.name}</p>
         <h2>{active.caseItem.title}</h2>
       </div>
 

@@ -1,11 +1,12 @@
 ---
 import { fileTheory, theoryModules } from '../data/course-content';
+import Icon from './Icon.astro';
 ---
 
 <section class="stack">
   <div class="split-hero">
     <div>
-      <p class="eyebrow">Guía rápida sobre la teoría completa</p>
+      <p class="eyebrow"><Icon name="teoria" size={15} /> Guía rápida sobre la teoría completa</p>
       <h2>No se clasifica el proceso; se clasifica cada dato, archivo o recurso.</h2>
       <p>{fileTheory.overview}</p>
     </div>
@@ -26,7 +27,7 @@ import { fileTheory, theoryModules } from '../data/course-content';
   </div>
 
   <div class="section-heading">
-    <p class="eyebrow">Por dispositivo</p>
+    <p class="eyebrow"><Icon name="capitulo" size={15} /> Por dispositivo</p>
     <h2>Cómo defender archivos en examen</h2>
   </div>
   <div class="device-table" role="table" aria-label="Caracterización de archivos por dispositivo">

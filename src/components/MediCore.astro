@@ -1,11 +1,12 @@
 ---
 import { medicoreCase } from '../data/course-content';
+import Icon from './Icon.astro';
 const { intro, processes, columns, table, tableNote, questions } = medicoreCase;
 ---
 
 <section class="stack">
   <div class="section-heading">
-    <p class="eyebrow">Caso resuelto · práctica tercer examen</p>
+    <p class="eyebrow"><Icon name="medicore" size={15} /> Caso resuelto · segundo examen</p>
     <h2>Caso MediCore, caracterizado y defendido como Calidad.</h2>
   </div>
 
@@ -22,7 +23,7 @@ const { intro, processes, columns, table, tableNote, questions } = medicoreCase;
   </article>
 
   <div class="mini-heading">
-    <span>Pizarra</span>
+    <span><Icon name="notas" size={14} /> Pizarra</span>
     <strong>Tabla de caracterización</strong>
   </div>
   <div class="markdown-table-wrap">
@@ -50,7 +51,7 @@ const { intro, processes, columns, table, tableNote, questions } = medicoreCase;
   <blockquote>{tableNote}</blockquote>
 
   <div class="mini-heading">
-    <span>Preguntas trabajadas</span>
+    <span><Icon name="preguntas" size={14} /> Preguntas del examen</span>
     <strong>{questions.length} con defensa de examen</strong>
   </div>
 

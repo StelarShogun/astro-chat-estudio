@@ -147,7 +147,7 @@ export default function CaseSolver() {
   return (
     <section className="stack">
       <div className="section-heading">
-        <p className="eyebrow">Resolver caso</p>
+        <p className="eyebrow"><Icon name="resolver" size={15} /> Resolver caso</p>
         <h2>Caracterizo, decido y defiendo. Se guarda solo.</h2>
       </div>
 
@@ -174,7 +174,7 @@ export default function CaseSolver() {
       </div>
 
       <div className="mini-heading">
-        <span>Caracterización</span>
+        <span><Icon name="notas" size={14} /> Caracterización</span>
         <strong>{state.processes.length} procesos</strong>
       </div>
 
@@ -222,7 +222,7 @@ export default function CaseSolver() {
       </button>
 
       <div className="mini-heading">
-        <span>Decisión</span>
+        <span><Icon name="recomendacion" size={14} /> Decisión</span>
         <strong>Defensa por bloque</strong>
       </div>
 

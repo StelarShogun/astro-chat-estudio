@@ -589,13 +589,24 @@ blockquote {
   margin: 0 0 12px;
 }
 
-.doc-outline span {
+.doc-outline button {
   border: 1px solid rgba(85, 199, 255, 0.28);
   border-radius: 999px;
-  padding: 6px 10px;
+  padding: 6px 11px;
   background: rgba(85, 199, 255, 0.08);
   color: #beeaff;
   font-size: 0.82rem;
+  font-weight: 700;
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    background 140ms ease;
+}
+
+.doc-outline button:hover {
+  transform: translateY(-1px);
+  border-color: var(--cyan);
+  background: rgba(85, 199, 255, 0.16);
 }
 
 .loading-note,
@@ -1285,5 +1296,96 @@ blockquote {
   .solver-toolbar,
   .pdf-card-head {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ---- Impresión: solo la sección activa, sin cromo ---- */
+@media print {
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    overflow: visible !important;
+  }
+
+  .sidebar,
+  .hero-panel,
+  .doc-list,
+  .doc-actions,
+  .doc-outline,
+  .solver-toolbar .solver-actions,
+  .solver-add,
+  .solver-remove {
+    display: none !important;
+  }
+
+  .app-shell {
+    display: block !important;
+  }
+
+  .content {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+
+  .section-panel {
+    display: none !important;
+  }
+
+  .section-panel.is-active {
+    display: block !important;
+  }
+
+  .markdown-body,
+  .document-text,
+  .doc-viewer {
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    border: 0 !important;
+    background: #fff !important;
+    color: #000 !important;
+    box-shadow: none !important;
+  }
+
+  .wide-card,
+  .template-card,
+  .question-card,
+  .theory-card,
+  .exam-photo-card,
+  .tanenbaum-card,
+  .solver-card,
+  .solver-decision,
+  .pdf-card,
+  .source-panel,
+  .device-table article,
+  .module-card {
+    border: 1px solid #ccc !important;
+    background: #fff !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+
+  .pdf-frame {
+    display: none !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  li,
+  dd,
+  .question-card p,
+  .tanenbaum-card li {
+    color: #000 !important;
+  }
+
+  blockquote {
+    background: #f4f4f4 !important;
+    color: #000 !important;
+    border-color: #888 !important;
   }
 }

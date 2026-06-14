@@ -448,9 +448,34 @@ export default function DocumentReader({ section }) {
     return documentText
       .split(/\r?\n/)
       .filter((line) => /^#{1,4}\s+/.test(line))
-      .slice(0, 18)
-      .map((line) => line.replace(/^#{1,4}\s+/, '').trim());
+      .slice(0, 24)
+      .map((line) =>
+        line
+          .replace(/^#{1,4}\s+/, '')
+          .replace(/[`*]/g, '')
+          .trim(),
+      );
   }, [documentText]);
+
+  const scrollToHeading = (text) => {
+    const root = viewerRef.current;
+    if (!root) return;
+    const headings = root.querySelectorAll(
+      '.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4',
+    );
+    for (const heading of headings) {
+      if (heading.textContent.trim() === text) {
+        heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+    }
+  };
+
+  const scrollToTop = () => {
+    viewerRef.current
+      ?.querySelector('.markdown-body, .document-text')
+      ?.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const kindLabel = (doc) =>
     doc.format === 'excalidraw' ? 'Mapa' : doc.kind === 'Obsidian' ? 'Nota' : 'Transcripción';
@@ -486,6 +511,9 @@ export default function DocumentReader({ section }) {
                 <h2>{activeDoc.title}</h2>
               </div>
               <div className="doc-actions">
+                <button type="button" className="doc-action" onClick={scrollToTop} title="Ir al inicio del documento">
+                  ↑ Inicio
+                </button>
                 <button type="button" className="doc-action" onClick={toggleFullscreen}>
                   {isFullscreen ? 'Salir de pantalla completa' : 'Pantalla completa'}
                 </button>
@@ -496,9 +524,15 @@ export default function DocumentReader({ section }) {
             </header>
 
             {outline.length > 0 && (
-              <nav className="doc-outline" aria-label="Encabezados detectados">
+              <nav className="doc-outline" aria-label="Índice del documento">
                 {outline.map((heading, headingIndex) => (
-                  <span key={`${heading}-${headingIndex}`}>{heading}</span>
+                  <button
+                    type="button"
+                    key={`${heading}-${headingIndex}`}
+                    onClick={() => scrollToHeading(heading)}
+                  >
+                    {heading}
+                  </button>
                 ))}
               </nav>
             )}

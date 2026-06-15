@@ -99,24 +99,26 @@ export default function EditableTable({ table, columns, rows, onColumnsChange, o
                   <th key={column.key}>{column.label}</th>
                 ) : (
                   <th key={column.key} className="col-head">
-                    <input
-                      className="col-head-input"
-                      value={column.label}
-                      onChange={(event) => renameColumn(column.key, event.target.value)}
-                      aria-label={`Nombre de la columna ${column.label}`}
-                      title="Editar el nombre de la columna"
-                    />
-                    {table.allowAddColumns && (
-                      <button
-                        type="button"
-                        className="col-remove"
-                        onClick={() => removeColumn(column.key)}
-                        aria-label={`Eliminar columna ${column.label}`}
-                        title="Eliminar columna"
-                      >
-                        <Icon name="quitar" size={13} />
-                      </button>
-                    )}
+                    <div className="col-head-inner">
+                      <input
+                        className="col-head-input"
+                        value={column.label}
+                        onChange={(event) => renameColumn(column.key, event.target.value)}
+                        aria-label={`Nombre de la columna ${column.label}`}
+                        title="Editar el nombre de la columna"
+                      />
+                      {table.allowAddColumns && (
+                        <button
+                          type="button"
+                          className="col-remove"
+                          onClick={() => removeColumn(column.key)}
+                          aria-label={`Eliminar columna ${column.label}`}
+                          title="Eliminar columna"
+                        >
+                          <Icon name="quitar" size={13} />
+                        </button>
+                      )}
+                    </div>
                   </th>
                 ),
               )}

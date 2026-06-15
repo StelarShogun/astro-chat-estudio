@@ -93,6 +93,31 @@ p {
   transition: grid-template-columns 180ms ease;
 }
 
+/* Botón hamburguesa y fondo del cajón: solo se usan en móvil. */
+.drawer-toggle {
+  display: none;
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 45;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: rgba(11, 14, 18, 0.92);
+  color: var(--teal);
+  backdrop-filter: blur(6px);
+}
+
+.drawer-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 38;
+  background: rgba(0, 0, 0, 0.55);
+}
+
 .app-shell.sidebar-collapsed {
   grid-template-columns: 82px minmax(0, 1fr);
 }
@@ -1102,25 +1127,84 @@ button.wiki-link:hover {
     grid-template-columns: 1fr;
   }
 
+  .drawer-toggle {
+    display: grid;
+  }
+
+  /* El dashboard se vuelve un cajón que entra desde la izquierda. */
   .sidebar {
-    position: sticky;
-    height: auto;
-    max-height: 92vh;
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    height: 100dvh;
+    width: min(86vw, 320px);
+    max-height: none;
+    overflow: auto;
+    z-index: 40;
+    border-right: 1px solid var(--line);
+    border-bottom: 0;
+    box-shadow: var(--shadow);
+    transform: translateX(-100%);
+    transition: transform 220ms ease;
   }
 
+  .drawer-open .sidebar {
+    transform: translateX(0);
+  }
+
+  .drawer-open .drawer-backdrop {
+    display: block;
+  }
+
+  /* En el cajón siempre se muestra el menú completo, aunque venga "colapsado". */
   .sidebar-collapsed .sidebar {
-    max-height: 74px;
-    overflow: hidden;
+    width: min(86vw, 320px);
+    max-height: none;
+    overflow: auto;
   }
 
-  .sidebar-collapsed .section-nav {
+  .sidebar-collapsed .sidebar,
+  .sidebar {
+    padding: 18px;
+  }
+
+  .sidebar-collapsed .sidebar-top {
+    grid-template-columns: 44px minmax(0, 1fr);
+  }
+
+  .sidebar-collapsed .brand-block,
+  .sidebar-collapsed .section-nav .nav-text,
+  .sidebar-collapsed .section-nav .nav-key {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: revert;
+  }
+
+  .sidebar-collapsed .section-nav,
+  .section-nav {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar-collapsed .section-nav button {
+    grid-template-columns: 36px minmax(0, 1fr) auto;
+    place-items: stretch;
+    align-items: center;
+    padding: 8px 11px;
+  }
+
+  /* El botón de contraer no aplica en móvil: el cajón se cierra con la X/fondo. */
+  .collapse-button {
     display: none;
   }
 
-  .section-nav {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  /* Deja aire para el botón hamburguesa fijo. */
+  .content {
+    padding-top: 64px;
   }
 
   .hero-panel,
@@ -1787,9 +1871,10 @@ button.wiki-link:hover {
 /* ---- Encabezados de columna editables ---- */
 .editable-table th.col-head {
   padding: 6px;
+  vertical-align: middle;
 }
 
-.col-head {
+.col-head-inner {
   display: flex;
   align-items: center;
   gap: 4px;

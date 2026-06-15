@@ -30,6 +30,17 @@ const sections = [
 
 <Layout>
   <main class="app-shell sidebar-open" id="app-shell">
+    <button
+      class="drawer-toggle"
+      type="button"
+      id="drawer-toggle"
+      aria-label="Abrir menú"
+      aria-controls="app-shell"
+      aria-expanded="false"
+    >
+      <Icon name="menu" size={22} />
+    </button>
+    <div class="drawer-backdrop" id="drawer-backdrop" aria-hidden="true"></div>
     <aside class="sidebar" aria-label="Dashboard de estudio">
       <div class="sidebar-top">
         <button
@@ -148,6 +159,9 @@ const sections = [
   const navButtons = Array.from(document.querySelectorAll('.section-nav button[data-target]'));
   const panels = Array.from(document.querySelectorAll('.section-panel'));
   const collapseButton = document.getElementById('collapse-button');
+  const drawerToggle = document.getElementById('drawer-toggle');
+  const drawerBackdrop = document.getElementById('drawer-backdrop');
+  const mobileQuery = window.matchMedia('(max-width: 1100px)');
 
   const activate = (target) => {
     let matched = false;
@@ -167,8 +181,23 @@ const sections = [
     } catch {}
   };
 
+  // Cajón lateral (drawer) en móvil: se abre desde el costado.
+  const setDrawer = (open) => {
+    shell.classList.toggle('drawer-open', open);
+    drawerToggle?.setAttribute('aria-expanded', String(open));
+    drawerToggle?.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    document.body.style.overflow = open && mobileQuery.matches ? 'hidden' : '';
+  };
+
+  drawerToggle?.addEventListener('click', () => setDrawer(!shell.classList.contains('drawer-open')));
+  drawerBackdrop?.addEventListener('click', () => setDrawer(false));
+  mobileQuery.addEventListener('change', () => setDrawer(false));
+
   navButtons.forEach((button) => {
-    button.addEventListener('click', () => activate(button.getAttribute('data-target')));
+    button.addEventListener('click', () => {
+      activate(button.getAttribute('data-target'));
+      if (mobileQuery.matches) setDrawer(false);
+    });
   });
 
   // Tarjetas de acceso rápido en la pantalla de Inicio.
@@ -182,6 +211,10 @@ const sections = [
   // Atajos de teclado: 1–9 van a las primeras nueve secciones y 0 a la décima.
   // Se ignora cuando se escribe en un campo.
   document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && shell.classList.contains('drawer-open')) {
+      setDrawer(false);
+      return;
+    }
     if (event.metaKey || event.ctrlKey || event.altKey) return;
     const tag = document.activeElement?.tagName;
     if (tag === 'INPUT' || tag === 'TEXTAREA') return;

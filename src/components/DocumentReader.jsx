@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { sourceDocuments } from '../data/source-manifest';
 import Icon from './Icon.jsx';
 
@@ -155,38 +155,144 @@ function readableColor(color) {
   return ['#000000', '#1e1e1e', '#2b2b2b'].includes(color.toLowerCase()) ? '#edf2f8' : color;
 }
 
+const MIN_ZOOM = 0.02;
+const MAX_ZOOM = 6;
+const clampZoom = (z) => Math.min(Math.max(z, MIN_ZOOM), MAX_ZOOM);
+
 function ExcalidrawView({ data }) {
-  const elements = (data?.elements ?? []).filter((element) => !element.isDeleted);
-  const drawable = elements.filter((element) =>
-    ['frame', 'rectangle', 'text', 'arrow', 'line'].includes(element.type),
-  );
+  const { drawable, base } = useMemo(() => {
+    const elements = (data?.elements ?? []).filter((element) => !element.isDeleted);
+    const dr = elements.filter((element) =>
+      ['frame', 'rectangle', 'text', 'arrow', 'line'].includes(element.type),
+    );
+    if (dr.length === 0) return { drawable: [], base: null };
+    const bounds = dr.reduce(
+      (box, element) => {
+        const points = element.points ?? [[0, 0]];
+        const pointXs = points.map((point) => element.x + point[0]);
+        const pointYs = points.map((point) => element.y + point[1]);
+        const xs = [element.x, element.x + (element.width || 0), ...pointXs];
+        const ys = [element.y, element.y + (element.height || 0), ...pointYs];
+        return {
+          minX: Math.min(box.minX, ...xs),
+          minY: Math.min(box.minY, ...ys),
+          maxX: Math.max(box.maxX, ...xs),
+          maxY: Math.max(box.maxY, ...ys),
+        };
+      },
+      { minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity },
+    );
+    const padding = 160;
+    return {
+      drawable: dr,
+      base: {
+        x: bounds.minX - padding,
+        y: bounds.minY - padding,
+        w: bounds.maxX - bounds.minX + padding * 2,
+        h: bounds.maxY - bounds.minY + padding * 2,
+      },
+    };
+  }, [data]);
 
-  if (drawable.length === 0) return null;
+  const stageRef = useRef(null);
+  const dragRef = useRef(null);
+  const [t, setT] = useState({ x: 0, y: 0, z: 1 });
 
-  const bounds = drawable.reduce(
-    (box, element) => {
-      const points = element.points ?? [[0, 0]];
-      const pointXs = points.map((point) => element.x + point[0]);
-      const pointYs = points.map((point) => element.y + point[1]);
-      const xs = [element.x, element.x + (element.width || 0), ...pointXs];
-      const ys = [element.y, element.y + (element.height || 0), ...pointYs];
-      return {
-        minX: Math.min(box.minX, ...xs),
-        minY: Math.min(box.minY, ...ys),
-        maxX: Math.max(box.maxX, ...xs),
-        maxY: Math.max(box.maxY, ...ys),
-      };
-    },
-    { minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity },
-  );
-  const padding = 160;
-  const viewBox = `${bounds.minX - padding} ${bounds.minY - padding} ${bounds.maxX - bounds.minX + padding * 2} ${
-    bounds.maxY - bounds.minY + padding * 2
-  }`;
+  // Encaja el mapa completo dentro del escenario (zoom "ajustar").
+  const fit = useCallback(() => {
+    const stage = stageRef.current;
+    if (!stage || !base) return;
+    const r = stage.getBoundingClientRect();
+    const z = Math.min(r.width / base.w, r.height / base.h) * 0.96;
+    setT({ z, x: (r.width - base.w * z) / 2, y: (r.height - base.h * z) / 2 });
+  }, [base]);
+
+  useEffect(() => {
+    fit();
+  }, [fit]);
+
+  // Re-encaja al cambiar de tamaño (incluye entrar/salir de pantalla completa).
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage || typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(() => fit());
+    ro.observe(stage);
+    return () => ro.disconnect();
+  }, [fit]);
+
+  // Zoom con la rueda hacia el cursor (listener no pasivo para poder prevenir el scroll).
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    const onWheel = (event) => {
+      event.preventDefault();
+      const r = stage.getBoundingClientRect();
+      const cx = event.clientX - r.left;
+      const cy = event.clientY - r.top;
+      const factor = event.deltaY < 0 ? 1.12 : 1 / 1.12;
+      setT((prev) => {
+        const nz = clampZoom(prev.z * factor);
+        const k = nz / prev.z;
+        return { z: nz, x: cx - (cx - prev.x) * k, y: cy - (cy - prev.y) * k };
+      });
+    };
+    stage.addEventListener('wheel', onWheel, { passive: false });
+    return () => stage.removeEventListener('wheel', onWheel);
+  }, []);
+
+  const zoomByCenter = (factor) => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    const r = stage.getBoundingClientRect();
+    const cx = r.width / 2;
+    const cy = r.height / 2;
+    setT((prev) => {
+      const nz = clampZoom(prev.z * factor);
+      const k = nz / prev.z;
+      return { z: nz, x: cx - (cx - prev.x) * k, y: cy - (cy - prev.y) * k };
+    });
+  };
+
+  const onPointerDown = (event) => {
+    // No captures el puntero si el clic empieza en los controles de zoom:
+    // si no, el botón nunca recibe su evento click.
+    if (event.target.closest?.('.excalidraw-controls')) return;
+    dragRef.current = { x: event.clientX, y: event.clientY };
+    stageRef.current?.setPointerCapture?.(event.pointerId);
+  };
+  const onPointerMove = (event) => {
+    if (!dragRef.current) return;
+    const dx = event.clientX - dragRef.current.x;
+    const dy = event.clientY - dragRef.current.y;
+    dragRef.current = { x: event.clientX, y: event.clientY };
+    setT((prev) => ({ ...prev, x: prev.x + dx, y: prev.y + dy }));
+  };
+  const onPointerUp = () => {
+    dragRef.current = null;
+  };
+
+  if (!base) return null;
 
   return (
-    <div className="excalidraw-stage">
-      <svg viewBox={viewBox} role="img" aria-label="Mapa de estudio">
+    <div
+      className="excalidraw-stage"
+      ref={stageRef}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      onPointerLeave={onPointerUp}
+    >
+      <div
+        className="excalidraw-canvas"
+        style={{ transform: `translate(${t.x}px, ${t.y}px) scale(${t.z})`, width: base.w, height: base.h }}
+      >
+        <svg
+          viewBox={`${base.x} ${base.y} ${base.w} ${base.h}`}
+          width={base.w}
+          height={base.h}
+          role="img"
+          aria-label="Mapa de estudio"
+        >
         <defs>
           <marker id="arrow-head" markerWidth="18" markerHeight="18" refX="14" refY="6" orient="auto">
             <path d="M2,2 L14,6 L2,10 Z" fill="#dbe7f3" />
@@ -265,7 +371,20 @@ function ExcalidrawView({ data }) {
             </g>
           );
         })}
-      </svg>
+        </svg>
+      </div>
+      <div className="excalidraw-controls">
+        <button type="button" onClick={() => zoomByCenter(1.2)} title="Acercar" aria-label="Acercar">
+          <Icon name="zoomMas" size={18} />
+        </button>
+        <button type="button" onClick={() => zoomByCenter(1 / 1.2)} title="Alejar" aria-label="Alejar">
+          <Icon name="zoomMenos" size={18} />
+        </button>
+        <button type="button" onClick={fit} title="Ajustar a la pantalla" aria-label="Ajustar a la pantalla">
+          <Icon name="ajustar" size={18} />
+        </button>
+      </div>
+      <p className="excalidraw-hint">Arrastra para mover · rueda o botones para hacer zoom</p>
     </div>
   );
 }
@@ -548,9 +667,12 @@ export default function DocumentReader({ section }) {
   };
 
   const scrollToTop = () => {
+    // En vista normal hace scroll el cuerpo del documento; en pantalla completa
+    // el contenedor que hace scroll es el propio visor.
     viewerRef.current
       ?.querySelector('.markdown-body, .document-text')
       ?.scrollTo({ top: 0, behavior: 'smooth' });
+    viewerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Enlaces internos de Obsidian: [[#Encabezado]] salta dentro de la nota;
@@ -660,6 +782,18 @@ export default function DocumentReader({ section }) {
               <pre className="document-text" aria-label={`Texto completo de ${activeDoc.title}`}>
                 {documentText}
               </pre>
+            )}
+
+            {isFullscreen && (
+              <button
+                type="button"
+                className="doc-fab-top"
+                onClick={scrollToTop}
+                title="Ir arriba del todo"
+                aria-label="Ir arriba del todo"
+              >
+                <Icon name="arriba" size={20} />
+              </button>
             )}
           </>
         )}

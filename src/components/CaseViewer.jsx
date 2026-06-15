@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { caseModules } from '../data/cases.js';
-import { evaluateAnswer } from '../lib/caseEvaluator.js';
+import { acceptedSymbols, analyzeProcessTable, evaluateAnswer } from '../lib/caseEvaluator.js';
 import EditableTable from './EditableTable.jsx';
 import QuestionAnswer from './QuestionAnswer.jsx';
 import Icon from './Icon.jsx';
@@ -125,10 +125,53 @@ function ConsistencyPanel({ issues, title }) {
   );
 }
 
+function TableFeedback({ feedback }) {
+  return (
+    <div className="table-feedback" role="status">
+      <div className="table-feedback-head">
+        <span className="table-feedback-level">
+          <Icon name="nivel" size={15} /> {feedback.level}
+        </span>
+        <span className="table-feedback-metrics">
+          {feedback.completion}% completa
+          {feedback.graded > 0 && ` · ${feedback.correctCount}/${feedback.graded} caracterizaciones clave`}
+        </span>
+      </div>
+
+      {feedback.strengths.length > 0 && (
+        <div className="table-feedback-block">
+          <h5><Icon name="correcto" size={14} /> Bien hecho</h5>
+          <ul>
+            {feedback.strengths.map((item, index) => (
+              <li key={index}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {feedback.issues.length > 0 && (
+        <div className="table-feedback-block">
+          <h5><Icon name="mejorar" size={14} /> Por revisar</h5>
+          <ul>
+            {feedback.issues.map((item, index) => (
+              <li key={index}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <p className="table-feedback-reco">
+        <Icon name="recomendacion" size={14} /> {feedback.recommendation}
+      </p>
+    </div>
+  );
+}
+
 function CaseContent({ activeCase }) {
   const [tables, setTables] = useState(() => initTables(activeCase));
   const [answers, setAnswers] = useState({});
   const [feedbacks, setFeedbacks] = useState({});
+  const [tableFeedback, setTableFeedback] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -137,6 +180,7 @@ function CaseContent({ activeCase }) {
     setTables(loadTables(activeCase));
     setAnswers(loadAnswers(activeCase));
     setFeedbacks({});
+    setTableFeedback(null);
     setLoaded(true);
   }, [activeCase]);
 
@@ -186,6 +230,15 @@ function CaseContent({ activeCase }) {
     setTables(initTables(activeCase));
     setAnswers({});
     setFeedbacks({});
+    setTableFeedback(null);
+  };
+
+  const analyzeTable = () => {
+    const tableDef = activeCase.tables.find((table) => activeCase.analysis && table.id === 'caracterizacion')
+      || activeCase.tables[0];
+    if (!tableDef) return;
+    const state = tables[tableDef.id] || { columns: tableDef.columns, rows: [] };
+    setTableFeedback(analyzeProcessTable(state, activeCase.analysis));
   };
 
   const copyExport = async () => {
@@ -294,6 +347,20 @@ function CaseContent({ activeCase }) {
         <strong>Editable · se guarda sola</strong>
       </div>
       {activeCase.tablesIntro && <p className="case-tables-intro">{activeCase.tablesIntro}</p>}
+
+      <details className="symbols-legend">
+        <summary>
+          <Icon name="guia" size={14} /> Símbolos aceptados en la tabla
+        </summary>
+        <ul>
+          {acceptedSymbols.map((symbol) => (
+            <li key={symbol.label}>
+              <strong>{symbol.label}:</strong> {symbol.value}
+            </li>
+          ))}
+        </ul>
+      </details>
+
       <div className="case-tables">
         {activeCase.tables.map((table) => (
           <EditableTable
@@ -306,6 +373,15 @@ function CaseContent({ activeCase }) {
           />
         ))}
       </div>
+
+      {activeCase.analysis && (
+        <div className="table-analysis">
+          <button type="button" className="doc-action table-analyze-btn" onClick={analyzeTable} title="La IA revisa tu caracterización">
+            <Icon name="evaluar" /> Analizar mi tabla con IA
+          </button>
+          {tableFeedback && <TableFeedback feedback={tableFeedback} />}
+        </div>
+      )}
 
       {typeof activeCase.consistency === 'function' && (
         <ConsistencyPanel issues={issues} title={activeCase.consistencyTitle} />

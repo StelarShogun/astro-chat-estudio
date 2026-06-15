@@ -143,6 +143,20 @@ const examen1 = {
   ])],
   consistencyTitle: 'Revisión de tu caracterización (en vivo)',
   consistency: caracterizacionDiagnostico,
+  // Modelo de Calidad para que la IA local analice la tabla de procesos.
+  analysis: {
+    gradeSpec: { rafaga: 'level', es: 'level', tiempoReal: 'bool' },
+    expected: {
+      A: { rafaga: 'baja', es: 'alta', tiempoReal: 'no' },
+      B: { rafaga: 'media', es: 'alta', tiempoReal: 'no' },
+      C: { rafaga: 'alta', es: 'media', tiempoReal: 'no' },
+      D: { rafaga: 'baja', es: 'media', tiempoReal: 'no' },
+      E: { rafaga: 'media', es: 'alta', tiempoReal: 'no' },
+      F: { rafaga: 'baja', es: 'alta', tiempoReal: 'no' },
+      G: { rafaga: 'baja', es: 'media', tiempoReal: 'no' },
+      H: { rafaga: 'baja', es: 'alta', tiempoReal: 'no' },
+    },
+  },
   questions: [
     {
       id: 'e1-q1',
@@ -413,6 +427,16 @@ const examen2 = {
   ])],
   consistencyTitle: 'Revisión de tu caracterización (en vivo)',
   consistency: caracterizacionDiagnostico,
+  // Modelo de Calidad para que la IA local analice la tabla de procesos.
+  analysis: {
+    gradeSpec: { rafaga: 'level', es: 'level', tiempoReal: 'bool', crecimiento: 'growth', reutilizacion: 'bool' },
+    expected: {
+      A: { rafaga: 'minima', es: 'alta', tiempoReal: 'no', crecimiento: 'estable', reutilizacion: 'no' },
+      B: { rafaga: 'alta', es: 'alta', tiempoReal: 'no', crecimiento: 'creciente', reutilizacion: 'si' },
+      C: { rafaga: 'alta', es: 'alta', tiempoReal: 'no', crecimiento: 'creciente', reutilizacion: 'no' },
+      D: { rafaga: 'alta', es: 'alta', tiempoReal: 'no', crecimiento: 'creciente', reutilizacion: 'no' },
+    },
+  },
   questions: [
     {
       id: 'e2-q1',

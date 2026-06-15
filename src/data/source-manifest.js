@@ -2,19 +2,9 @@ export const sourceDocuments = [
   {
     "id": "obsidian-mapa-final-so-calidad-excalidraw",
     "title": "Mapa_Final_SO_Calidad",
+    "label": "Mapa final del curso",
     "kind": "Obsidian",
     "format": "excalidraw",
-    "path": "/source-material/obsidian/obsidian-mapa-final-so-calidad-excalidraw.excalidraw",
-    "sourcePath": "~/Documentos/UNA/UNA/Operativos/Examen III/Repaso_Final_SO_Calidad_Obsidian/Mapa_Final_SO_Calidad.excalidraw",
-    "words": 33297,
-    "lines": 15925,
-    "bytes": 352962
-  },
-  {
-    "id": "obsidian-mapa-final-so-calidad-excalidraw-md",
-    "title": "Mapa_Final_SO_Calidad.excalidraw",
-    "kind": "Obsidian",
-    "format": "md",
     "path": "/source-material/obsidian/obsidian-mapa-final-so-calidad-excalidraw-md.md",
     "sourcePath": "~/Documentos/UNA/UNA/Operativos/Examen III/Repaso_Final_SO_Calidad_Obsidian/Mapa_Final_SO_Calidad.excalidraw.md",
     "words": 31971,
@@ -24,6 +14,7 @@ export const sourceDocuments = [
   {
     "id": "obsidian-materia-so-tanenbaum-calidad-md",
     "title": "Materia_SO_Tanenbaum_Calidad",
+    "label": "Materia con Tanenbaum",
     "kind": "Obsidian",
     "format": "md",
     "path": "/source-material/obsidian/obsidian-materia-so-tanenbaum-calidad-md.md",
@@ -35,6 +26,7 @@ export const sourceDocuments = [
   {
     "id": "obsidian-repaso-final-so-calidad-md",
     "title": "Repaso_Final_SO_Calidad",
+    "label": "Repaso final",
     "kind": "Obsidian",
     "format": "md",
     "path": "/source-material/obsidian/obsidian-repaso-final-so-calidad-md.md",
@@ -46,6 +38,7 @@ export const sourceDocuments = [
   {
     "id": "obsidian-tablero-so-calidad-md",
     "title": "Tablero_SO_Calidad",
+    "label": "Tablero del curso",
     "kind": "Obsidian",
     "format": "md",
     "path": "/source-material/obsidian/obsidian-tablero-so-calidad-md.md",
@@ -288,9 +281,9 @@ export const sourceDocuments = [
 ];
 
 export const sourceStats = {
-  "documents": 26,
-  "words": 288862,
-  "lines": 51917,
+  "documents": 25,
+  "words": 256891,
+  "lines": 36696,
   "transcriptions": 21,
-  "obsidian": 5
+  "obsidian": 4
 };

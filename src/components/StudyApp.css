@@ -927,8 +927,10 @@ button.wiki-link:hover {
 }
 
 .markdown-table-wrap table {
-  width: 100%;
-  min-width: 620px;
+  /* La tabla se adapta al contenido: ocupa al menos todo el ancho disponible
+     y crece si el contenido lo necesita; el contenedor hace scroll horizontal. */
+  width: auto;
+  min-width: 100%;
   border-collapse: collapse;
 }
 
@@ -938,6 +940,10 @@ button.wiki-link:hover {
   border-right: 1px solid var(--line);
   padding: 12px 14px;
   vertical-align: top;
+  /* Las celdas envuelven texto largo para que se lea completo sin desbordar. */
+  max-width: 460px;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .markdown-table-wrap th {
@@ -1819,9 +1825,32 @@ button.wiki-link:hover {
   max-width: 60ch;
 }
 
+/* La tabla editable se ajusta al contenido: usa todo el ancho disponible y, si
+   las columnas no caben con su ancho mínimo legible, el contenedor hace scroll. */
+.editable-table .markdown-table-wrap table {
+  width: auto;
+  min-width: 100%;
+}
+
+.editable-table th,
+.editable-table td {
+  min-width: 245px;
+}
+
+.editable-table th:first-child,
+.editable-table td:first-child {
+  min-width: 270px;
+}
+
+.editable-table thead th:last-child:empty,
+.editable-table td.cell-action {
+  min-width: 0;
+  width: 52px;
+}
+
 .editable-table .markdown-table-wrap input {
   width: 100%;
-  min-width: 90px;
+  min-width: 110px;
   border: 1px solid transparent;
   border-radius: 6px;
   padding: 6px 8px;
@@ -1890,7 +1919,8 @@ button.wiki-link:hover {
   color: inherit;
   font: inherit;
   font-weight: 600;
-  padding: 5px 7px;
+  font-size: 0.86rem;
+  padding: 5px 6px;
 }
 
 .col-head-input:hover {

@@ -592,7 +592,7 @@ export default function DocumentReader({ section }) {
             <div className={`doc-item${activeDoc?.id === doc.id ? ' active' : ''}`} key={doc.id}>
               <button type="button" className="doc-pick" onClick={() => setActiveDocId(doc.id)}>
                 <span>{kindLabel(doc)}</span>
-                <strong>{doc.title}</strong>
+                <strong>{doc.label || doc.title}</strong>
               </button>
               <button
                 type="button"
@@ -615,7 +615,7 @@ export default function DocumentReader({ section }) {
             <header className="doc-toolbar">
               <div>
                 <p className="eyebrow">{kindLabel(activeDoc)}</p>
-                <h2>{activeDoc.title}</h2>
+                <h2>{activeDoc.label || activeDoc.title}</h2>
               </div>
               <div className="doc-actions">
                 <button type="button" className="doc-action" onClick={scrollToTop} title="Ir al inicio del documento">

@@ -6,6 +6,7 @@
 
 export const icons = {
   // --- Navegación de secciones ---
+  inicio: '<path d="M4 11.5 12 4l8 7.5"/><path d="M6 10.5V20h12v-9.5"/><path d="M10 20v-5h4v5"/>',
   metodo: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/>',
   resolver: '<path d="M4 20h4L18 10l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',
   examen: '<path d="M9 3v6l-4.6 8.6A1.5 1.5 0 0 0 5.7 20h12.6a1.5 1.5 0 0 0 1.3-2.4L15 9V3"/><path d="M8 3h8"/><path d="M7.5 14h9"/>',

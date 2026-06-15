@@ -13,7 +13,8 @@ import CaseViewer from '../components/CaseViewer.jsx';
 import Icon from '../components/Icon.astro';
 
 const sections = [
-  { id: 'inicio', label: 'Método', icon: 'metodo', hint: 'Cómo razonar el examen' },
+  { id: 'inicio', label: 'Inicio', icon: 'inicio', hint: 'Resumen del curso' },
+  { id: 'metodo', label: 'Método', icon: 'metodo', hint: 'Cómo razonar el examen' },
   { id: 'resolver', label: 'Resolver caso', icon: 'resolver', hint: 'Plantilla en blanco' },
   { id: 'casos', label: 'Examen interactivo', icon: 'examen', hint: 'Practica y recibe feedback' },
   { id: 'transcripciones', label: 'Transcripciones', icon: 'transcripcion', hint: 'Clases en texto' },
@@ -71,25 +72,39 @@ const sections = [
     </aside>
 
     <section class="content">
-      <header class="hero-panel">
-        <div>
-          <p class="eyebrow">Curso de Sistemas Operativos</p>
-          <h1>Todo el material para estudiar como examen.</h1>
-          <p class="hero-text">
-            Repasa con las transcripciones completas, las notas del curso, mapas visuales y
-            exámenes reales. Caracteriza casos en la plantilla y consulta a Tanenbaum como apoyo.
-          </p>
-        </div>
-        <div class="source-panel">
-          <span>Ruta de estudio</span>
-          <strong>Caracterizar, decidir y defender</strong>
-          <p>Primero se separan procesos, dispositivos, archivos y recursos.</p>
-          <p>Después se elige la política y se justifica con lenguaje de examen.</p>
-          <p>Al final se practica con casos completos y preguntas reales.</p>
-        </div>
-      </header>
-
       <div class="section-panel is-active" data-section="inicio">
+        <header class="hero-panel">
+          <div>
+            <p class="eyebrow">Curso de Sistemas Operativos</p>
+            <h1>Todo el material para estudiar como examen.</h1>
+            <p class="hero-text">
+              Repasa con las transcripciones completas, las notas del curso, mapas visuales y
+              exámenes reales. Caracteriza casos en la plantilla y consulta a Tanenbaum como apoyo.
+            </p>
+          </div>
+          <div class="source-panel">
+            <span>Ruta de estudio</span>
+            <strong>Caracterizar, decidir y defender</strong>
+            <p>Primero se separan procesos, dispositivos, archivos y recursos.</p>
+            <p>Después se elige la política y se justifica con lenguaje de examen.</p>
+            <p>Al final se practica con casos completos y preguntas reales.</p>
+          </div>
+        </header>
+
+        <nav class="home-jump" aria-label="Accesos rápidos">
+          {sections.filter((s) => s.id !== 'inicio').map((s) => (
+            <button type="button" class="home-jump-card" data-jump={s.id}>
+              <span class="home-jump-icon"><Icon name={s.icon} size={22} /></span>
+              <span class="home-jump-text">
+                <strong>{s.label}</strong>
+                <small>{s.hint}</small>
+              </span>
+            </button>
+          ))}
+        </nav>
+      </div>
+
+      <div class="section-panel" data-section="metodo">
         <QuickGuide />
       </div>
       <div class="section-panel" data-section="resolver">
@@ -154,6 +169,14 @@ const sections = [
 
   navButtons.forEach((button) => {
     button.addEventListener('click', () => activate(button.getAttribute('data-target')));
+  });
+
+  // Tarjetas de acceso rápido en la pantalla de Inicio.
+  document.querySelectorAll('[data-jump]').forEach((button) => {
+    button.addEventListener('click', () => {
+      activate(button.getAttribute('data-jump'));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   });
 
   // Atajos de teclado: 1–9 van a las primeras nueve secciones y 0 a la décima.
